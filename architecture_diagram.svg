@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 640" width="800" height="640">
+  <defs>
+    <style>
+      .title { font-family: 'Arial', sans-serif; font-size: 20px; font-weight: bold; fill: #618025; }
+      .subtitle { font-family: 'Arial', sans-serif; font-size: 14px; fill: #666; }
+      .box-text { font-family: 'Arial', sans-serif; font-size: 14px; font-weight: bold; fill: #333; text-anchor: middle; }
+      .detail-text { font-family: 'Arial', sans-serif; font-size: 11px; fill: #666; text-anchor: middle; }
+      .center-box { fill: #85ad33; stroke: #618025; stroke-width: 3; }
+      .integration-box { fill: #ffffff; stroke: #7bbaf0; stroke-width: 2; }
+      .primary-box { fill: #e5f1d4; stroke: #85ad33; stroke-width: 2; }
+      .arrow { stroke: #7bbaf0; stroke-width: 2; fill: none; marker-end: url(#arrowhead); }
+      .arrow-bidirectional { stroke: #85ad33; stroke-width: 3; fill: none; marker-end: url(#arrowhead-green); marker-start: url(#arrowhead-green-start); }
+      .label { font-family: 'Arial', sans-serif; font-size: 10px; fill: #666; text-anchor: middle; }
+    </style>
+
+    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#7bbaf0" />
+    </marker>
+
+    <marker id="arrowhead-green" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#85ad33" />
+    </marker>
+
+    <marker id="arrowhead-green-start" markerWidth="10" markerHeight="10" refX="1" refY="3" orient="auto">
+      <polygon points="10 0, 0 3, 10 6" fill="#85ad33" />
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="400" y="30" class="title" text-anchor="middle">Architecture Overview</text>
+  <text x="400" y="50" class="subtitle" text-anchor="middle">Hub-and-Spoke Integration Design</text>
+
+  <!-- Central Dashboard Box -->
+  <rect x="300" y="220" width="200" height="100" rx="8" class="center-box" />
+  <text x="400" y="255" class="box-text" fill="white">IM DASHBOARD</text>
+  <text x="400" y="275" class="detail-text" fill="white">(Single Source of Truth)</text>
+  <text x="400" y="295" class="detail-text" fill="white">Portfolio Management</text>
+  <text x="400" y="310" class="detail-text" fill="white">Health Scoring • Milestones</text>
+
+  <!-- HubSpot (Primary Integration) - Top -->
+  <rect x="320" y="70" width="160" height="80" rx="8" class="primary-box" />
+  <text x="400" y="100" class="box-text" fill="#618025">HubSpot</text>
+  <text x="400" y="118" class="detail-text">(Primary)</text>
+  <text x="400" y="133" class="detail-text">Bidirectional Sync</text>
+
+  <!-- Bidirectional arrow between Dashboard and HubSpot -->
+  <path d="M 400 150 L 400 220" class="arrow-bidirectional" />
+  <text x="420" y="185" class="label">Real-time</text>
+  <text x="420" y="197" class="label">Sync</text>
+
+  <!-- Jira (Read-only) - Bottom Left -->
+  <rect x="50" y="450" width="140" height="80" rx="8" class="integration-box" />
+  <text x="120" y="480" class="box-text">Jira</text>
+  <text x="120" y="498" class="detail-text">(CROs)</text>
+  <text x="120" y="513" class="detail-text">Read-only</text>
+
+  <!-- Arrow from Jira to Dashboard -->
+  <path d="M 190 480 Q 250 380 300 290" class="arrow" />
+  <text x="235" y="395" class="label">CRO Data</text>
+
+  <!-- Zendesk (Read-only) - Bottom Center-Left -->
+  <rect x="230" y="450" width="140" height="80" rx="8" class="integration-box" />
+  <text x="300" y="480" class="box-text">Zendesk</text>
+  <text x="300" y="498" class="detail-text">(Support)</text>
+  <text x="300" y="513" class="detail-text">Read-only</text>
+
+  <!-- Arrow from Zendesk to Dashboard -->
+  <path d="M 320 450 L 345 320" class="arrow" />
+  <text x="320" y="390" class="label">Tickets</text>
+
+  <!-- ParentSquare Usage (Read-only) - Bottom Center-Right -->
+  <rect x="430" y="450" width="140" height="80" rx="8" class="integration-box" />
+  <text x="500" y="480" class="box-text">ParentSquare</text>
+  <text x="500" y="498" class="detail-text">(Usage)</text>
+  <text x="500" y="513" class="detail-text">Read-only</text>
+
+  <!-- Arrow from ParentSquare to Dashboard -->
+  <path d="M 480 450 L 455 320" class="arrow" />
+  <text x="480" y="390" class="label">Analytics</text>
+
+  <!-- Additional Integration (Future) - Bottom Right -->
+  <rect x="610" y="450" width="140" height="80" rx="8" class="integration-box" style="stroke-dasharray: 5,5;" />
+  <text x="680" y="480" class="box-text" fill="#999">Future</text>
+  <text x="680" y="498" class="detail-text" fill="#999">AI/ML</text>
+  <text x="680" y="513" class="detail-text" fill="#999">Phase 3</text>
+
+  <!-- Arrow from Future to Dashboard -->
+  <path d="M 610 480 Q 550 380 500 290" class="arrow" style="stroke-dasharray: 5,5; stroke: #999;" />
+  <text x="565" y="395" class="label" fill="#999">Predictive</text>
+
+  <!-- Legend -->
+  <g transform="translate(50, 560)">
+    <!-- Primary Integration legend item -->
+    <rect x="0" y="0" width="220" height="30" rx="4" fill="#e5f1d4" stroke="#85ad33" stroke-width="2" />
+    <rect x="8" y="9" width="30" height="12" rx="2" fill="#e5f1d4" stroke="#85ad33" stroke-width="2" />
+    <text x="45" y="19" style="font-family: Arial; font-size: 11px; fill: #333; font-weight: bold;" text-anchor="start">Primary Integration (Bidirectional)</text>
+
+    <!-- Read-only Integrations legend item -->
+    <rect x="240" y="0" width="180" height="30" rx="4" fill="#ffffff" stroke="#7bbaf0" stroke-width="2" />
+    <rect x="248" y="9" width="30" height="12" rx="2" fill="#ffffff" stroke="#7bbaf0" stroke-width="2" />
+    <text x="285" y="19" style="font-family: Arial; font-size: 11px; fill: #333; font-weight: bold;" text-anchor="start">Read-only Integrations</text>
+
+    <!-- Future/Phase 3 legend item -->
+    <rect x="440" y="0" width="130" height="30" rx="4" fill="#ffffff" stroke="#7bbaf0" stroke-width="2" stroke-dasharray="5,5" />
+    <rect x="448" y="9" width="30" height="12" rx="2" fill="#ffffff" stroke="#7bbaf0" stroke-width="2" stroke-dasharray="3,3" />
+    <text x="485" y="19" style="font-family: Arial; font-size: 11px; fill: #999; font-weight: bold;" text-anchor="start">Future/Phase 3</text>
+  </g>
+</svg>

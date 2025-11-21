@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IM Dashboard Mockups - ParentSquare</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ps-green: #85ad33;
+      --ps-blue: #7bbaf0;
+      --ps-purple: #bc609f;
+      --ps-gold: #f2b001;
+      --ps-light-green: #e5f1d4;
+      --ps-dark-gray: #444444;
+      --ps-light-gray: #f7f8f8;
+      --ps-dark-green: #618025;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+      background: linear-gradient(135deg, var(--ps-dark-green) 0%, var(--ps-green) 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .container {
+      max-width: 1200px;
+      width: 100%;
+    }
+
+    .hero {
+      text-align: center;
+      color: white;
+      margin-bottom: 3rem;
+    }
+
+    .logo-container {
+      margin-bottom: 2rem;
+    }
+
+    .logo {
+      filter: brightness(0) invert(1);
+      height: 60px;
+    }
+
+    h1 {
+      font-size: 3rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+
+    .subtitle {
+      font-size: 1.3rem;
+      opacity: 0.95;
+      margin-bottom: 0.5rem;
+    }
+
+    .author {
+      font-size: 1rem;
+      opacity: 0.85;
+      margin-top: 1rem;
+    }
+
+    .mockup-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .mockup-card {
+      background: white;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+      transition: all 0.3s;
+      cursor: pointer;
+    }
+
+    .mockup-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.3);
+    }
+
+    .mockup-preview {
+      height: 300px;
+      background: var(--ps-light-gray);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .mockup-preview img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .mockup-preview::after {
+      content: '👁️ View Mockup';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: var(--ps-green);
+      color: white;
+      padding: 1rem 2rem;
+      border-radius: 8px;
+      font-weight: 700;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .mockup-card:hover .mockup-preview::after {
+      opacity: 1;
+    }
+
+    .mockup-content {
+      padding: 2rem;
+    }
+
+    .mockup-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--ps-dark-green);
+      margin-bottom: 0.75rem;
+    }
+
+    .mockup-description {
+      color: #666;
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+
+    .feature-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .feature-list li {
+      color: #666;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .feature-list li::before {
+      content: '✓';
+      color: var(--ps-green);
+      font-weight: 700;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 0.75rem 1.5rem;
+      background: var(--ps-green);
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+
+    .btn:hover {
+      background: var(--ps-dark-green);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(133, 173, 51, 0.3);
+    }
+
+    .info-banner {
+      background: white;
+      border-radius: 16px;
+      padding: 2rem;
+      text-align: center;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+    }
+
+    .info-banner h2 {
+      color: var(--ps-dark-green);
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .info-banner p {
+      color: #666;
+      line-height: 1.8;
+      margin-bottom: 1.5rem;
+    }
+
+    .info-links {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .mockup-preview.portfolio {
+      background: linear-gradient(135deg, #fafafa 0%, var(--ps-light-gray) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 6rem;
+    }
+
+    .mockup-preview.detail {
+      background: linear-gradient(135deg, var(--ps-dark-green) 0%, var(--ps-green) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 6rem;
+    }
+
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2rem;
+      }
+
+      .subtitle {
+        font-size: 1rem;
+      }
+
+      .mockup-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="hero">
+      <div class="logo-container">
+        <img src="ParentSquare_logo_light.png" alt="ParentSquare" class="logo">
+      </div>
+      <h1>IM Dashboard Mockups</h1>
+      <div class="subtitle">Interactive Visual Prototypes</div>
+      <div class="author">Created for Monday Team Presentation • Derek McBride</div>
+    </div>
+
+    <div class="mockup-grid">
+      <div class="mockup-card" onclick="window.location.href='mockup_portfolio_view.html'">
+        <div class="mockup-preview portfolio">
+          📊
+        </div>
+        <div class="mockup-content">
+          <h2 class="mockup-title">Portfolio View</h2>
+          <p class="mockup-description">
+            The main dashboard showing all implementation projects at a glance. IMs can filter, sort, and quickly assess the health of their entire portfolio.
+          </p>
+          <ul class="feature-list">
+            <li>Real-time health indicators (Green/Yellow/Red)</li>
+            <li>Filterable by IM owner, phase, and health status</li>
+            <li>Sortable by go-live date, health, or name</li>
+            <li>Quick stats showing portfolio health summary</li>
+            <li>One-click access to project details</li>
+          </ul>
+          <a href="mockup_portfolio_view.html" class="btn">View Portfolio Mockup →</a>
+        </div>
+      </div>
+
+      <div class="mockup-card" onclick="window.location.href='mockup_project_detail.html'">
+        <div class="mockup-preview detail">
+          📋
+        </div>
+        <div class="mockup-content">
+          <h2 class="mockup-title">Project Detail View</h2>
+          <p class="mockup-description">
+            Detailed view of a single implementation project with all relevant information, milestones, health status, and contact coverage in one place.
+          </p>
+          <ul class="feature-list">
+            <li>Phase progression stepper showing current status</li>
+            <li>Interactive milestone checklist with dates</li>
+            <li>Health status with override capability</li>
+            <li>Contact coverage validation and gap alerts</li>
+            <li>Integration tabs for HubSpot, Jira, Zendesk data</li>
+          </ul>
+          <a href="mockup_project_detail.html" class="btn">View Project Detail Mockup →</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="info-banner">
+      <h2>About These Mockups</h2>
+      <p>
+        These interactive HTML mockups demonstrate the proposed IM Dashboard user experience with ParentSquare branding.
+        They're fully clickable and can be navigated to show the flow between portfolio and project views.
+        Perfect for team presentations and stakeholder demos!
+      </p>
+      <div class="info-links">
+        <a href="IM_Dashboard_Executive_Summary_Branded.html" class="btn">📄 View Executive Summary</a>
+        <a href="im_dashboard_branded.html" class="btn">📘 View Full Technical Spec</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

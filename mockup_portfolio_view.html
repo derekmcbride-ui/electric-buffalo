@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IM Dashboard - Portfolio View (Mockup)</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ps-green: #85ad33;
+      --ps-blue: #7bbaf0;
+      --ps-purple: #bc609f;
+      --ps-gold: #f2b001;
+      --ps-light-green: #e5f1d4;
+      --ps-dark-gray: #444444;
+      --ps-light-gray: #f7f8f8;
+      --ps-dark-green: #618025;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+      background-color: #fafafa;
+      color: #333;
+    }
+
+    .header {
+      background: white;
+      border-bottom: 3px solid var(--ps-green);
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+
+    .logo {
+      height: 40px;
+    }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .user-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--ps-green);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .page-header {
+      margin-bottom: 2rem;
+    }
+
+    .page-title {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--ps-dark-green);
+      margin-bottom: 0.5rem;
+    }
+
+    .page-subtitle {
+      color: #666;
+      font-size: 1rem;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .stat-card {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      border-left: 4px solid var(--ps-green);
+    }
+
+    .stat-card.blue { border-left-color: var(--ps-blue); }
+    .stat-card.gold { border-left-color: var(--ps-gold); }
+    .stat-card.red { border-left-color: #e74c3c; }
+
+    .stat-value {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--ps-dark-green);
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-label {
+      color: #666;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-weight: 600;
+    }
+
+    .filters {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      margin-bottom: 2rem;
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .filter-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      min-width: 200px;
+    }
+
+    .filter-label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #666;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .filter-select {
+      padding: 0.6rem 1rem;
+      border: 2px solid #e0e0e0;
+      border-radius: 6px;
+      font-family: inherit;
+      font-size: 0.95rem;
+      background: white;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .filter-select:hover {
+      border-color: var(--ps-green);
+    }
+
+    .filter-select:focus {
+      outline: none;
+      border-color: var(--ps-green);
+      box-shadow: 0 0 0 3px rgba(133, 173, 51, 0.1);
+    }
+
+    .projects-table {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      overflow: hidden;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    thead {
+      background: var(--ps-light-gray);
+    }
+
+    th {
+      padding: 1rem 1.5rem;
+      text-align: left;
+      font-weight: 600;
+      color: var(--ps-dark-gray);
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border-bottom: 2px solid #e0e0e0;
+    }
+
+    td {
+      padding: 1.25rem 1.5rem;
+      border-bottom: 1px solid #f0f0f0;
+      font-size: 0.95rem;
+    }
+
+    tbody tr {
+      transition: background 0.2s;
+      cursor: pointer;
+    }
+
+    tbody tr:hover {
+      background: var(--ps-light-green);
+    }
+
+    .project-name {
+      font-weight: 600;
+      color: var(--ps-dark-green);
+    }
+
+    .health-badge {
+      display: inline-block;
+      padding: 0.4rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .health-green {
+      background: #d4edda;
+      color: #155724;
+    }
+
+    .health-yellow {
+      background: #fff3cd;
+      color: #856404;
+    }
+
+    .health-red {
+      background: #f8d7da;
+      color: #721c24;
+    }
+
+    .phase-badge {
+      display: inline-block;
+      padding: 0.4rem 0.8rem;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      background: var(--ps-light-gray);
+      color: var(--ps-dark-gray);
+    }
+
+    .phase-badge.active {
+      background: var(--ps-light-green);
+      color: var(--ps-dark-green);
+    }
+
+    .days-badge {
+      font-weight: 600;
+      color: var(--ps-dark-gray);
+    }
+
+    .days-badge.urgent {
+      color: #e74c3c;
+    }
+
+    .mockup-banner {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: var(--ps-gold);
+      color: #333;
+      padding: 1rem 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      font-weight: 600;
+      font-size: 0.9rem;
+      z-index: 1000;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 8px;
+      background: #e0e0e0;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--ps-green);
+      transition: width 0.3s;
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <img src="ParentSquare_logo_light.png" alt="ParentSquare" class="logo">
+    <div class="user-info">
+      <span style="font-weight: 600; color: #666;">Derek McBride</span>
+      <div class="user-avatar">DM</div>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="page-header">
+      <h1 class="page-title">My Implementation Portfolio</h1>
+      <p class="page-subtitle">Managing 12 active implementations</p>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-value">12</div>
+        <div class="stat-label">Active Projects</div>
+      </div>
+      <div class="stat-card blue">
+        <div class="stat-value">8</div>
+        <div class="stat-label">Green Health</div>
+      </div>
+      <div class="stat-card gold">
+        <div class="stat-value">3</div>
+        <div class="stat-label">Yellow Health</div>
+      </div>
+      <div class="stat-card red">
+        <div class="stat-value">1</div>
+        <div class="stat-label">At Risk (Red)</div>
+      </div>
+    </div>
+
+    <div class="filters">
+      <div class="filter-group">
+        <label class="filter-label">IM Owner</label>
+        <select class="filter-select">
+          <option>Derek McBride (Me)</option>
+          <option>All IMs</option>
+          <option>Aimee Lem</option>
+          <option>Cody Dacus</option>
+          <option>Robert Smith</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label class="filter-label">Health Status</label>
+        <select class="filter-select">
+          <option>All Statuses</option>
+          <option>Green Only</option>
+          <option>Yellow Only</option>
+          <option>Red Only</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label class="filter-label">Phase</label>
+        <select class="filter-select">
+          <option>All Phases</option>
+          <option>Kickoff</option>
+          <option>In Progress</option>
+          <option>Launched</option>
+          <option>Stabilizing</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label class="filter-label">Sort By</label>
+        <select class="filter-select">
+          <option>Go-Live Date (Nearest)</option>
+          <option>Health (Worst First)</option>
+          <option>Account Name (A-Z)</option>
+          <option>Last Updated</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="projects-table">
+      <table>
+        <thead>
+          <tr>
+            <th>Account Name</th>
+            <th>Health</th>
+            <th>Phase</th>
+            <th>Go-Live Date</th>
+            <th>Days Until Launch</th>
+            <th>Completion</th>
+            <th>Last Updated</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr onclick="window.location.href='mockup_project_detail.html'">
+            <td class="project-name">Springfield Unified School District</td>
+            <td><span class="health-badge health-red">Red</span></td>
+            <td><span class="phase-badge active">In Progress</span></td>
+            <td>Jan 15, 2025</td>
+            <td class="days-badge urgent">56 days</td>
+            <td>
+              <div class="progress-bar">
+                <div class="progress-fill" style="width: 45%;"></div>
+              </div>
+            </td>
+            <td>2 hours ago</td>
+          </tr>
+          <tr>
+            <td class="project-name">Riverside Community Schools</td>
+            <td><span class="health-badge health-green">Green</span></td>
+            <td><span class="phase-badge active">Launched</span></td>
+            <td>Dec 10, 2024</td>
+            <td class="days-badge">20 days</td>
+            <td>
+              <div class="progress-bar">
+                <div class="progress-fill" style="width: 85%;"></div>
+              </div>
+            </td>
+            <td>1 day ago</td>
+          </tr>
+          <tr>
+            <td class="project-name">Oakwood Academy</td>
+            <td><span class="health-badge health-yellow">Yellow</span></td>
+            <td><span class="phase-badge active">In Progress</span></td>
+            <td>Jan 22, 2025</td>
+            <td class="days-badge">63 days</td>
+            <td>
+              <div class="progress-bar">
+                <div class="progress-fill" style="width: 60%;"></div>
+              </div>
+            </td>
+            <td>5 hours ago</td>
+          </tr>
+          <tr>
+            <td class="project-name">Lakeside Elementary District</td>
+            <td><span class="health-badge health-green">Green</span></td>
+            <td><span class="phase-badge active">In Progress</span></td>
+            <td>Feb 5, 2025</td>
+            <td class="days-badge">77 days</td>
+            <td>
+              <div class="progress-bar">
+                <div class="progress-fill" style="width: 55%;"></div>
+              </div>
+            </td>
+            <td>3 hours ago</td>
+          </tr>
+          <tr>
+            <td class="project-name">Mountain View Charter School</td>
+            <td><span class="health-badge health-green">Green</span></td>
+            <td><span class="phase-badge active">Kickoff</span></td>
+            <td>Feb 15, 2025</td>
+            <td class="days-badge">87 days</td>
+            <td>
+              <div class="progress-bar">
+                <div class="progress-fill" style="width: 20%;"></div>
+              </div>
+            </td>
+            <td>6 hours ago</td>
+          </tr>
+          <tr>
+            <td class="project-name">Sunset School District</td>
+            <td><span class="health-badge health-yellow">Yellow</span></td>
+            <td><span class="phase-badge active">In Progress</span></td>
+            <td>Jan 28, 2025</td>
+            <td class="days-badge">69 days</td>
+            <td>
+              <div class="progress-bar">
+                <div class="progress-fill" style="width: 50%;"></div>
+              </div>
+            </td>
+            <td>1 day ago</td>
+          </tr>
+          <tr>
+            <td class="project-name">Greenfield Public Schools</td>
+            <td><span class="health-badge health-green">Green</span></td>
+            <td><span class="phase-badge active">Launched</span></td>
+            <td>Dec 3, 2024</td>
+            <td class="days-badge">13 days</td>
+            <td>
+              <div class="progress-bar">
+                <div class="progress-fill" style="width: 90%;"></div>
+              </div>
+            </td>
+            <td>4 hours ago</td>
+          </tr>
+          <tr>
+            <td class="project-name">Harbor View Academy</td>
+            <td><span class="health-badge health-green">Green</span></td>
+            <td><span class="phase-badge active">In Progress</span></td>
+            <td>Feb 10, 2025</td>
+            <td class="days-badge">82 days</td>
+            <td>
+              <div class="progress-bar">
+                <div class="progress-fill" style="width: 40%;"></div>
+              </div>
+            </td>
+            <td>8 hours ago</td>
+          </tr>
+          <tr>
+            <td class="project-name">Valley Creek Schools</td>
+            <td><span class="health-badge health-yellow">Yellow</span></td>
+            <td><span class="phase-badge active">Kickoff</span></td>
+            <td>Feb 20, 2025</td>
+            <td class="days-badge">92 days</td>
+            <td>
+              <div class="progress-bar">
+                <div class="progress-fill" style="width: 25%;"></div>
+              </div>
+            </td>
+            <td>2 days ago</td>
+          </tr>
+          <tr>
+            <td class="project-name">Hillside Community Schools</td>
+            <td><span class="health-badge health-green">Green</span></td>
+            <td><span class="phase-badge active">In Progress</span></td>
+            <td>Jan 30, 2025</td>
+            <td class="days-badge">71 days</td>
+            <td>
+              <div class="progress-bar">
+                <div class="progress-fill" style="width: 65%;"></div>
+              </div>
+            </td>
+            <td>7 hours ago</td>
+          </tr>
+          <tr>
+            <td class="project-name">Maple Grove District</td>
+            <td><span class="health-badge health-green">Green</span></td>
+            <td><span class="phase-badge active">Stabilizing</span></td>
+            <td>Nov 28, 2024</td>
+            <td class="days-badge" style="color: var(--ps-green);">Launched</td>
+            <td>
+              <div class="progress-bar">
+                <div class="progress-fill" style="width: 95%;"></div>
+              </div>
+            </td>
+            <td>12 hours ago</td>
+          </tr>
+          <tr>
+            <td class="project-name">Coastal Charter Network</td>
+            <td><span class="health-badge health-green">Green</span></td>
+            <td><span class="phase-badge active">In Progress</span></td>
+            <td>Feb 8, 2025</td>
+            <td class="days-badge">80 days</td>
+            <td>
+              <div class="progress-bar">
+                <div class="progress-fill" style="width: 48%;"></div>
+              </div>
+            </td>
+            <td>5 hours ago</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="mockup-banner">
+    📱 Interactive Mockup - Click Springfield to see Project Detail View
+  </div>
+
+  <script>
+    // Add hover effects and interactivity
+    document.querySelectorAll('tbody tr').forEach(row => {
+      row.style.cursor = 'pointer';
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Springfield Unified - IM Dashboard (Mockup)</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ps-green: #85ad33;
+      --ps-blue: #7bbaf0;
+      --ps-purple: #bc609f;
+      --ps-gold: #f2b001;
+      --ps-light-green: #e5f1d4;
+      --ps-dark-gray: #444444;
+      --ps-light-gray: #f7f8f8;
+      --ps-dark-green: #618025;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+      background-color: #fafafa;
+      color: #333;
+    }
+
+    .header {
+      background: white;
+      border-bottom: 3px solid var(--ps-green);
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+
+    .logo {
+      height: 40px;
+    }
+
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #666;
+      font-size: 0.9rem;
+    }
+
+    .breadcrumb a {
+      color: var(--ps-green);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .breadcrumb a:hover {
+      text-decoration: underline;
+    }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .user-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--ps-green);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .project-header {
+      background: linear-gradient(135deg, var(--ps-dark-green) 0%, var(--ps-green) 100%);
+      color: white;
+      padding: 2rem;
+      border-radius: 12px;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .project-title {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .project-meta {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+      font-size: 0.95rem;
+    }
+
+    .meta-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .meta-label {
+      opacity: 0.8;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .meta-value {
+      font-weight: 600;
+      font-size: 1.1rem;
+    }
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 2rem;
+    }
+
+    .main-content {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .card {
+      background: white;
+      border-radius: 12px;
+      padding: 2rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 2px solid var(--ps-light-gray);
+    }
+
+    .card-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--ps-dark-green);
+    }
+
+    .health-card {
+      background: linear-gradient(135deg, #f8d7da 0%, #f5c2c7 100%);
+      border-left: 6px solid #dc3545;
+    }
+
+    .health-card.yellow {
+      background: linear-gradient(135deg, #fff3cd 0%, #ffe69c 100%);
+      border-left-color: #ffc107;
+    }
+
+    .health-card.green {
+      background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+      border-left-color: #28a745;
+    }
+
+    .health-indicator {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .health-icon {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      background: white;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .health-text {
+      flex: 1;
+    }
+
+    .health-status {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #721c24;
+    }
+
+    .health-reason {
+      color: #666;
+      font-size: 0.9rem;
+      margin-top: 0.5rem;
+    }
+
+    .btn {
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 6px;
+      font-family: inherit;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 0.95rem;
+    }
+
+    .btn-primary {
+      background: var(--ps-green);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: var(--ps-dark-green);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(133, 173, 51, 0.3);
+    }
+
+    .btn-secondary {
+      background: white;
+      color: var(--ps-dark-gray);
+      border: 2px solid #e0e0e0;
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--ps-green);
+      color: var(--ps-green);
+    }
+
+    .phase-stepper {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+      position: relative;
+    }
+
+    .phase-stepper::before {
+      content: '';
+      position: absolute;
+      top: 20px;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: #e0e0e0;
+      z-index: 0;
+    }
+
+    .phase-step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      z-index: 1;
+      background: #fafafa;
+      padding: 0 0.5rem;
+    }
+
+    .phase-circle {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #e0e0e0;
+      border: 3px solid #e0e0e0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      color: #999;
+    }
+
+    .phase-step.completed .phase-circle {
+      background: var(--ps-green);
+      border-color: var(--ps-green);
+      color: white;
+    }
+
+    .phase-step.active .phase-circle {
+      background: white;
+      border-color: var(--ps-green);
+      color: var(--ps-green);
+      box-shadow: 0 0 0 4px rgba(133, 173, 51, 0.2);
+    }
+
+    .phase-label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #999;
+      text-align: center;
+    }
+
+    .phase-step.completed .phase-label,
+    .phase-step.active .phase-label {
+      color: var(--ps-dark-green);
+    }
+
+    .milestone-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .milestone-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 1rem;
+      border-radius: 8px;
+      background: var(--ps-light-gray);
+      transition: all 0.2s;
+    }
+
+    .milestone-item:hover {
+      background: var(--ps-light-green);
+    }
+
+    .milestone-checkbox {
+      width: 24px;
+      height: 24px;
+      border: 2px solid #ccc;
+      border-radius: 4px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: all 0.2s;
+    }
+
+    .milestone-checkbox.checked {
+      background: var(--ps-green);
+      border-color: var(--ps-green);
+      color: white;
+    }
+
+    .milestone-content {
+      flex: 1;
+    }
+
+    .milestone-title {
+      font-weight: 600;
+      color: var(--ps-dark-gray);
+      margin-bottom: 0.25rem;
+    }
+
+    .milestone-date {
+      font-size: 0.85rem;
+      color: #999;
+    }
+
+    .contact-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem;
+      border-radius: 8px;
+      background: var(--ps-light-gray);
+    }
+
+    .contact-item.missing {
+      background: #fff3cd;
+      border-left: 4px solid #ffc107;
+    }
+
+    .contact-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+
+    .contact-icon.filled {
+      background: var(--ps-green);
+      color: white;
+    }
+
+    .contact-icon.missing {
+      background: #ffc107;
+      color: white;
+    }
+
+    .contact-info {
+      flex: 1;
+    }
+
+    .contact-role {
+      font-weight: 600;
+      color: var(--ps-dark-gray);
+      font-size: 0.95rem;
+    }
+
+    .contact-name {
+      font-size: 0.85rem;
+      color: #666;
+      margin-top: 0.25rem;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 0.5rem;
+      border-bottom: 2px solid #e0e0e0;
+      margin-bottom: 1.5rem;
+    }
+
+    .tab {
+      padding: 0.75rem 1.5rem;
+      border: none;
+      background: none;
+      font-family: inherit;
+      font-weight: 600;
+      color: #999;
+      cursor: pointer;
+      border-bottom: 3px solid transparent;
+      transition: all 0.2s;
+    }
+
+    .tab:hover {
+      color: var(--ps-green);
+    }
+
+    .tab.active {
+      color: var(--ps-green);
+      border-bottom-color: var(--ps-green);
+    }
+
+    .sync-info {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #666;
+      font-size: 0.85rem;
+      margin-top: 1rem;
+      padding: 0.75rem;
+      background: var(--ps-light-green);
+      border-radius: 6px;
+    }
+
+    .mockup-banner {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: var(--ps-gold);
+      color: #333;
+      padding: 1rem 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      font-weight: 600;
+      font-size: 0.9rem;
+      z-index: 1000;
+    }
+
+    .action-bar {
+      display: flex;
+      gap: 1rem;
+      padding-top: 1.5rem;
+      border-top: 2px solid var(--ps-light-gray);
+    }
+
+    @media (max-width: 1024px) {
+      .content-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <img src="ParentSquare_logo_light.png" alt="ParentSquare" class="logo">
+    <div class="breadcrumb">
+      <a href="mockup_portfolio_view.html">← Back to Portfolio</a>
+      <span>/</span>
+      <span>Springfield Unified School District</span>
+    </div>
+    <div class="user-info">
+      <span style="font-weight: 600; color: #666;">Derek McBride</span>
+      <div class="user-avatar">DM</div>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="project-header">
+      <h1 class="project-title">Springfield Unified School District</h1>
+      <div class="project-meta">
+        <div class="meta-item">
+          <div class="meta-label">Deal Amount</div>
+          <div class="meta-value">$45,000</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">Go-Live Date</div>
+          <div class="meta-value">January 15, 2025</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">Days Until Launch</div>
+          <div class="meta-value" style="color: #ffeb3b;">56 days</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">Product Type</div>
+          <div class="meta-value">District + Parent Communication</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">IM Owner</div>
+          <div class="meta-value">Derek McBride</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-grid">
+      <div class="main-content">
+        <!-- Phase Progress -->
+        <div class="card">
+          <h2 class="card-title" style="margin-bottom: 2rem;">Implementation Phase</h2>
+          <div class="phase-stepper">
+            <div class="phase-step completed">
+              <div class="phase-circle">✓</div>
+              <div class="phase-label">Kickoff</div>
+            </div>
+            <div class="phase-step active">
+              <div class="phase-circle">2</div>
+              <div class="phase-label">In Progress</div>
+            </div>
+            <div class="phase-step">
+              <div class="phase-circle">3</div>
+              <div class="phase-label">Launched</div>
+            </div>
+            <div class="phase-step">
+              <div class="phase-circle">4</div>
+              <div class="phase-label">Stabilizing</div>
+            </div>
+            <div class="phase-step">
+              <div class="phase-circle">5</div>
+              <div class="phase-label">Completed</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Milestones -->
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">Milestones</h2>
+            <span style="color: #666; font-size: 0.9rem;">5 of 8 completed</span>
+          </div>
+          <div class="milestone-list">
+            <div class="milestone-item">
+              <div class="milestone-checkbox checked">✓</div>
+              <div class="milestone-content">
+                <div class="milestone-title">Kickoff Meeting Completed</div>
+                <div class="milestone-date">Completed: Oct 15, 2024</div>
+              </div>
+            </div>
+            <div class="milestone-item">
+              <div class="milestone-checkbox checked">✓</div>
+              <div class="milestone-content">
+                <div class="milestone-title">Data Import Validated</div>
+                <div class="milestone-date">Completed: Oct 22, 2024</div>
+              </div>
+            </div>
+            <div class="milestone-item">
+              <div class="milestone-checkbox checked">✓</div>
+              <div class="milestone-content">
+                <div class="milestone-title">Admin Training Scheduled</div>
+                <div class="milestone-date">Completed: Nov 1, 2024</div>
+              </div>
+            </div>
+            <div class="milestone-item">
+              <div class="milestone-checkbox checked">✓</div>
+              <div class="milestone-content">
+                <div class="milestone-title">Staff Training Completed</div>
+                <div class="milestone-date">Completed: Nov 10, 2024</div>
+              </div>
+            </div>
+            <div class="milestone-item">
+              <div class="milestone-checkbox checked">✓</div>
+              <div class="milestone-content">
+                <div class="milestone-title">Parent Communication Sent</div>
+                <div class="milestone-date">Completed: Nov 15, 2024</div>
+              </div>
+            </div>
+            <div class="milestone-item">
+              <div class="milestone-checkbox">☐</div>
+              <div class="milestone-content">
+                <div class="milestone-title">Test Messages Sent</div>
+                <div class="milestone-date">Target: Dec 1, 2024</div>
+              </div>
+            </div>
+            <div class="milestone-item">
+              <div class="milestone-checkbox">☐</div>
+              <div class="milestone-content">
+                <div class="milestone-title">Go-Live Preparation Complete</div>
+                <div class="milestone-date">Target: Jan 10, 2025</div>
+              </div>
+            </div>
+            <div class="milestone-item">
+              <div class="milestone-checkbox">☐</div>
+              <div class="milestone-content">
+                <div class="milestone-title">Go-Live Confirmed</div>
+                <div class="milestone-date">Target: Jan 15, 2025</div>
+              </div>
+            </div>
+          </div>
+          <div class="sync-info">
+            ✓ Synced to HubSpot 2 hours ago
+          </div>
+        </div>
+
+        <!-- Integration Tabs -->
+        <div class="card">
+          <div class="tabs">
+            <button class="tab active">HubSpot Data</button>
+            <button class="tab">Jira CROs (Phase 2)</button>
+            <button class="tab">Support Tickets (Phase 2)</button>
+            <button class="tab">Usage Analytics (Phase 2)</button>
+          </div>
+          <div style="color: #666;">
+            <p style="margin-bottom: 1rem;"><strong>Deal Stage:</strong> Implementation In Progress</p>
+            <p style="margin-bottom: 1rem;"><strong>Close Date:</strong> September 15, 2024</p>
+            <p style="margin-bottom: 1rem;"><strong>Deal Owner:</strong> Sarah Chen (CSM)</p>
+            <p><strong>Last HubSpot Update:</strong> 2 hours ago</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="sidebar">
+        <!-- Health Status -->
+        <div class="card health-card">
+          <div class="card-header">
+            <h2 class="card-title" style="color: #721c24;">Health Status</h2>
+          </div>
+          <div class="health-indicator">
+            <div class="health-icon">⚠️</div>
+            <div class="health-text">
+              <div class="health-status">At Risk (Red)</div>
+              <div class="health-reason">Behind schedule: 2 delayed milestones</div>
+            </div>
+          </div>
+          <button class="btn btn-secondary" style="width: 100%;">Update Health Status</button>
+        </div>
+
+        <!-- Contact Coverage -->
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">Contact Coverage</h2>
+            <span style="color: #ffc107; font-weight: 600;">⚠️ 1 Missing</span>
+          </div>
+          <div class="contact-list">
+            <div class="contact-item">
+              <div class="contact-icon filled">✓</div>
+              <div class="contact-info">
+                <div class="contact-role">District Admin</div>
+                <div class="contact-name">John Smith</div>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-icon filled">✓</div>
+              <div class="contact-info">
+                <div class="contact-role">SIS Owner</div>
+                <div class="contact-name">Maria Garcia</div>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-icon filled">✓</div>
+              <div class="contact-info">
+                <div class="contact-role">Communications Lead</div>
+                <div class="contact-name">Jennifer Lee</div>
+              </div>
+            </div>
+            <div class="contact-item missing">
+              <div class="contact-icon missing">!</div>
+              <div class="contact-info">
+                <div class="contact-role">Technical Admin</div>
+                <div class="contact-name" style="color: #856404; font-weight: 600;">Missing - Action Needed</div>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-icon filled">✓</div>
+              <div class="contact-info">
+                <div class="contact-role">Training Coordinator</div>
+                <div class="contact-name">David Wilson</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="card">
+          <h2 class="card-title" style="margin-bottom: 1.5rem;">Quick Actions</h2>
+          <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+            <button class="btn btn-secondary" style="width: 100%;">Add Note</button>
+            <button class="btn btn-secondary" style="width: 100%;">Schedule Meeting</button>
+            <button class="btn btn-secondary" style="width: 100%;">View in HubSpot →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="action-bar" style="margin-top: 2rem;">
+      <button class="btn btn-primary">💾 Save Changes</button>
+      <button class="btn btn-secondary">🔄 Sync to HubSpot Now</button>
+      <button class="btn btn-secondary">📊 View Reports</button>
+    </div>
+  </div>
+
+  <div class="mockup-banner">
+    📱 Interactive Mockup - Visual representation of Project Detail View
+  </div>
+</body>
+</html>

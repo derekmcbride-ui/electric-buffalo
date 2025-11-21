@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>IM_Dashboard_Executive_Summary</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#implementation-manager-dashboard---executive-summary"
+id="toc-implementation-manager-dashboard---executive-summary">Implementation
+Manager Dashboard - Executive Summary</a>
+<ul>
+<li><a href="#project-overview" id="toc-project-overview">Project
+Overview</a></li>
+<li><a href="#the-problem" id="toc-the-problem">The Problem</a></li>
+<li><a href="#the-solution" id="toc-the-solution">The Solution</a>
+<ul>
+<li><a href="#core-capabilities" id="toc-core-capabilities">Core
+Capabilities</a></li>
+</ul></li>
+<li><a href="#architecture-overview"
+id="toc-architecture-overview">Architecture Overview</a></li>
+<li><a href="#business-impact" id="toc-business-impact">Business
+Impact</a>
+<ul>
+<li><a href="#time-savings" id="toc-time-savings">Time Savings</a></li>
+<li><a href="#financial-impact" id="toc-financial-impact">Financial
+Impact</a></li>
+</ul></li>
+<li><a href="#implementation-roadmap"
+id="toc-implementation-roadmap">Implementation Roadmap</a>
+<ul>
+<li><a href="#phase-1-8-12-weeks---mvp"
+id="toc-phase-1-8-12-weeks---mvp">Phase 1 (8-12 weeks) - MVP</a></li>
+<li><a href="#phase-2-months-4-6" id="toc-phase-2-months-4-6">Phase 2
+(Months 4-6)</a></li>
+<li><a href="#phase-3-months-7-9" id="toc-phase-3-months-7-9">Phase 3
+(Months 7-9)</a></li>
+</ul></li>
+<li><a href="#success-metrics" id="toc-success-metrics">Success
+Metrics</a></li>
+<li><a href="#next-steps" id="toc-next-steps">Next Steps</a></li>
+<li><a href="#recommendation"
+id="toc-recommendation">Recommendation</a></li>
+</ul></li>
+</ul>
+</nav>
+<h1
+id="implementation-manager-dashboard---executive-summary">Implementation
+Manager Dashboard - Executive Summary</h1>
+<h2 id="project-overview">Project Overview</h2>
+<p><strong>Project Title:</strong> Implementation Manager (IM)
+Dashboard</p>
+<p><strong>Brief Description:</strong> A centralized internal
+application serving as the “Implementation Command Console” for
+ParentSquare. Establishes a single source of truth for implementation
+project status, health monitoring, and workflows, integrating with
+HubSpot, Jira, Zendesk, and ParentSquare usage systems. Reduces manual
+work by 75% while improving data quality and visibility across the
+organization.</p>
+<p><strong>Project Lead Name:</strong> Derek McBride</p>
+<p><strong>Project Member Names:</strong> - Aimee Lem - Cody Dacus -
+Robert Smith</p>
+<p><strong>XFN Teams:</strong> - Implementation Manager Team (Primary
+Users) - RevOps/Sales Operations (HubSpot Integration) - Customer
+Success (Secondary Users) - Engineering (Development &amp; Maintenance)
+- Leadership (Strategic Oversight)</p>
+<p><strong>Links to Project Documentation:</strong> - <a
+href="/Users/derek/Claude/IM%20Dashboard/im_dashboard.md">Full Technical
+Specification</a> - <a
+href="/Users/derek/Claude/IM%20Dashboard/Centralized%20Implementation%20Manager%20(IM)%20Dashboard%20and%20HubSpot%20Synchronization.md">Centralized
+IM Dashboard &amp; HubSpot Sync Design</a> - <a
+href="/Users/derek/Claude/IM%20Dashboard/IM%20Hubspot%20API%20Proposal.md">IM
+HubSpot API Proposal</a></p>
+<hr />
+<h2 id="the-problem">The Problem</h2>
+<p>Implementation Managers currently face critical productivity and data
+quality challenges:</p>
+<ul>
+<li><strong>Fragmented data sources</strong> requiring manual
+aggregation from HubSpot, Jira, Zendesk, and product usage systems</li>
+<li><strong>Inconsistent HubSpot data</strong> where deal stages and
+fields don’t reflect actual implementation reality</li>
+<li><strong>Manual synchronization burden</strong> consuming 30-45
+minutes per day per IM, leading to reporting delays and data drift</li>
+<li><strong>Limited visibility</strong> into contact coverage gaps and
+implementation health signals</li>
+<li><strong>No unified workflow</strong> forcing IMs to context-switch
+between multiple systems daily</li>
+</ul>
+<hr />
+<h2 id="the-solution">The Solution</h2>
+<p>The <strong>IM Dashboard</strong> is a centralized, net-new internal
+application that serves as the “Implementation Command Console” for
+ParentSquare. It establishes a <strong>single source of truth</strong>
+for implementation project status, health, and workflows.</p>
+<h3 id="core-capabilities">Core Capabilities</h3>
+<p><strong>For Implementation Managers:</strong> - Manage complete
+portfolio of implementation projects in one interface - Track milestone
+completion with automated HubSpot synchronization - Monitor customer
+health through aggregated signals from multiple systems - Ensure contact
+coverage by validating key stakeholder roles - <strong>Reduce manual
+work by 75%</strong> through automated status updates and intelligent
+workflows</p>
+<p><strong>For CS/Sales Teams:</strong> - Access real-time, reliable
+implementation data in HubSpot - View health status, phase progression,
+and contact coverage without interrupting IMs - Enable better
+forecasting and resource planning</p>
+<p><strong>For Leadership:</strong> - Portfolio-level visibility across
+all implementations - Accurate risk identification and trend analysis -
+Data-driven insights for team capacity planning</p>
+<hr />
+<h2 id="architecture-overview">Architecture Overview</h2>
+<pre><code>┌──────────────────────────────────────────────────────────┐
+│                    IM DASHBOARD                          │
+│              (Single Source of Truth)                    │
+└──────────────────────────────────────────────────────────┘
+                         │
+         ┌───────────────┼───────────────┬──────────────┐
+         ▼               ▼               ▼              ▼
+   ┌─────────┐    ┌──────────┐    ┌─────────┐   ┌──────────┐
+   │HubSpot  │    │   Jira   │    │Zendesk  │   │ParentSq  │
+   │(Primary)│    │  (CROs)  │    │(Support)│   │ (Usage)  │
+   │Bi-dir.  │    │Read-only │    │Read-only│   │Read-only │
+   └─────────┘    └──────────┘    └─────────┘   └──────────┘</code></pre>
+<p><strong>Key Design Decisions:</strong> - Dashboard owns
+implementation phase and health data; HubSpot mirrors it - Bidirectional
+HubSpot sync with conservative stage automation (only 1-2 critical
+transitions in v1) - Multi-system health scoring (Jira tickets, Zendesk
+support, product usage, manual IM input) - Contact coverage validation
+flags gaps without creating records - Extensible architecture ready for
+future AI/ML enhancements</p>
+<hr />
+<h2 id="business-impact">Business Impact</h2>
+<h3 id="time-savings">Time Savings</h3>
+<ul>
+<li><strong>Before:</strong> 30-45 min/day updating HubSpot manually per
+IM</li>
+<li><strong>After:</strong> 5-10 min/day managing projects in
+dashboard</li>
+<li><strong>Result:</strong> 75% reduction in administrative tasks</li>
+</ul>
+<h3 id="financial-impact">Financial Impact</h3>
+<p><strong>Investment:</strong> $150k-$200k Year 1 - Development: 8-12
+weeks (3-4 engineers) - Infrastructure: ~$20k/year - Maintenance: 0.5
+FTE (~$60k/year)</p>
+<p><strong>Annual Value:</strong> $850k-$1.65M - IM time savings:
+$150k/year (15 IMs × 4 hours/week saved) - Improved retention (1-2 fewer
+churns): $500k-$1M/year - Better expansion (2-3 more upsells):
+$200k-$500k/year</p>
+<p><strong>ROI: 467% (conservative estimate)</strong></p>
+<p><strong>Payback Period: 2-3 months</strong></p>
+<hr />
+<h2 id="implementation-roadmap">Implementation Roadmap</h2>
+<h3 id="phase-1-8-12-weeks---mvp">Phase 1 (8-12 weeks) - MVP</h3>
+<ul>
+<li>Core portfolio management and project tracking</li>
+<li>Basic HubSpot bidirectional sync</li>
+<li>Health monitoring with manual override</li>
+<li>Contact coverage validation</li>
+</ul>
+<h3 id="phase-2-months-4-6">Phase 2 (Months 4-6)</h3>
+<ul>
+<li>Jira CRO integration (read-only)</li>
+<li>Zendesk support ticket integration</li>
+<li>ParentSquare usage analytics integration</li>
+<li>Advanced health scoring algorithm</li>
+<li>Automated alerting and notifications</li>
+</ul>
+<h3 id="phase-3-months-7-9">Phase 3 (Months 7-9)</h3>
+<ul>
+<li>Predictive health modeling (AI/ML)</li>
+<li>Advanced analytics and reporting</li>
+<li>Mobile-responsive interface</li>
+<li>Enhanced workflow automation</li>
+</ul>
+<hr />
+<h2 id="success-metrics">Success Metrics</h2>
+<p><strong>Operational Efficiency:</strong> - 75% reduction in manual
+HubSpot update time - 90% on-time milestone tracking - &lt;5% data sync
+errors</p>
+<p><strong>Data Quality:</strong> - 95% HubSpot data accuracy - 100%
+implementation phase visibility - Real-time health status reporting</p>
+<p><strong>Business Outcomes:</strong> - 10% improvement in
+implementation on-time completion (Year 1) - 5% improvement in customer
+retention during implementation - 15% increase in IM capacity (same
+headcount, more implementations)</p>
+<hr />
+<h2 id="next-steps">Next Steps</h2>
+<ol type="1">
+<li><strong>Stakeholder Alignment</strong> - Validate with IM team,
+RevOps/Sales, Engineering, and Leadership</li>
+<li><strong>Technical Validation</strong> - Confirm HubSpot API
+capabilities and integration approach</li>
+<li><strong>Resource Allocation</strong> - Secure 3-4 engineers for 8-12
+week sprint</li>
+<li><strong>Requirements Finalization</strong> - Address open questions
+and finalize v1 scope</li>
+<li><strong>Sprint 0</strong> - Infrastructure setup, HubSpot sandbox,
+and technical design</li>
+</ol>
+<hr />
+<h2 id="recommendation">Recommendation</h2>
+<p>This dashboard is not just a productivity tool—it’s a
+<strong>transformation of how ParentSquare manages implementation
+success</strong>. With a 467% ROI and 2-3 month payback period, this
+represents a high-value investment that will scale with the business and
+provide compounding benefits over time.</p>
+<p><strong>Approval requested to proceed with Phase 1
+development.</strong></p>
+</body>
+</html>

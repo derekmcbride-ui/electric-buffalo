@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IM Dashboard - Project Presentation</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ps-green: #85ad33;
+      --ps-blue: #7bbaf0;
+      --ps-purple: #bc609f;
+      --ps-gold: #f2b001;
+      --ps-light-green: #e5f1d4;
+      --ps-dark-gray: #444444;
+      --ps-light-gray: #f7f8f8;
+      --ps-dark-green: #618025;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+      background: #fafafa;
+      color: #333;
+    }
+
+    .header {
+      background: linear-gradient(135deg, var(--ps-dark-green) 0%, var(--ps-green) 100%);
+      color: white;
+      padding: 3rem 2rem;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .logo-text {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+
+    .subtitle {
+      font-size: 1.2rem;
+      opacity: 0.95;
+      margin-bottom: 0.5rem;
+    }
+
+    .author {
+      font-size: 1rem;
+      opacity: 0.85;
+      margin-top: 1rem;
+    }
+
+    .nav {
+      background: white;
+      border-bottom: 3px solid var(--ps-green);
+      padding: 1rem 2rem;
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+
+    .nav-btn {
+      padding: 0.75rem 1.5rem;
+      background: white;
+      color: var(--ps-dark-gray);
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      font-family: inherit;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 0.95rem;
+    }
+
+    .nav-btn:hover, .nav-btn.active {
+      background: var(--ps-green);
+      color: white;
+      border-color: var(--ps-green);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(133, 173, 51, 0.3);
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .section {
+      display: none;
+      animation: fadeIn 0.3s;
+    }
+
+    .section.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .card {
+      background: white;
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    .card-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--ps-dark-green);
+      margin-bottom: 1rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 2px solid var(--ps-light-gray);
+    }
+
+    .iframe-container {
+      width: 100%;
+      height: 80vh;
+      border: 2px solid var(--ps-light-gray);
+      border-radius: 8px;
+      overflow: hidden;
+      background: white;
+    }
+
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    .download-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-top: 1.5rem;
+    }
+
+    .download-btn {
+      display: inline-block;
+      padding: 0.75rem 1.5rem;
+      background: var(--ps-blue);
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+
+    .download-btn:hover {
+      background: #5a9fd4;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(123, 186, 240, 0.3);
+    }
+
+    .mockup-preview {
+      border: 3px solid var(--ps-green);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+      margin-bottom: 2rem;
+    }
+
+    .info-box {
+      background: var(--ps-light-green);
+      border-left: 4px solid var(--ps-green);
+      padding: 1.5rem;
+      border-radius: 8px;
+      margin: 1.5rem 0;
+    }
+
+    .info-box h3 {
+      color: var(--ps-dark-green);
+      margin-bottom: 0.75rem;
+    }
+
+    .info-box p {
+      color: #666;
+      line-height: 1.6;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin: 2rem 0;
+    }
+
+    .feature-card {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 8px;
+      border-left: 4px solid var(--ps-blue);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+
+    .feature-card h3 {
+      color: var(--ps-dark-green);
+      margin-bottom: 0.75rem;
+      font-size: 1.1rem;
+    }
+
+    .feature-card ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .feature-card li {
+      padding: 0.5rem 0;
+      color: #666;
+      border-bottom: 1px solid var(--ps-light-gray);
+    }
+
+    .feature-card li:last-child {
+      border-bottom: none;
+    }
+
+    .feature-card li::before {
+      content: '✓';
+      color: var(--ps-green);
+      font-weight: 700;
+      margin-right: 0.5rem;
+    }
+
+    .team-info {
+      background: linear-gradient(135deg, var(--ps-light-gray) 0%, white 100%);
+      padding: 2rem;
+      border-radius: 12px;
+      margin: 2rem 0;
+    }
+
+    .team-info h3 {
+      color: var(--ps-dark-green);
+      margin-bottom: 1rem;
+    }
+
+    .team-list {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .team-member {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .team-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: var(--ps-green);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 700;
+      font-size: 1.2rem;
+    }
+
+    .team-name {
+      font-weight: 600;
+      color: var(--ps-dark-gray);
+    }
+
+    .team-role {
+      font-size: 0.85rem;
+      color: #999;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="logo-text">🎯 ParentSquare</div>
+    <h1 style="font-size: 2.5rem; margin-bottom: 1rem;">Implementation Manager Dashboard</h1>
+    <div class="subtitle">Project Presentation & Interactive Mockups</div>
+    <div class="author">Project Lead: Derek McBride • Team: Aimee Lem, Cody Dacus, Robert Smith</div>
+  </div>
+
+  <nav class="nav">
+    <button class="nav-btn active" onclick="showSection('overview')">📋 Overview</button>
+    <button class="nav-btn" onclick="showSection('mockups')">🎨 Interactive Mockups</button>
+    <button class="nav-btn" onclick="showSection('documents')">📄 Documentation</button>
+    <button class="nav-btn" onclick="showSection('next-steps')">🚀 Next Steps</button>
+  </nav>
+
+  <div class="container">
+    <!-- Overview Section -->
+    <section id="overview" class="section active">
+      <div class="card">
+        <h2 class="card-title">Project Overview</h2>
+        <p style="color: #666; line-height: 1.8; margin-bottom: 2rem;">
+          The <strong>IM Dashboard</strong> is a centralized internal application that serves as the "Implementation Command Console" for ParentSquare.
+          It establishes a single source of truth for implementation project status, health monitoring, and workflows, integrating with HubSpot, Jira, Zendesk, and ParentSquare usage systems.
+        </p>
+
+        <div class="info-box">
+          <h3>The Problem</h3>
+          <p>
+            Implementation Managers currently spend <strong>30-45 minutes per day</strong> manually updating HubSpot with implementation status.
+            This leads to fragmented data, reporting delays, and limited visibility into implementation health.
+          </p>
+        </div>
+
+        <div class="info-box" style="background: #e3f2fd; border-left-color: var(--ps-blue);">
+          <h3>The Solution</h3>
+          <p>
+            A purpose-built dashboard that reduces manual work by <strong>75%</strong>, provides real-time health scoring,
+            and automatically syncs with HubSpot. Expected ROI: <strong>467%</strong> with a 2-3 month payback period.
+          </p>
+        </div>
+
+        <div class="grid-2">
+          <div class="feature-card">
+            <h3>Phase 1 (8-12 weeks) - MVP</h3>
+            <ul>
+              <li>Core portfolio management</li>
+              <li>HubSpot bidirectional sync</li>
+              <li>Health monitoring with manual override</li>
+              <li>Contact coverage validation</li>
+            </ul>
+          </div>
+          <div class="feature-card" style="border-left-color: var(--ps-gold);">
+            <h3>Phase 2 (Months 4-6)</h3>
+            <ul>
+              <li>Jira CRO integration (read-only)</li>
+              <li>Zendesk support ticket integration</li>
+              <li>ParentSquare usage analytics</li>
+              <li>Advanced health scoring</li>
+              <li>Automated alerting</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="team-info">
+          <h3>Project Team</h3>
+          <div class="team-list">
+            <div class="team-member">
+              <div class="team-avatar">DM</div>
+              <div>
+                <div class="team-name">Derek McBride</div>
+                <div class="team-role">Project Lead</div>
+              </div>
+            </div>
+            <div class="team-member">
+              <div class="team-avatar">AL</div>
+              <div>
+                <div class="team-name">Aimee Lem</div>
+                <div class="team-role">Team Member</div>
+              </div>
+            </div>
+            <div class="team-member">
+              <div class="team-avatar">CD</div>
+              <div>
+                <div class="team-name">Cody Dacus</div>
+                <div class="team-role">Team Member</div>
+              </div>
+            </div>
+            <div class="team-member">
+              <div class="team-avatar">RS</div>
+              <div>
+                <div class="team-name">Robert Smith</div>
+                <div class="team-role">Team Member</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Mockups Section -->
+    <section id="mockups" class="section">
+      <div class="card">
+        <h2 class="card-title">Interactive Mockups</h2>
+        <p style="color: #666; margin-bottom: 2rem;">
+          Explore the interactive prototypes below. These show the actual user experience with ParentSquare branding.
+        </p>
+
+        <h3 style="color: var(--ps-dark-green); margin: 2rem 0 1rem;">Portfolio View</h3>
+        <p style="color: #666; margin-bottom: 1rem;">Main dashboard showing all implementation projects at a glance.</p>
+        <div class="mockup-preview">
+          <div class="iframe-container">
+            <iframe src="mockup_portfolio_view.html"></iframe>
+          </div>
+        </div>
+        <p style="color: #999; font-size: 0.9rem; margin-bottom: 2rem;">
+          💡 <strong>Tip:</strong> Click on "Springfield Unified School District" in the mockup above to see the Project Detail View
+        </p>
+
+        <h3 style="color: var(--ps-dark-green); margin: 2rem 0 1rem;">Project Detail View</h3>
+        <p style="color: #666; margin-bottom: 1rem;">Detailed view of a single implementation with milestones, health, and contacts.</p>
+        <div class="mockup-preview">
+          <div class="iframe-container">
+            <iframe src="mockup_project_detail.html"></iframe>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Documents Section -->
+    <section id="documents" class="section">
+      <div class="card">
+        <h2 class="card-title">Project Documentation</h2>
+        <p style="color: #666; margin-bottom: 2rem;">
+          Complete documentation package including executive summary, technical specifications, and branding guidelines.
+        </p>
+
+        <h3 style="color: var(--ps-dark-green); margin: 2rem 0 1rem;">📄 Executive Summary</h3>
+        <p style="color: #666; margin-bottom: 1rem;">One-pager with project overview, ROI analysis, and implementation roadmap.</p>
+        <div class="download-links">
+          <a href="IM_Dashboard_Executive_Summary_Branded.html" class="download-btn" target="_blank">
+            🌐 View Branded HTML
+          </a>
+          <a href="IM_Dashboard_Executive_Summary.pptx" class="download-btn" download>
+            📊 Download PowerPoint
+          </a>
+          <a href="IM_Dashboard_Executive_Summary.docx" class="download-btn" download>
+            📝 Download Word Doc
+          </a>
+        </div>
+
+        <h3 style="color: var(--ps-dark-green); margin: 3rem 0 1rem;">📘 Full Technical Specification</h3>
+        <p style="color: #666; margin-bottom: 1rem;">Comprehensive 40+ page spec with architecture diagrams, database schemas, and API design.</p>
+        <div class="download-links">
+          <a href="im_dashboard_branded.html" class="download-btn" target="_blank">
+            🌐 View Branded HTML
+          </a>
+          <a href="im_dashboard.md" class="download-btn" download>
+            📄 Download Markdown
+          </a>
+        </div>
+
+        <h3 style="color: var(--ps-dark-green); margin: 3rem 0 1rem;">🎨 Additional Resources</h3>
+        <div class="download-links">
+          <a href="PowerPoint_Branding_Guide.md" class="download-btn" download>
+            🎨 PowerPoint Branding Guide
+          </a>
+          <a href="Centralized Implementation Manager (IM) Dashboard and HubSpot Synchronization.md" class="download-btn" download>
+            🔄 HubSpot Integration Design
+          </a>
+          <a href="IM Hubspot API Proposal.md" class="download-btn" download>
+            🔌 HubSpot API Proposal
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Next Steps Section -->
+    <section id="next-steps" class="section">
+      <div class="card">
+        <h2 class="card-title">Next Steps & Discussion</h2>
+
+        <div class="info-box">
+          <h3>Monday Team Meeting Agenda</h3>
+          <p style="margin-bottom: 1rem;">
+            This presentation is designed for team alignment and feedback gathering. We want to:
+          </p>
+          <ul style="list-style: none; padding: 0; color: #666;">
+            <li style="padding: 0.5rem 0;">✓ Share the vision and get everyone excited</li>
+            <li style="padding: 0.5rem 0;">✓ Validate assumptions about IM workflows</li>
+            <li style="padding: 0.5rem 0;">✓ Gather input on features and priorities</li>
+            <li style="padding: 0.5rem 0;">✓ Identify concerns and risks early</li>
+            <li style="padding: 0.5rem 0;">✓ Build team ownership of the project</li>
+          </ul>
+        </div>
+
+        <h3 style="color: var(--ps-dark-green); margin: 2rem 0 1rem;">Discussion Topics</h3>
+        <div class="grid-2">
+          <div class="feature-card" style="border-left-color: var(--ps-purple);">
+            <h3>Questions for IMs</h3>
+            <ul style="list-style: none; padding: 0; color: #666;">
+              <li style="padding: 0.5rem 0; border-bottom: 1px solid var(--ps-light-gray);">What are your biggest pain points with current workflow?</li>
+              <li style="padding: 0.5rem 0; border-bottom: 1px solid var(--ps-light-gray);">What features would you use daily?</li>
+              <li style="padding: 0.5rem 0; border-bottom: 1px solid var(--ps-light-gray);">What data is most important to see at a glance?</li>
+              <li style="padding: 0.5rem 0;">Would you use this tool over HubSpot?</li>
+            </ul>
+          </div>
+          <div class="feature-card" style="border-left-color: var(--ps-gold);">
+            <h3>Technical Considerations</h3>
+            <ul style="list-style: none; padding: 0; color: #666;">
+              <li style="padding: 0.5rem 0; border-bottom: 1px solid var(--ps-light-gray);">Do we have HubSpot API expertise?</li>
+              <li style="padding: 0.5rem 0; border-bottom: 1px solid var(--ps-light-gray);">What's our deployment infrastructure?</li>
+              <li style="padding: 0.5rem 0; border-bottom: 1px solid var(--ps-light-gray);">Timeline realistic for our team capacity?</li>
+              <li style="padding: 0.5rem 0;">What risks should we plan for?</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="info-box" style="background: #fff3cd; border-left-color: var(--ps-gold);">
+          <h3>Key Decisions Needed</h3>
+          <p>
+            After Monday's presentation, we'll need alignment on: Phase 1 scope, team capacity commitment,
+            HubSpot integration approach, and pilot timeline. This is an alignment meeting, not an approval meeting.
+          </p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    function showSection(sectionId) {
+      // Hide all sections
+      document.querySelectorAll('.section').forEach(section => {
+        section.classList.remove('active');
+      });
+
+      // Remove active class from all buttons
+      document.querySelectorAll('.nav-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+
+      // Show selected section
+      document.getElementById(sectionId).classList.add('active');
+
+      // Add active class to clicked button
+      event.target.classList.add('active');
+
+      // Scroll to top
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  </script>
+</body>
+</html>

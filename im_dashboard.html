@@ -1,0 +1,2829 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>IM Dashboard - Technical Specification</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">IM Dashboard - Technical Specification</h1>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#implementation-manager-dashboard"
+id="toc-implementation-manager-dashboard">Implementation Manager
+Dashboard</a>
+<ul>
+<li><a href="#visual-architecture-technical-specification"
+id="toc-visual-architecture-technical-specification">Visual Architecture
+&amp; Technical Specification</a></li>
+<li><a href="#executive-overview" id="toc-executive-overview">Executive
+Overview</a>
+<ul>
+<li><a href="#the-problem-it-solves" id="toc-the-problem-it-solves">The
+Problem It Solves</a></li>
+<li><a href="#the-solution" id="toc-the-solution">The Solution</a></li>
+</ul></li>
+<li><a href="#system-architecture" id="toc-system-architecture">System
+Architecture</a>
+<ul>
+<li><a href="#high-level-architecture-diagram"
+id="toc-high-level-architecture-diagram">High-Level Architecture
+Diagram</a></li>
+</ul></li>
+<li><a href="#integration-architecture"
+id="toc-integration-architecture">Integration Architecture</a>
+<ul>
+<li><a href="#hubspot-integration-primary-bidirectional-sync"
+id="toc-hubspot-integration-primary-bidirectional-sync">HubSpot
+Integration (Primary Bidirectional Sync)</a></li>
+</ul></li>
+<li><a href="#data-flow-architecture"
+id="toc-data-flow-architecture">Data Flow Architecture</a>
+<ul>
+<li><a href="#primary-data-flows" id="toc-primary-data-flows">Primary
+Data Flows</a></li>
+</ul></li>
+<li><a href="#component-architecture"
+id="toc-component-architecture">Component Architecture</a>
+<ul>
+<li><a href="#frontend-components" id="toc-frontend-components">Frontend
+Components</a></li>
+<li><a href="#backend-services-architecture"
+id="toc-backend-services-architecture">Backend Services
+Architecture</a></li>
+</ul></li>
+<li><a href="#database-schema" id="toc-database-schema">Database
+Schema</a>
+<ul>
+<li><a href="#core-tables" id="toc-core-tables">Core Tables</a></li>
+</ul></li>
+<li><a href="#technical-stack-recommendations"
+id="toc-technical-stack-recommendations">Technical Stack
+Recommendations</a>
+<ul>
+<li><a href="#frontend-technology-stack"
+id="toc-frontend-technology-stack">Frontend Technology Stack</a></li>
+<li><a href="#backend-technology-stack"
+id="toc-backend-technology-stack">Backend Technology Stack</a></li>
+<li><a href="#database" id="toc-database">Database</a></li>
+<li><a href="#infrastructure-deployment"
+id="toc-infrastructure-deployment">Infrastructure &amp;
+Deployment</a></li>
+<li><a href="#integration-approaches"
+id="toc-integration-approaches">Integration Approaches</a></li>
+</ul></li>
+<li><a href="#phase-1-implementation-roadmap"
+id="toc-phase-1-implementation-roadmap">Phase 1 Implementation
+Roadmap</a></li>
+<li><a href="#key-features-capabilities"
+id="toc-key-features-capabilities">Key Features &amp; Capabilities</a>
+<ul>
+<li><a href="#for-implementation-managers"
+id="toc-for-implementation-managers">For Implementation
+Managers</a></li>
+<li><a href="#for-customer-success-sales"
+id="toc-for-customer-success-sales">For Customer Success &amp;
+Sales</a></li>
+<li><a href="#for-leadership-operations"
+id="toc-for-leadership-operations">For Leadership &amp;
+Operations</a></li>
+</ul></li>
+<li><a href="#technical-considerations-best-practices"
+id="toc-technical-considerations-best-practices">Technical
+Considerations &amp; Best Practices</a>
+<ul>
+<li><a href="#data-consistency-synchronization"
+id="toc-data-consistency-synchronization">Data Consistency &amp;
+Synchronization</a></li>
+<li><a href="#security-compliance" id="toc-security-compliance">Security
+&amp; Compliance</a></li>
+<li><a href="#performance-scalability"
+id="toc-performance-scalability">Performance &amp; Scalability</a></li>
+<li><a href="#monitoring-observability"
+id="toc-monitoring-observability">Monitoring &amp;
+Observability</a></li>
+</ul></li>
+<li><a href="#success-metrics" id="toc-success-metrics">Success
+Metrics</a></li>
+<li><a href="#appendix-alternative-approaches-considered"
+id="toc-appendix-alternative-approaches-considered">Appendix:
+Alternative Approaches Considered</a></li>
+<li><a href="#document-metadata" id="toc-document-metadata">Document
+Metadata</a></li>
+<li><a href="#conclusion" id="toc-conclusion">Conclusion</a></li>
+</ul></li>
+</ul>
+</nav>
+<h1 id="implementation-manager-dashboard">Implementation Manager
+Dashboard</h1>
+<h2 id="visual-architecture-technical-specification">Visual Architecture
+&amp; Technical Specification</h2>
+<hr />
+<h2 id="executive-overview">Executive Overview</h2>
+<p>The <strong>Implementation Manager (IM) Dashboard</strong> is a
+centralized, net-new internal application that serves as the
+“Implementation Command Console” for ParentSquare. It addresses the
+critical challenge of fragmented implementation data and inconsistent
+reporting by establishing a single source of truth for implementation
+project status, health, and workflows.</p>
+<h3 id="the-problem-it-solves">The Problem It Solves</h3>
+<p>Currently, Implementation Managers face: - <strong>Fragmented data
+sources</strong> requiring manual aggregation from HubSpot, internal
+tools, Jira, Zendesk, and product usage systems - <strong>Inconsistent
+HubSpot data</strong> where deal stages and fields don’t reflect actual
+implementation reality - <strong>Manual synchronization burden</strong>
+leading to reporting delays and data drift - <strong>Limited
+visibility</strong> into contact coverage gaps and implementation health
+signals - <strong>No unified workflow</strong> forcing IMs to
+context-switch between multiple systems daily</p>
+<h3 id="the-solution">The Solution</h3>
+<p>The IM Dashboard creates a unified workspace where Implementation
+Managers can:</p>
+<ol type="1">
+<li><strong>Manage their complete portfolio</strong> of implementation
+projects in one interface</li>
+<li><strong>Track milestone completion</strong> and phase progression
+with automated HubSpot synchronization</li>
+<li><strong>Monitor customer health</strong> through aggregated signals
+from multiple systems (Jira tickets, Zendesk support, product usage,
+sentiment data)</li>
+<li><strong>Ensure contact coverage</strong> by validating that key
+stakeholder roles are filled</li>
+<li><strong>Reduce manual work</strong> by 75% through automated status
+updates and intelligent workflows</li>
+<li><strong>Access real-time insights</strong> from ParentSquare product
+usage data, CRO statuses, and support metrics</li>
+</ol>
+<p>The dashboard implements a <strong>hub-and-spoke
+architecture</strong> where it serves as the central hub, orchestrating
+bidirectional data flows with HubSpot (the primary integration), while
+pulling supplementary signals from Jira, Zendesk, and ParentSquare
+analytics systems.</p>
+<hr />
+<h2 id="system-architecture">System Architecture</h2>
+<h3 id="high-level-architecture-diagram">High-Level Architecture
+Diagram</h3>
+<pre><code>┌─────────────────────────────────────────────────────────────────────────────┐
+│                         PRESENTATION LAYER                                   │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│  ┌──────────────────┐  ┌──────────────────┐  ┌──────────────────┐         │
+│  │  Portfolio View  │  │  Project Detail  │  │  Health Monitor  │         │
+│  │                  │  │                  │  │                  │         │
+│  │ • Filter by IM   │  │ • Milestones     │  │ • Risk Alerts    │         │
+│  │ • Health status  │  │ • Timeline       │  │ • Score trends   │         │
+│  │ • Phase filter   │  │ • Contacts       │  │ • Action items   │         │
+│  └──────────────────┘  └──────────────────┘  └──────────────────┘         │
+│                                                                              │
+│  ┌──────────────────┐  ┌──────────────────┐  ┌──────────────────┐         │
+│  │  CRO Tracker     │  │ Support Insights │  │  Usage Analytics │         │
+│  │                  │  │                  │  │                  │         │
+│  │ • Jira tickets   │  │ • Zendesk data   │  │ • Feature usage  │         │
+│  │ • Priority view  │  │ • Ticket volume  │  │ • Engagement     │         │
+│  │ • Status updates │  │ • Response time  │  │ • Completion %   │         │
+│  └──────────────────┘  └──────────────────┘  └──────────────────┘         │
+│                                                                              │
+└─────────────────────────────────────────────────────────────────────────────┘
+                                    │
+                                    ▼
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                        APPLICATION LAYER                                     │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│  ┌──────────────────────────────────────────────────────────────────────┐  │
+│  │                    Core Business Logic Services                       │  │
+│  ├──────────────────────────────────────────────────────────────────────┤  │
+│  │                                                                       │  │
+│  │  ┌─────────────────────┐  ┌──────────────────┐  ┌─────────────────┐ │  │
+│  │  │  Project Service    │  │  Sync Service    │  │  Health Service │ │  │
+│  │  │                     │  │                  │  │                 │ │  │
+│  │  │ • CRUD operations   │  │ • HubSpot sync   │  │ • Score calc    │ │  │
+│  │  │ • Phase management  │  │ • Stage mapping  │  │ • Alert logic   │ │  │
+│  │  │ • Milestone tracking│  │ • Field sync     │  │ • Risk flagging │ │  │
+│  │  └─────────────────────┘  └──────────────────┘  └─────────────────┘ │  │
+│  │                                                                       │  │
+│  │  ┌─────────────────────┐  ┌──────────────────┐  ┌─────────────────┐ │  │
+│  │  │  Contact Service    │  │  Event Service   │  │  Analytics Svc  │ │  │
+│  │  │                     │  │                  │  │                 │ │  │
+│  │  │ • Role validation   │  │ • Webhook mgmt   │  │ • Usage queries │ │  │
+│  │  │ • Coverage checks   │  │ • Event logging  │  │ • Trend analysis│ │  │
+│  │  │ • Gap reporting     │  │ • Audit trail    │  │ • Reporting     │ │  │
+│  │  └─────────────────────┘  └──────────────────┘  └─────────────────┘ │  │
+│  │                                                                       │  │
+│  └───────────────────────────────────────────────────────────────────────┘  │
+│                                                                              │
+└─────────────────────────────────────────────────────────────────────────────┘
+                                    │
+                                    ▼
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                        INTEGRATION LAYER                                     │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│  ┌──────────────────────────────────────────────────────────────────────┐  │
+│  │                      Integration Connectors                           │  │
+│  ├──────────────────────────────────────────────────────────────────────┤  │
+│  │                                                                       │  │
+│  │  ┌─────────────────────┐  ┌──────────────────┐  ┌─────────────────┐ │  │
+│  │  │  HubSpot Connector  │  │  Jira Connector  │  │ Zendesk Conn.   │ │  │
+│  │  │  [PRIMARY]          │  │  [READ-ONLY]     │  │ [READ-ONLY]     │ │  │
+│  │  │                     │  │                  │  │                 │ │  │
+│  │  │ • Deals API         │  │ • CRO tracking   │  │ • Ticket API    │ │  │
+│  │  │ • Contacts API      │  │ • Issue status   │  │ • Support data  │ │  │
+│  │  │ • Properties API    │  │ • Priority data  │  │ • Volume trends │ │  │
+│  │  │ • Webhooks (inbound)│  │                  │  │                 │ │  │
+│  │  │ • Rate limiting     │  │                  │  │                 │ │  │
+│  │  │ • Error handling    │  │                  │  │                 │ │  │
+│  │  │ • Retry logic       │  │                  │  │                 │ │  │
+│  │  └─────────────────────┘  └──────────────────┘  └─────────────────┘ │  │
+│  │                                                                       │  │
+│  │  ┌─────────────────────┐  ┌──────────────────┐  ┌─────────────────┐ │  │
+│  │  │ParentSquare Conn.   │  │ Notification Hub │  │ Future: AI/ML   │ │  │
+│  │  │[READ-ONLY]          │  │                  │  │                 │ │  │
+│  │  │                     │  │ • Slack webhooks │  │ • Predictive    │ │  │
+│  │  │ • Usage analytics   │  │ • Email service  │  │   health scores │ │  │
+│  │  │ • Feature adoption  │  │ • Alert routing  │  │ • Smart alerts  │ │  │
+│  │  │ • Completion data   │  │                  │  │ • Insights      │ │  │
+│  │  └─────────────────────┘  └──────────────────┘  └─────────────────┘ │  │
+│  │                                                                       │  │
+│  └───────────────────────────────────────────────────────────────────────┘  │
+│                                                                              │
+└─────────────────────────────────────────────────────────────────────────────┘
+                                    │
+                                    ▼
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                          DATA LAYER                                          │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│  ┌──────────────────────────────────────────────────────────────────────┐  │
+│  │                    Primary Application Database                       │  │
+│  │                    [SOURCE OF TRUTH]                                  │  │
+│  ├──────────────────────────────────────────────────────────────────────┤  │
+│  │                                                                       │  │
+│  │  Core Tables:                                                         │  │
+│  │  • implementation_projects (master table)                            │  │
+│  │  • milestones                                                         │  │
+│  │  • health_scores (historical tracking)                               │  │
+│  │  • contacts_coverage                                                  │  │
+│  │  • sync_log (audit trail)                                             │  │
+│  │  • integration_cache (external system data)                          │  │
+│  │                                                                       │  │
+│  └───────────────────────────────────────────────────────────────────────┘  │
+│                                                                              │
+│  ┌───────────────────────┐  ┌───────────────────────┐                      │
+│  │   Cache Layer         │  │   Event Queue         │                      │
+│  │   (Redis/Memcached)   │  │   (RabbitMQ/SQS)      │                      │
+│  │                       │  │                       │                      │
+│  │ • API response cache  │  │ • Webhook events      │                      │
+│  │ • Session data        │  │ • Sync jobs           │                      │
+│  │ • Rate limit tracking │  │ • Alert processing    │                      │
+│  └───────────────────────┘  └───────────────────────┘                      │
+│                                                                              │
+└─────────────────────────────────────────────────────────────────────────────┘
+                                    │
+                                    ▼
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                    INFRASTRUCTURE LAYER                                      │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│  ┌──────────────────┐  ┌──────────────────┐  ┌──────────────────┐         │
+│  │  Authentication  │  │    Monitoring    │  │     Logging      │         │
+│  │                  │  │                  │  │                  │         │
+│  │ • SSO/OAuth      │  │ • Health checks  │  │ • Audit logs     │         │
+│  │ • RBAC           │  │ • Performance    │  │ • Error tracking │         │
+│  │ • API keys       │  │ • Alerts         │  │ • Debug traces   │         │
+│  └──────────────────┘  └──────────────────┘  └──────────────────┘         │
+│                                                                              │
+└─────────────────────────────────────────────────────────────────────────────┘</code></pre>
+<hr />
+<h2 id="integration-architecture">Integration Architecture</h2>
+<h3 id="hubspot-integration-primary-bidirectional-sync">HubSpot
+Integration (Primary Bidirectional Sync)</h3>
+<pre><code>┌─────────────────────────────────────────────────────────────────────────────┐
+│                     IM DASHBOARD ↔ HUBSPOT INTEGRATION                      │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+HUBSPOT → IM DASHBOARD (Initial Import &amp; Selective Updates)
+═══════════════════════════════════════════════════════════
+┌──────────────┐                                    ┌─────────────────┐
+│   HubSpot    │────── Webhook Triggers ───────────▶│  IM Dashboard   │
+│              │                                    │                 │
+│  • Deals     │◀──── Poll for New Deals ──────────│  • Listens for: │
+│  • Contacts  │         (scheduled job)            │    - New deals  │
+│  • Properties│                                    │    - Owner chg  │
+└──────────────┘                                    │    - Close date │
+                                                    └─────────────────┘
+
+Data Imported from HubSpot:
+───────────────────────────
+• Deal ID (primary key for sync)
+• Deal Name / Account Name
+• Deal Amount
+• Close Date
+• Deal Stage (read-only reference)
+• Deal Owner → mapped to IM Owner
+• Associated Contacts → for coverage validation
+• Product Type (from custom properties)
+
+
+IM DASHBOARD → HUBSPOT (Continuous Real-Time Sync)
+═══════════════════════════════════════════════════
+┌─────────────────┐         Events          ┌──────────────────┐
+│  IM Dashboard   │                         │   Sync Service   │
+│                 │────────────────────────▶│                  │
+│ IM Updates:     │                         │ Transforms &amp;     │
+│ • Phase change  │                         │ Validates data   │
+│ • Health update │                         │                  │
+│ • Milestone     │                         │ Handles:         │
+│   completion    │                         │ • Rate limiting  │
+│ • Go-live date  │                         │ • Retry logic    │
+│ • Contact gaps  │                         │ • Error recovery │
+└─────────────────┘                         └──────────────────┘
+                                                      │
+                                                      ▼
+                                            ┌──────────────────┐
+                                            │   HubSpot API    │
+                                            │                  │
+                                            │ Updates:         │
+                                            │ • Deal Properties│
+                                            │ • Deal Stage     │
+                                            │   (conditional)  │
+                                            │ • Activity notes │
+                                            └──────────────────┘
+
+
+FIELD MAPPING: IM DASHBOARD → HUBSPOT PROPERTIES
+═════════════════════════════════════════════════
+
+┌─────────────────────────────┬─────────────────────────────┬───────────────┐
+│   IM Dashboard Field        │   HubSpot Custom Property   │   Data Type   │
+├─────────────────────────────┼─────────────────────────────┼───────────────┤
+│ implementation_phase        │ im_phase                    │ Enumeration   │
+│                             │   • Kickoff                 │               │
+│                             │   • In Progress             │               │
+│                             │   • Launched                │               │
+│                             │   • Stabilizing             │               │
+│                             │   • Completed               │               │
+├─────────────────────────────┼─────────────────────────────┼───────────────┤
+│ health_status               │ im_health_status            │ Enumeration   │
+│                             │   • Green                   │               │
+│                             │   • Yellow                  │               │
+│                             │   • Red                     │               │
+├─────────────────────────────┼─────────────────────────────┼───────────────┤
+│ target_go_live_date         │ im_target_go_live_date      │ Date          │
+├─────────────────────────────┼─────────────────────────────┼───────────────┤
+│ last_im_update_timestamp    │ last_im_update_date         │ DateTime      │
+├─────────────────────────────┼─────────────────────────────┼───────────────┤
+│ health_override_reason      │ im_health_reason            │ Text          │
+├─────────────────────────────┼─────────────────────────────┼───────────────┤
+│ days_since_last_update      │ im_days_since_update        │ Number        │
+├─────────────────────────────┼─────────────────────────────┼───────────────┤
+│ contact_coverage_status     │ im_contact_coverage         │ Enumeration   │
+│                             │   • Complete                │               │
+│                             │   • Partial                 │               │
+│                             │   • Incomplete              │               │
+├─────────────────────────────┼─────────────────────────────┼───────────────┤
+│ missing_contact_roles       │ im_missing_roles            │ Text (list)   │
+└─────────────────────────────┴─────────────────────────────┴───────────────┘
+
+
+STAGE PROGRESSION AUTOMATION (Conditional v1)
+══════════════════════════════════════════════
+
+┌─────────────────────────────────────────────────────────────────────────┐
+│  Phase 1: CONSERVATIVE Stage Updates (2-3 key transitions only)        │
+└─────────────────────────────────────────────────────────────────────────┘
+
+Trigger Conditions:
+───────────────────
+IF implementation_phase = &quot;Launched&quot;
+   AND kickoff_complete = true
+   AND go_live_complete = true
+   THEN update HubSpot Deal Stage to &quot;Live&quot; (or agreed equivalent)
+
+IF implementation_phase = &quot;Completed&quot;
+   AND stabilizing_complete = true
+   THEN update HubSpot Deal Stage to &quot;Implemented&quot; (or agreed equivalent)
+
+Safety Rails:
+─────────────
+• Manual override available in dashboard
+• Sync log records all stage changes
+• Rollback capability for incorrect transitions
+• Alert to IM/RevOps team on stage change
+
+
+ACTIVITY LOGGING TO HUBSPOT
+════════════════════════════
+
+Automatically create HubSpot notes/activities when:
+───────────────────────────────────────────────────
+• Health status changes (especially Green → Yellow/Red)
+• Implementation phase advances
+• Milestones marked complete
+• Contact gaps identified
+• Manual status update by IM (with notes)
+
+Note Format:
+────────────
+[IM Dashboard Update - {timestamp}]
+Phase: {phase}
+Health: {health_status}
+IM Notes: {user_notes}
+Updated by: {im_owner_name}</code></pre>
+<hr />
+<h2 id="data-flow-architecture">Data Flow Architecture</h2>
+<h3 id="primary-data-flows">Primary Data Flows</h3>
+<pre><code>┌─────────────────────────────────────────────────────────────────────────────┐
+│                     DATA FLOW: IMPLEMENTATION LIFECYCLE                      │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+1. PROJECT INITIALIZATION
+──────────────────────────
+    ┌──────────────┐
+    │   HubSpot    │  New Deal Created
+    │              │  (Won/Closed-Won)
+    └───────┬──────┘
+            │
+            ▼
+    ┌──────────────┐
+    │   Webhook    │  Trigger: Deal Stage = &quot;Closed Won&quot;
+    │   Listener   │
+    └───────┬──────┘
+            │
+            ▼
+    ┌──────────────────────┐
+    │  IM Dashboard        │  Creates Implementation Project
+    │  Project Service     │  • Imports deal data
+    └───────┬──────────────┘  • Assigns IM owner
+            │                 • Initializes milestones
+            │                 • Sets initial phase = &quot;Kickoff&quot;
+            ▼
+    ┌──────────────────────┐
+    │  Database            │  New record in
+    │  implementation_     │  implementation_projects table
+    │  projects            │
+    └──────────────────────┘
+
+
+2. DAILY IM WORKFLOW
+────────────────────
+    ┌──────────────────────┐
+    │  IM Dashboard UI     │  IM logs in, views portfolio
+    │  Portfolio View      │
+    └───────┬──────────────┘
+            │
+            ▼
+    ┌──────────────────────┐
+    │  Project Detail      │  IM selects project,
+    │  Page                │  sees milestone checklist
+    └───────┬──────────────┘
+            │
+            ▼
+    ┌──────────────────────┐
+    │  IM Actions:         │
+    │  • Checks milestone  │──┐
+    │  • Updates health    │  │
+    │  • Adds notes        │  │
+    │  • Changes phase     │  │
+    └──────────────────────┘  │
+                              │
+            ┌─────────────────┘
+            ▼
+    ┌──────────────────────┐
+    │  Business Logic      │  Validates changes
+    │  Project Service     │  Calculates health score
+    └───────┬──────────────┘  Determines if stage should change
+            │
+            ├────────────┬────────────┐
+            ▼            ▼            ▼
+    ┌──────────┐  ┌──────────┐  ┌──────────┐
+    │ Database │  │   Sync   │  │  Alert   │
+    │  Update  │  │ Service  │  │ Service  │
+    └──────────┘  └─────┬────┘  └─────┬────┘
+                        │             │
+                        ▼             ▼
+                  ┌──────────┐  ┌──────────┐
+                  │ HubSpot  │  │  Slack/  │
+                  │  Update  │  │  Email   │
+                  └──────────┘  └──────────┘
+
+
+3. HEALTH SCORE CALCULATION (Multi-System)
+───────────────────────────────────────────
+    ┌──────────────────────────────────────────────────────────┐
+    │              HEALTH SCORE INPUTS (Weighted)              │
+    └──────────────────────────────────────────────────────────┘
+            │
+            ├─────────────────┬─────────────────┬─────────────────┐
+            ▼                 ▼                 ▼                 ▼
+    ┌──────────────┐  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐
+    │ParentSquare  │  │    Jira      │  │   Zendesk    │  │   Manual     │
+    │   Usage      │  │   CROs       │  │   Tickets    │  │   IM Input   │
+    │              │  │              │  │              │  │              │
+    │ • Login %    │  │ • Open bugs  │  │ • Volume     │  │ • Delays     │
+    │ • Feature    │  │ • Priority   │  │ • Severity   │  │ • Blockers   │
+    │   adoption   │  │ • Age        │  │ • Response   │  │ • Sentiment  │
+    │ • Data load  │  │              │  │   time       │  │              │
+    └──────┬───────┘  └──────┬───────┘  └──────┬───────┘  └──────┬───────┘
+           │                 │                 │                 │
+           └─────────────────┴─────────────────┴─────────────────┘
+                             │
+                             ▼
+                   ┌──────────────────┐
+                   │  Health Service  │  Algorithm:
+                   │                  │  • Weights each signal
+                   │  Calculation:    │  • Applies rules
+                   │  Score = f(...)  │  • Suggests G/Y/R
+                   └─────────┬────────┘
+                             │
+                             ▼
+                   ┌──────────────────┐
+                   │  IM Review &amp;     │  IM can override
+                   │  Override        │  with reason
+                   └─────────┬────────┘
+                             │
+                             ▼
+                   ┌──────────────────┐
+                   │  Final Health    │  Synced to HubSpot
+                   │  Status Set      │  + alerts triggered
+                   └──────────────────┘
+
+
+4. CONTACT COVERAGE VALIDATION
+───────────────────────────────
+    ┌──────────────────────────────────────────────────────────┐
+    │              REQUIRED ROLES (per implementation)          │
+    └──────────────────────────────────────────────────────────┘
+    │  1. District Admin / Executive Sponsor
+    │  2. SIS Owner / Data Lead
+    │  3. Communications / Parent Engagement Lead
+    │  4. Technical Admin / IT Contact
+    │  5. Training Coordinator
+    └──────────────────────────────────────────────────────────┘
+            │
+            ▼
+    ┌──────────────────────┐
+    │  HubSpot Contacts    │  Query associated contacts
+    │  API Query           │  for implementation deal
+    └───────┬──────────────┘
+            │
+            ▼
+    ┌──────────────────────┐
+    │  Contact Service     │  Match contacts to required roles
+    │  Role Mapping        │  based on HubSpot contact properties
+    └───────┬──────────────┘
+            │
+            ├─────────────────┬─────────────────┐
+            ▼                 ▼                 ▼
+    ┌──────────────┐  ┌──────────────┐  ┌──────────────┐
+    │  Coverage    │  │   Gaps       │  │  Dashboard   │
+    │  Complete    │  │  Identified  │  │   Display    │
+    │              │  │              │  │              │
+    │ Green flag   │  │ Red flag +   │  │ • Visual     │
+    │              │  │ List missing │  │   indicator  │
+    │              │  │ roles        │  │ • Action btn │
+    └──────────────┘  └──────┬───────┘  └──────────────┘
+                             │
+                             ▼
+                      ┌──────────────┐
+                      │  Alert to IM │
+                      │  + Task to   │
+                      │  CSM/Sales   │
+                      └──────────────┘</code></pre>
+<hr />
+<h2 id="component-architecture">Component Architecture</h2>
+<h3 id="frontend-components">Frontend Components</h3>
+<pre><code>┌─────────────────────────────────────────────────────────────────────────────┐
+│                         FRONTEND COMPONENT TREE                              │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+App
+├── Authentication
+│   ├── LoginPage
+│   └── AuthProvider (SSO/OAuth integration)
+│
+├── Layout
+│   ├── Header
+│   │   ├── UserProfile
+│   │   ├── Notifications
+│   │   └── QuickSearch
+│   ├── Sidebar Navigation
+│   │   ├── Portfolio
+│   │   ├── Health Monitor
+│   │   ├── Reports
+│   │   └── Settings
+│   └── Footer
+│
+├── Portfolio View ★ (Main Landing Page)
+│   ├── FilterBar
+│   │   ├── IMOwnerFilter (multi-select)
+│   │   ├── PhaseFilter (multi-select)
+│   │   ├── HealthFilter (multi-select)
+│   │   ├── GoLiveDateRangeFilter
+│   │   └── SearchByAccount
+│   │
+│   ├── ProjectsTable
+│   │   ├── TableHeader (sortable columns)
+│   │   └── ProjectRow (foreach project)
+│   │       ├── AccountNameCell (+ link to detail)
+│   │       ├── ProductTypeCell
+│   │       ├── IMOwnerCell
+│   │       ├── PhaseCell (with status badge)
+│   │       ├── HealthCell (G/Y/R icon)
+│   │       ├── GoLiveDateCell
+│   │       ├── DaysSinceUpdateCell
+│   │       └── QuickActionsCell (context menu)
+│   │
+│   └── SummaryStats
+│       ├── TotalProjectsCount
+│       ├── AtRiskCount (Red health)
+│       ├── LaunchingSoonCount (30 days)
+│       └── MyPortfolioCount (current user)
+│
+├── Project Detail View ★
+│   ├── ProjectHeader
+│   │   ├── AccountInfo
+│   │   │   ├── AccountName
+│   │   │   ├── ProductType
+│   │   │   ├── HubSpotDealLink (external)
+│   │   │   └── DealAmount
+│   │   ├── OwnerInfo
+│   │   │   ├── IMOwner
+│   │   │   └── CSMOwner (from HubSpot)
+│   │   └── KeyDates
+│   │       ├── CloseDate
+│   │       ├── TargetGoLive (editable)
+│   │       └── ActualGoLive
+│   │
+│   ├── PhaseProgressBar
+│   │   └── PhaseSteps (visual stepper)
+│   │       ├── Kickoff
+│   │       ├── In Progress
+│   │       ├── Launched
+│   │       ├── Stabilizing
+│   │       └── Completed
+│   │
+│   ├── MilestonesPanel ★
+│   │   ├── MilestoneChecklist
+│   │   │   ├── KickoffMilestone
+│   │   │   │   ├── CheckboxInput
+│   │   │   │   ├── CompletionDate
+│   │   │   │   └── Notes
+│   │   │   ├── DataImportMilestone
+│   │   │   ├── SISIntegrationMilestone
+│   │   │   ├── StaffTrainingMilestone
+│   │   │   ├── SoftLaunchMilestone
+│   │   │   └── GoLiveMilestone
+│   │   └── AutoProgressButton (advances phase when criteria met)
+│   │
+│   ├── HealthPanel ★
+│   │   ├── CurrentHealthDisplay (large visual indicator)
+│   │   ├── SystemSuggestedHealth
+│   │   │   ├── Score breakdown
+│   │   │   └── Contributing factors
+│   │   ├── ManualOverride
+│   │   │   ├── OverrideToggle
+│   │   │   ├── ReasonTextArea (required)
+│   │   │   └── SaveButton
+│   │   ├── HealthHistory (trend chart)
+│   │   └── AlertConfiguration
+│   │
+│   ├── ContactCoveragePanel
+│   │   ├── CoverageStatus (overall indicator)
+│   │   ├── RequiredRolesList
+│   │   │   └── RoleRow (foreach role)
+│   │   │       ├── RoleName
+│   │   │       ├── AssignedContact (from HubSpot)
+│   │   │       ├── StatusIcon (filled/missing)
+│   │   │       └── ActionButton (add contact)
+│   │   └── MissingRolesAlert
+│   │
+│   ├── IntegrationsTabset
+│   │   ├── HubSpotTab
+│   │   │   ├── DealStageDisplay (read-only)
+│   │   │   ├── KeyFieldsSnapshot
+│   │   │   └── SyncStatus
+│   │   ├── ParentSquareTab
+│   │   │   ├── UsageMetrics
+│   │   │   │   ├── LoginRate
+│   │   │   │   ├── FeatureAdoption
+│   │   │   │   └── DataLoadProgress
+│   │   │   └── CompletionCriteria (for milestones)
+│   │   ├── JiraTab (CROs)
+│   │   │   ├── OpenCROsList
+│   │   │   ├── PriorityDistribution
+│   │   │   └── AgingBugs
+│   │   └── ZendeskTab
+│   │       ├── TicketVolume (last 30 days)
+│   │       ├── HighPriorityTickets
+│   │       └── ResponseTimeMetrics
+│   │
+│   ├── TimelinePanel
+│   │   └── ActivityFeed (chronological)
+│   │       ├── PhaseChanges
+│   │       ├── MilestoneCompletions
+│   │       ├── HealthChanges
+│   │       ├── SystemAlerts
+│   │       └── ManualNotes
+│   │
+│   └── ActionBar
+│       ├── SaveButton
+│       ├── SyncNowButton (force sync to HubSpot)
+│       └── MoreActionsMenu
+│
+├── Health Monitor Dashboard
+│   ├── AtRiskProjects (Red health)
+│   ├── WatchlistProjects (Yellow health)
+│   ├── HealthTrendsChart (all projects over time)
+│   └── RecommendedActions (AI-driven suggestions - future)
+│
+├── Reports &amp; Analytics
+│   ├── PhaseDistribution
+│   ├── TimeToLaunchMetrics
+│   ├── HealthScoreDistribution
+│   ├── ContactCoverageReport
+│   └── ExportButton (CSV/PDF)
+│
+└── Settings &amp; Admin
+    ├── UserManagement
+    ├── IntegrationSettings
+    │   ├── HubSpotConfig
+    │   ├── JiraConfig
+    │   ├── ZendeskConfig
+    │   └── ParentSquareConfig
+    ├── MilestoneTemplates
+    ├── AlertRules
+    └── AuditLog</code></pre>
+<h3 id="backend-services-architecture">Backend Services
+Architecture</h3>
+<pre><code>┌─────────────────────────────────────────────────────────────────────────────┐
+│                      BACKEND SERVICES (Microservices Pattern)                │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+API Gateway / Router
+├── Authentication Middleware
+├── Authorization Middleware (RBAC)
+├── Rate Limiting
+├── Request Validation
+└── Error Handling
+
+Core Services
+│
+├── Project Service
+│   ├── Responsibilities:
+│   │   ├── CRUD operations for implementation projects
+│   │   ├── Phase management and transitions
+│   │   ├── Milestone tracking and validation
+│   │   └── Project portfolio queries
+│   ├── Endpoints:
+│   │   ├── GET    /api/projects (list with filters)
+│   │   ├── GET    /api/projects/{id} (detail)
+│   │   ├── POST   /api/projects (create)
+│   │   ├── PATCH  /api/projects/{id} (update)
+│   │   ├── POST   /api/projects/{id}/milestones (mark complete)
+│   │   └── POST   /api/projects/{id}/phase (advance phase)
+│   └── Dependencies:
+│       ├── Database (implementation_projects table)
+│       ├── Sync Service (trigger HubSpot updates)
+│       └── Event Service (log changes)
+│
+├── Health Service
+│   ├── Responsibilities:
+│   │   ├── Calculate health scores from multiple inputs
+│   │   ├── Apply weighting rules and algorithms
+│   │   ├── Track health history over time
+│   │   ├── Generate health alerts
+│   │   └── Support manual overrides with audit trail
+│   ├── Endpoints:
+│   │   ├── GET    /api/health/{project_id} (current status)
+│   │   ├── GET    /api/health/{project_id}/history (trend)
+│   │   ├── POST   /api/health/{project_id}/calculate (refresh)
+│   │   ├── POST   /api/health/{project_id}/override (manual set)
+│   │   └── GET    /api/health/at-risk (query projects)
+│   ├── Health Score Algorithm (v1 simple):
+│   │   ├── Input: Days behind schedule (if target date passed)
+│   │   ├── Input: Open Jira CROs (weighted by priority)
+│   │   ├── Input: Zendesk ticket volume (last 30 days)
+│   │   ├── Input: ParentSquare usage metrics (below threshold)
+│   │   ├── Input: Manual IM flags
+│   │   └── Output: Green (no issues) / Yellow (1-2 flags) / Red (3+ flags)
+│   └── Dependencies:
+│       ├── Jira Connector (CRO data)
+│       ├── Zendesk Connector (ticket data)
+│       ├── ParentSquare Connector (usage data)
+│       └── Database (health_scores table)
+│
+├── Sync Service ★ (Critical Path)
+│   ├── Responsibilities:
+│   │   ├── Bidirectional sync with HubSpot
+│   │   ├── Field mapping and transformation
+│   │   ├── Conditional stage updates
+│   │   ├── Activity/note logging to HubSpot
+│   │   ├── Error handling and retry logic
+│   │   └── Sync audit trail
+│   ├── Endpoints:
+│   │   ├── POST   /api/sync/hubspot/trigger (manual sync)
+│   │   ├── POST   /api/sync/hubspot/import-deal (pull from HubSpot)
+│   │   ├── GET    /api/sync/status/{project_id} (sync history)
+│   │   └── POST   /api/sync/hubspot/webhook (receive HubSpot events)
+│   ├── Sync Rules Engine:
+│   │   ├── Field change detection (diff)
+│   │   ├── Mapping rules (IM field → HubSpot property)
+│   │   ├── Stage progression rules (conditional)
+│   │   ├── Conflict resolution (last-write-wins with timestamp)
+│   │   └── Rollback capability
+│   ├── Background Jobs:
+│   │   ├── Poll new deals (every 15 min)
+│   │   ├── Batch sync stale records (nightly)
+│   │   └── Retry failed syncs (exponential backoff)
+│   └── Dependencies:
+│       ├── HubSpot Connector
+│       ├── Event Queue (async processing)
+│       └── Database (sync_log table)
+│
+├── Contact Service
+│   ├── Responsibilities:
+│   │   ├── Validate contact coverage for required roles
+│   │   ├── Query HubSpot for associated contacts
+│   │   ├── Role mapping and gap detection
+│   │   └── Generate coverage reports
+│   ├── Endpoints:
+│   │   ├── GET    /api/contacts/{project_id}/coverage (summary)
+│   │   ├── GET    /api/contacts/{project_id}/gaps (missing roles)
+│   │   ├── POST   /api/contacts/{project_id}/validate (run check)
+│   │   └── PATCH  /api/contacts/{project_id}/roles (update mapping)
+│   └── Dependencies:
+│       ├── HubSpot Connector (contacts API)
+│       └── Database (contacts_coverage table)
+│
+├── Analytics Service
+│   ├── Responsibilities:
+│   │   ├── Query ParentSquare usage data
+│   │   ├── Aggregate metrics for health scoring
+│   │   ├── Generate reports and dashboards
+│   │   └── Export functionality
+│   ├── Endpoints:
+│   │   ├── GET    /api/analytics/usage/{project_id}
+│   │   ├── GET    /api/analytics/portfolio (aggregates)
+│   │   ├── GET    /api/analytics/reports/{type}
+│   │   └── POST   /api/analytics/export
+│   └── Dependencies:
+│       ├── ParentSquare Connector
+│       └── Database (read replicas for reporting)
+│
+├── Event Service
+│   ├── Responsibilities:
+│   │   ├── Webhook management (inbound from HubSpot)
+│   │   ├── Event logging and audit trail
+│   │   ├── Event-driven workflows
+│   │   └── Activity timeline generation
+│   ├── Endpoints:
+│   │   ├── POST   /api/events/webhook/{source} (receive webhooks)
+│   │   ├── GET    /api/events/{project_id} (activity feed)
+│   │   └── GET    /api/events/audit (admin view)
+│   └── Dependencies:
+│       ├── Event Queue
+│       └── Database (events/audit tables)
+│
+└── Notification Service
+    ├── Responsibilities:
+    │   ├── Send Slack alerts
+    │   ├── Send email notifications
+    │   ├── Alert routing based on rules
+    │   └── Notification preferences management
+    ├── Endpoints:
+    │   ├── POST   /api/notifications/send
+    │   ├── GET    /api/notifications/preferences
+    │   └── PATCH  /api/notifications/preferences
+    └── Dependencies:
+        ├── Slack API
+        ├── Email service (SendGrid/SES)
+        └── Database (notification_preferences)</code></pre>
+<hr />
+<h2 id="database-schema">Database Schema</h2>
+<h3 id="core-tables">Core Tables</h3>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- ============================================================================</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- IMPLEMENTATION PROJECTS (Source of Truth)</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co">-- ============================================================================</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> implementation_projects (</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">id</span>                          UUID <span class="kw">PRIMARY</span> <span class="kw">KEY</span> <span class="kw">DEFAULT</span> gen_random_uuid(),</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="co">-- HubSpot linkage</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    hubspot_deal_id             <span class="dt">VARCHAR</span>(<span class="dv">255</span>) <span class="kw">UNIQUE</span> <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    <span class="co">-- Core identifiers</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    account_name                <span class="dt">VARCHAR</span>(<span class="dv">255</span>) <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    district_org_id             <span class="dt">VARCHAR</span>(<span class="dv">255</span>),  <span class="co">-- ParentSquare internal ID</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    product_type                <span class="dt">VARCHAR</span>(<span class="dv">100</span>) <span class="kw">NOT</span> <span class="kw">NULL</span>,  <span class="co">-- Comms, Remind, SmartSites</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>    <span class="co">-- Ownership</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>    im_owner_id                 UUID <span class="kw">NOT</span> <span class="kw">NULL</span>,  <span class="co">-- FK to users table</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>    im_owner_name               <span class="dt">VARCHAR</span>(<span class="dv">255</span>) <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>    csm_owner_name              <span class="dt">VARCHAR</span>(<span class="dv">255</span>),  <span class="co">-- From HubSpot (read-only)</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>    <span class="co">-- Phase and status (SOURCE OF TRUTH)</span></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>    implementation_phase        <span class="dt">VARCHAR</span>(<span class="dv">50</span>) <span class="kw">NOT</span> <span class="kw">NULL</span></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>                                  <span class="kw">CHECK</span> (implementation_phase <span class="kw">IN</span></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>                                    (<span class="st">&#39;Kickoff&#39;</span>, <span class="st">&#39;In Progress&#39;</span>, <span class="st">&#39;Launched&#39;</span>,</span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>                                     <span class="st">&#39;Stabilizing&#39;</span>, <span class="st">&#39;Completed&#39;</span>)),</span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>    health_status               <span class="dt">VARCHAR</span>(<span class="dv">20</span>) <span class="kw">NOT</span> <span class="kw">NULL</span></span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>                                  <span class="kw">CHECK</span> (health_status <span class="kw">IN</span></span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>                                    (<span class="st">&#39;Green&#39;</span>, <span class="st">&#39;Yellow&#39;</span>, <span class="st">&#39;Red&#39;</span>)),</span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>    health_override             <span class="dt">BOOLEAN</span> <span class="kw">DEFAULT</span> <span class="kw">FALSE</span>,</span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>    health_override_reason      TEXT,</span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>    system_suggested_health     <span class="dt">VARCHAR</span>(<span class="dv">20</span>),  <span class="co">-- Before override</span></span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>    <span class="co">-- Dates</span></span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>    deal_close_date             <span class="dt">DATE</span>,</span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>    target_go_live_date         <span class="dt">DATE</span>,</span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>    actual_go_live_date         <span class="dt">DATE</span>,</span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a>    kickoff_date                <span class="dt">DATE</span>,</span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a>    <span class="co">-- Milestones (v1 boolean flags)</span></span>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a>    milestone_kickoff_complete      <span class="dt">BOOLEAN</span> <span class="kw">DEFAULT</span> <span class="kw">FALSE</span>,</span>
+<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a>    milestone_kickoff_date          <span class="dt">DATE</span>,</span>
+<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a>    milestone_data_import_complete  <span class="dt">BOOLEAN</span> <span class="kw">DEFAULT</span> <span class="kw">FALSE</span>,</span>
+<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a>    milestone_data_import_date      <span class="dt">DATE</span>,</span>
+<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a>    milestone_sis_integration_complete <span class="dt">BOOLEAN</span> <span class="kw">DEFAULT</span> <span class="kw">FALSE</span>,</span>
+<span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a>    milestone_sis_integration_date  <span class="dt">DATE</span>,</span>
+<span id="cb6-45"><a href="#cb6-45" aria-hidden="true" tabindex="-1"></a>    milestone_staff_training_complete <span class="dt">BOOLEAN</span> <span class="kw">DEFAULT</span> <span class="kw">FALSE</span>,</span>
+<span id="cb6-46"><a href="#cb6-46" aria-hidden="true" tabindex="-1"></a>    milestone_staff_training_date   <span class="dt">DATE</span>,</span>
+<span id="cb6-47"><a href="#cb6-47" aria-hidden="true" tabindex="-1"></a>    milestone_soft_launch_complete  <span class="dt">BOOLEAN</span> <span class="kw">DEFAULT</span> <span class="kw">FALSE</span>,</span>
+<span id="cb6-48"><a href="#cb6-48" aria-hidden="true" tabindex="-1"></a>    milestone_soft_launch_date      <span class="dt">DATE</span>,</span>
+<span id="cb6-49"><a href="#cb6-49" aria-hidden="true" tabindex="-1"></a>    milestone_go_live_complete      <span class="dt">BOOLEAN</span> <span class="kw">DEFAULT</span> <span class="kw">FALSE</span>,</span>
+<span id="cb6-50"><a href="#cb6-50" aria-hidden="true" tabindex="-1"></a>    milestone_go_live_date          <span class="dt">DATE</span>,</span>
+<span id="cb6-51"><a href="#cb6-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-52"><a href="#cb6-52" aria-hidden="true" tabindex="-1"></a>    <span class="co">-- HubSpot snapshot (cached, read-only reference)</span></span>
+<span id="cb6-53"><a href="#cb6-53" aria-hidden="true" tabindex="-1"></a>    hubspot_deal_stage          <span class="dt">VARCHAR</span>(<span class="dv">100</span>),</span>
+<span id="cb6-54"><a href="#cb6-54" aria-hidden="true" tabindex="-1"></a>    hubspot_deal_amount         <span class="dt">DECIMAL</span>(<span class="dv">15</span>,<span class="dv">2</span>),</span>
+<span id="cb6-55"><a href="#cb6-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-56"><a href="#cb6-56" aria-hidden="true" tabindex="-1"></a>    <span class="co">-- Tracking</span></span>
+<span id="cb6-57"><a href="#cb6-57" aria-hidden="true" tabindex="-1"></a>    last_im_update_date         <span class="dt">TIMESTAMP</span> <span class="kw">WITH</span> <span class="dt">TIME</span> <span class="dt">ZONE</span>,</span>
+<span id="cb6-58"><a href="#cb6-58" aria-hidden="true" tabindex="-1"></a>    days_since_last_update      <span class="dt">INTEGER</span> <span class="kw">GENERATED</span> ALWAYS <span class="kw">AS</span></span>
+<span id="cb6-59"><a href="#cb6-59" aria-hidden="true" tabindex="-1"></a>                                  (<span class="fu">EXTRACT</span>(<span class="dt">DAY</span> <span class="kw">FROM</span> NOW() <span class="op">-</span> last_im_update_date)) STORED,</span>
+<span id="cb6-60"><a href="#cb6-60" aria-hidden="true" tabindex="-1"></a>    status_notes                TEXT,</span>
+<span id="cb6-61"><a href="#cb6-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-62"><a href="#cb6-62" aria-hidden="true" tabindex="-1"></a>    <span class="co">-- Audit</span></span>
+<span id="cb6-63"><a href="#cb6-63" aria-hidden="true" tabindex="-1"></a>    created_at                  <span class="dt">TIMESTAMP</span> <span class="kw">WITH</span> <span class="dt">TIME</span> <span class="dt">ZONE</span> <span class="kw">DEFAULT</span> NOW(),</span>
+<span id="cb6-64"><a href="#cb6-64" aria-hidden="true" tabindex="-1"></a>    updated_at                  <span class="dt">TIMESTAMP</span> <span class="kw">WITH</span> <span class="dt">TIME</span> <span class="dt">ZONE</span> <span class="kw">DEFAULT</span> NOW(),</span>
+<span id="cb6-65"><a href="#cb6-65" aria-hidden="true" tabindex="-1"></a>    created_by                  UUID,</span>
+<span id="cb6-66"><a href="#cb6-66" aria-hidden="true" tabindex="-1"></a>    updated_by                  UUID,</span>
+<span id="cb6-67"><a href="#cb6-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-68"><a href="#cb6-68" aria-hidden="true" tabindex="-1"></a>    <span class="co">-- Indexes</span></span>
+<span id="cb6-69"><a href="#cb6-69" aria-hidden="true" tabindex="-1"></a>    <span class="kw">INDEX</span> idx_im_owner (im_owner_id),</span>
+<span id="cb6-70"><a href="#cb6-70" aria-hidden="true" tabindex="-1"></a>    <span class="kw">INDEX</span> idx_phase (implementation_phase),</span>
+<span id="cb6-71"><a href="#cb6-71" aria-hidden="true" tabindex="-1"></a>    <span class="kw">INDEX</span> idx_health (health_status),</span>
+<span id="cb6-72"><a href="#cb6-72" aria-hidden="true" tabindex="-1"></a>    <span class="kw">INDEX</span> idx_go_live_date (target_go_live_date),</span>
+<span id="cb6-73"><a href="#cb6-73" aria-hidden="true" tabindex="-1"></a>    <span class="kw">INDEX</span> idx_hubspot_deal (hubspot_deal_id)</span>
+<span id="cb6-74"><a href="#cb6-74" aria-hidden="true" tabindex="-1"></a>);</span>
+<span id="cb6-75"><a href="#cb6-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-76"><a href="#cb6-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-77"><a href="#cb6-77" aria-hidden="true" tabindex="-1"></a><span class="co">-- ============================================================================</span></span>
+<span id="cb6-78"><a href="#cb6-78" aria-hidden="true" tabindex="-1"></a><span class="co">-- HEALTH SCORES (Historical tracking)</span></span>
+<span id="cb6-79"><a href="#cb6-79" aria-hidden="true" tabindex="-1"></a><span class="co">-- ============================================================================</span></span>
+<span id="cb6-80"><a href="#cb6-80" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> health_scores (</span>
+<span id="cb6-81"><a href="#cb6-81" aria-hidden="true" tabindex="-1"></a>    <span class="kw">id</span>                          UUID <span class="kw">PRIMARY</span> <span class="kw">KEY</span> <span class="kw">DEFAULT</span> gen_random_uuid(),</span>
+<span id="cb6-82"><a href="#cb6-82" aria-hidden="true" tabindex="-1"></a>    project_id                  UUID <span class="kw">NOT</span> <span class="kw">NULL</span> <span class="kw">REFERENCES</span> implementation_projects(<span class="kw">id</span>) <span class="kw">ON</span> <span class="kw">DELETE</span> <span class="kw">CASCADE</span>,</span>
+<span id="cb6-83"><a href="#cb6-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-84"><a href="#cb6-84" aria-hidden="true" tabindex="-1"></a>    <span class="co">-- Score calculation</span></span>
+<span id="cb6-85"><a href="#cb6-85" aria-hidden="true" tabindex="-1"></a>    calculated_health           <span class="dt">VARCHAR</span>(<span class="dv">20</span>) <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb6-86"><a href="#cb6-86" aria-hidden="true" tabindex="-1"></a>    score_components            JSONB,  <span class="co">-- Breakdown of contributing factors</span></span>
+<span id="cb6-87"><a href="#cb6-87" aria-hidden="true" tabindex="-1"></a>    <span class="co">/*</span></span>
+<span id="cb6-88"><a href="#cb6-88" aria-hidden="true" tabindex="-1"></a><span class="co">    Example score_components:</span></span>
+<span id="cb6-89"><a href="#cb6-89" aria-hidden="true" tabindex="-1"></a><span class="co">    {</span></span>
+<span id="cb6-90"><a href="#cb6-90" aria-hidden="true" tabindex="-1"></a><span class="co">      &quot;days_behind_schedule&quot;: 5,</span></span>
+<span id="cb6-91"><a href="#cb6-91" aria-hidden="true" tabindex="-1"></a><span class="co">      &quot;open_critical_cros&quot;: 2,</span></span>
+<span id="cb6-92"><a href="#cb6-92" aria-hidden="true" tabindex="-1"></a><span class="co">      &quot;ticket_volume_high&quot;: true,</span></span>
+<span id="cb6-93"><a href="#cb6-93" aria-hidden="true" tabindex="-1"></a><span class="co">      &quot;usage_below_threshold&quot;: false,</span></span>
+<span id="cb6-94"><a href="#cb6-94" aria-hidden="true" tabindex="-1"></a><span class="co">      &quot;manual_flag&quot;: true</span></span>
+<span id="cb6-95"><a href="#cb6-95" aria-hidden="true" tabindex="-1"></a><span class="co">    }</span></span>
+<span id="cb6-96"><a href="#cb6-96" aria-hidden="true" tabindex="-1"></a><span class="co">    */</span></span>
+<span id="cb6-97"><a href="#cb6-97" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-98"><a href="#cb6-98" aria-hidden="true" tabindex="-1"></a>    <span class="co">-- Inputs snapshot (for historical analysis)</span></span>
+<span id="cb6-99"><a href="#cb6-99" aria-hidden="true" tabindex="-1"></a>    jira_open_cros              <span class="dt">INTEGER</span>,</span>
+<span id="cb6-100"><a href="#cb6-100" aria-hidden="true" tabindex="-1"></a>    jira_critical_cros          <span class="dt">INTEGER</span>,</span>
+<span id="cb6-101"><a href="#cb6-101" aria-hidden="true" tabindex="-1"></a>    zendesk_tickets_30d         <span class="dt">INTEGER</span>,</span>
+<span id="cb6-102"><a href="#cb6-102" aria-hidden="true" tabindex="-1"></a>    zendesk_high_priority       <span class="dt">INTEGER</span>,</span>
+<span id="cb6-103"><a href="#cb6-103" aria-hidden="true" tabindex="-1"></a>    parentsquare_login_rate     <span class="dt">DECIMAL</span>(<span class="dv">5</span>,<span class="dv">2</span>),  <span class="co">-- percentage</span></span>
+<span id="cb6-104"><a href="#cb6-104" aria-hidden="true" tabindex="-1"></a>    parentsquare_feature_adoption <span class="dt">DECIMAL</span>(<span class="dv">5</span>,<span class="dv">2</span>),</span>
+<span id="cb6-105"><a href="#cb6-105" aria-hidden="true" tabindex="-1"></a>    days_behind_schedule        <span class="dt">INTEGER</span>,</span>
+<span id="cb6-106"><a href="#cb6-106" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-107"><a href="#cb6-107" aria-hidden="true" tabindex="-1"></a>    <span class="co">-- Metadata</span></span>
+<span id="cb6-108"><a href="#cb6-108" aria-hidden="true" tabindex="-1"></a>    calculated_at               <span class="dt">TIMESTAMP</span> <span class="kw">WITH</span> <span class="dt">TIME</span> <span class="dt">ZONE</span> <span class="kw">DEFAULT</span> NOW(),</span>
+<span id="cb6-109"><a href="#cb6-109" aria-hidden="true" tabindex="-1"></a>    calculation_version         <span class="dt">VARCHAR</span>(<span class="dv">20</span>),  <span class="co">-- Algorithm version for audit</span></span>
+<span id="cb6-110"><a href="#cb6-110" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-111"><a href="#cb6-111" aria-hidden="true" tabindex="-1"></a>    <span class="kw">INDEX</span> idx_project (project_id),</span>
+<span id="cb6-112"><a href="#cb6-112" aria-hidden="true" tabindex="-1"></a>    <span class="kw">INDEX</span> idx_calculated_at (calculated_at)</span>
+<span id="cb6-113"><a href="#cb6-113" aria-hidden="true" tabindex="-1"></a>);</span>
+<span id="cb6-114"><a href="#cb6-114" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-115"><a href="#cb6-115" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-116"><a href="#cb6-116" aria-hidden="true" tabindex="-1"></a><span class="co">-- ============================================================================</span></span>
+<span id="cb6-117"><a href="#cb6-117" aria-hidden="true" tabindex="-1"></a><span class="co">-- CONTACTS COVERAGE</span></span>
+<span id="cb6-118"><a href="#cb6-118" aria-hidden="true" tabindex="-1"></a><span class="co">-- ============================================================================</span></span>
+<span id="cb6-119"><a href="#cb6-119" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> contacts_coverage (</span>
+<span id="cb6-120"><a href="#cb6-120" aria-hidden="true" tabindex="-1"></a>    <span class="kw">id</span>                          UUID <span class="kw">PRIMARY</span> <span class="kw">KEY</span> <span class="kw">DEFAULT</span> gen_random_uuid(),</span>
+<span id="cb6-121"><a href="#cb6-121" aria-hidden="true" tabindex="-1"></a>    project_id                  UUID <span class="kw">NOT</span> <span class="kw">NULL</span> <span class="kw">REFERENCES</span> implementation_projects(<span class="kw">id</span>) <span class="kw">ON</span> <span class="kw">DELETE</span> <span class="kw">CASCADE</span>,</span>
+<span id="cb6-122"><a href="#cb6-122" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-123"><a href="#cb6-123" aria-hidden="true" tabindex="-1"></a>    <span class="co">-- Required role</span></span>
+<span id="cb6-124"><a href="#cb6-124" aria-hidden="true" tabindex="-1"></a>    role_name                   <span class="dt">VARCHAR</span>(<span class="dv">100</span>) <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb6-125"><a href="#cb6-125" aria-hidden="true" tabindex="-1"></a>    <span class="co">/*</span></span>
+<span id="cb6-126"><a href="#cb6-126" aria-hidden="true" tabindex="-1"></a><span class="co">      Standard roles:</span></span>
+<span id="cb6-127"><a href="#cb6-127" aria-hidden="true" tabindex="-1"></a><span class="co">      - District Admin / Executive Sponsor</span></span>
+<span id="cb6-128"><a href="#cb6-128" aria-hidden="true" tabindex="-1"></a><span class="co">      - SIS Owner / Data Lead</span></span>
+<span id="cb6-129"><a href="#cb6-129" aria-hidden="true" tabindex="-1"></a><span class="co">      - Communications / Parent Engagement Lead</span></span>
+<span id="cb6-130"><a href="#cb6-130" aria-hidden="true" tabindex="-1"></a><span class="co">      - Technical Admin / IT Contact</span></span>
+<span id="cb6-131"><a href="#cb6-131" aria-hidden="true" tabindex="-1"></a><span class="co">      - Training Coordinator</span></span>
+<span id="cb6-132"><a href="#cb6-132" aria-hidden="true" tabindex="-1"></a><span class="co">    */</span></span>
+<span id="cb6-133"><a href="#cb6-133" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-134"><a href="#cb6-134" aria-hidden="true" tabindex="-1"></a>    <span class="co">-- Contact info (from HubSpot)</span></span>
+<span id="cb6-135"><a href="#cb6-135" aria-hidden="true" tabindex="-1"></a>    hubspot_contact_id          <span class="dt">VARCHAR</span>(<span class="dv">255</span>),</span>
+<span id="cb6-136"><a href="#cb6-136" aria-hidden="true" tabindex="-1"></a>    contact_name                <span class="dt">VARCHAR</span>(<span class="dv">255</span>),</span>
+<span id="cb6-137"><a href="#cb6-137" aria-hidden="true" tabindex="-1"></a>    contact_email               <span class="dt">VARCHAR</span>(<span class="dv">255</span>),</span>
+<span id="cb6-138"><a href="#cb6-138" aria-hidden="true" tabindex="-1"></a>    contact_phone               <span class="dt">VARCHAR</span>(<span class="dv">50</span>),</span>
+<span id="cb6-139"><a href="#cb6-139" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-140"><a href="#cb6-140" aria-hidden="true" tabindex="-1"></a>    <span class="co">-- Status</span></span>
+<span id="cb6-141"><a href="#cb6-141" aria-hidden="true" tabindex="-1"></a>    is_filled                   <span class="dt">BOOLEAN</span> <span class="kw">DEFAULT</span> <span class="kw">FALSE</span>,</span>
+<span id="cb6-142"><a href="#cb6-142" aria-hidden="true" tabindex="-1"></a>    identified_date             <span class="dt">TIMESTAMP</span> <span class="kw">WITH</span> <span class="dt">TIME</span> <span class="dt">ZONE</span>,</span>
+<span id="cb6-143"><a href="#cb6-143" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-144"><a href="#cb6-144" aria-hidden="true" tabindex="-1"></a>    <span class="co">-- Audit</span></span>
+<span id="cb6-145"><a href="#cb6-145" aria-hidden="true" tabindex="-1"></a>    created_at                  <span class="dt">TIMESTAMP</span> <span class="kw">WITH</span> <span class="dt">TIME</span> <span class="dt">ZONE</span> <span class="kw">DEFAULT</span> NOW(),</span>
+<span id="cb6-146"><a href="#cb6-146" aria-hidden="true" tabindex="-1"></a>    updated_at                  <span class="dt">TIMESTAMP</span> <span class="kw">WITH</span> <span class="dt">TIME</span> <span class="dt">ZONE</span> <span class="kw">DEFAULT</span> NOW(),</span>
+<span id="cb6-147"><a href="#cb6-147" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-148"><a href="#cb6-148" aria-hidden="true" tabindex="-1"></a>    <span class="kw">UNIQUE</span>(project_id, role_name),</span>
+<span id="cb6-149"><a href="#cb6-149" aria-hidden="true" tabindex="-1"></a>    <span class="kw">INDEX</span> idx_project (project_id),</span>
+<span id="cb6-150"><a href="#cb6-150" aria-hidden="true" tabindex="-1"></a>    <span class="kw">INDEX</span> idx_filled (is_filled)</span>
+<span id="cb6-151"><a href="#cb6-151" aria-hidden="true" tabindex="-1"></a>);</span>
+<span id="cb6-152"><a href="#cb6-152" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-153"><a href="#cb6-153" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-154"><a href="#cb6-154" aria-hidden="true" tabindex="-1"></a><span class="co">-- ============================================================================</span></span>
+<span id="cb6-155"><a href="#cb6-155" aria-hidden="true" tabindex="-1"></a><span class="co">-- SYNC LOG (Audit trail for HubSpot synchronization)</span></span>
+<span id="cb6-156"><a href="#cb6-156" aria-hidden="true" tabindex="-1"></a><span class="co">-- ============================================================================</span></span>
+<span id="cb6-157"><a href="#cb6-157" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> sync_log (</span>
+<span id="cb6-158"><a href="#cb6-158" aria-hidden="true" tabindex="-1"></a>    <span class="kw">id</span>                          UUID <span class="kw">PRIMARY</span> <span class="kw">KEY</span> <span class="kw">DEFAULT</span> gen_random_uuid(),</span>
+<span id="cb6-159"><a href="#cb6-159" aria-hidden="true" tabindex="-1"></a>    project_id                  UUID <span class="kw">REFERENCES</span> implementation_projects(<span class="kw">id</span>) <span class="kw">ON</span> <span class="kw">DELETE</span> <span class="kw">SET</span> <span class="kw">NULL</span>,</span>
+<span id="cb6-160"><a href="#cb6-160" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-161"><a href="#cb6-161" aria-hidden="true" tabindex="-1"></a>    <span class="co">-- Sync metadata</span></span>
+<span id="cb6-162"><a href="#cb6-162" aria-hidden="true" tabindex="-1"></a>    sync_direction              <span class="dt">VARCHAR</span>(<span class="dv">20</span>) <span class="kw">NOT</span> <span class="kw">NULL</span></span>
+<span id="cb6-163"><a href="#cb6-163" aria-hidden="true" tabindex="-1"></a>                                  <span class="kw">CHECK</span> (sync_direction <span class="kw">IN</span> (<span class="st">&#39;TO_HUBSPOT&#39;</span>, <span class="st">&#39;FROM_HUBSPOT&#39;</span>)),</span>
+<span id="cb6-164"><a href="#cb6-164" aria-hidden="true" tabindex="-1"></a>    sync_type                   <span class="dt">VARCHAR</span>(<span class="dv">50</span>) <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb6-165"><a href="#cb6-165" aria-hidden="true" tabindex="-1"></a>                                  <span class="co">-- &#39;FIELD_UPDATE&#39;, &#39;STAGE_CHANGE&#39;, &#39;ACTIVITY_LOG&#39;, &#39;INITIAL_IMPORT&#39;</span></span>
+<span id="cb6-166"><a href="#cb6-166" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-167"><a href="#cb6-167" aria-hidden="true" tabindex="-1"></a>    <span class="co">-- What changed</span></span>
+<span id="cb6-168"><a href="#cb6-168" aria-hidden="true" tabindex="-1"></a>    fields_changed              JSONB,  <span class="co">-- List of fields that were updated</span></span>
+<span id="cb6-169"><a href="#cb6-169" aria-hidden="true" tabindex="-1"></a>    old_values                  JSONB,  <span class="co">-- Before state</span></span>
+<span id="cb6-170"><a href="#cb6-170" aria-hidden="true" tabindex="-1"></a>    new_values                  JSONB,  <span class="co">-- After state</span></span>
+<span id="cb6-171"><a href="#cb6-171" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-172"><a href="#cb6-172" aria-hidden="true" tabindex="-1"></a>    <span class="co">-- HubSpot specifics</span></span>
+<span id="cb6-173"><a href="#cb6-173" aria-hidden="true" tabindex="-1"></a>    hubspot_deal_id             <span class="dt">VARCHAR</span>(<span class="dv">255</span>),</span>
+<span id="cb6-174"><a href="#cb6-174" aria-hidden="true" tabindex="-1"></a>    hubspot_api_response        JSONB,  <span class="co">-- Full API response for debugging</span></span>
+<span id="cb6-175"><a href="#cb6-175" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-176"><a href="#cb6-176" aria-hidden="true" tabindex="-1"></a>    <span class="co">-- Result</span></span>
+<span id="cb6-177"><a href="#cb6-177" aria-hidden="true" tabindex="-1"></a>    status                      <span class="dt">VARCHAR</span>(<span class="dv">20</span>) <span class="kw">NOT</span> <span class="kw">NULL</span></span>
+<span id="cb6-178"><a href="#cb6-178" aria-hidden="true" tabindex="-1"></a>                                  <span class="kw">CHECK</span> (status <span class="kw">IN</span> (<span class="st">&#39;SUCCESS&#39;</span>, <span class="st">&#39;FAILED&#39;</span>, <span class="st">&#39;RETRYING&#39;</span>, <span class="st">&#39;SKIPPED&#39;</span>)),</span>
+<span id="cb6-179"><a href="#cb6-179" aria-hidden="true" tabindex="-1"></a>    error_message               TEXT,</span>
+<span id="cb6-180"><a href="#cb6-180" aria-hidden="true" tabindex="-1"></a>    retry_count                 <span class="dt">INTEGER</span> <span class="kw">DEFAULT</span> <span class="dv">0</span>,</span>
+<span id="cb6-181"><a href="#cb6-181" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-182"><a href="#cb6-182" aria-hidden="true" tabindex="-1"></a>    <span class="co">-- Timing</span></span>
+<span id="cb6-183"><a href="#cb6-183" aria-hidden="true" tabindex="-1"></a>    synced_at                   <span class="dt">TIMESTAMP</span> <span class="kw">WITH</span> <span class="dt">TIME</span> <span class="dt">ZONE</span> <span class="kw">DEFAULT</span> NOW(),</span>
+<span id="cb6-184"><a href="#cb6-184" aria-hidden="true" tabindex="-1"></a>    duration_ms                 <span class="dt">INTEGER</span>,</span>
+<span id="cb6-185"><a href="#cb6-185" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-186"><a href="#cb6-186" aria-hidden="true" tabindex="-1"></a>    <span class="kw">INDEX</span> idx_project (project_id),</span>
+<span id="cb6-187"><a href="#cb6-187" aria-hidden="true" tabindex="-1"></a>    <span class="kw">INDEX</span> idx_status (status),</span>
+<span id="cb6-188"><a href="#cb6-188" aria-hidden="true" tabindex="-1"></a>    <span class="kw">INDEX</span> idx_synced_at (synced_at),</span>
+<span id="cb6-189"><a href="#cb6-189" aria-hidden="true" tabindex="-1"></a>    <span class="kw">INDEX</span> idx_hubspot_deal (hubspot_deal_id)</span>
+<span id="cb6-190"><a href="#cb6-190" aria-hidden="true" tabindex="-1"></a>);</span>
+<span id="cb6-191"><a href="#cb6-191" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-192"><a href="#cb6-192" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-193"><a href="#cb6-193" aria-hidden="true" tabindex="-1"></a><span class="co">-- ============================================================================</span></span>
+<span id="cb6-194"><a href="#cb6-194" aria-hidden="true" tabindex="-1"></a><span class="co">-- EVENTS / ACTIVITY FEED</span></span>
+<span id="cb6-195"><a href="#cb6-195" aria-hidden="true" tabindex="-1"></a><span class="co">-- ============================================================================</span></span>
+<span id="cb6-196"><a href="#cb6-196" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> <span class="kw">events</span> (</span>
+<span id="cb6-197"><a href="#cb6-197" aria-hidden="true" tabindex="-1"></a>    <span class="kw">id</span>                          UUID <span class="kw">PRIMARY</span> <span class="kw">KEY</span> <span class="kw">DEFAULT</span> gen_random_uuid(),</span>
+<span id="cb6-198"><a href="#cb6-198" aria-hidden="true" tabindex="-1"></a>    project_id                  UUID <span class="kw">REFERENCES</span> implementation_projects(<span class="kw">id</span>) <span class="kw">ON</span> <span class="kw">DELETE</span> <span class="kw">CASCADE</span>,</span>
+<span id="cb6-199"><a href="#cb6-199" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-200"><a href="#cb6-200" aria-hidden="true" tabindex="-1"></a>    <span class="co">-- Event details</span></span>
+<span id="cb6-201"><a href="#cb6-201" aria-hidden="true" tabindex="-1"></a>    event_type                  <span class="dt">VARCHAR</span>(<span class="dv">100</span>) <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb6-202"><a href="#cb6-202" aria-hidden="true" tabindex="-1"></a>    <span class="co">/*</span></span>
+<span id="cb6-203"><a href="#cb6-203" aria-hidden="true" tabindex="-1"></a><span class="co">      Event types:</span></span>
+<span id="cb6-204"><a href="#cb6-204" aria-hidden="true" tabindex="-1"></a><span class="co">      - PROJECT_CREATED</span></span>
+<span id="cb6-205"><a href="#cb6-205" aria-hidden="true" tabindex="-1"></a><span class="co">      - PHASE_CHANGED</span></span>
+<span id="cb6-206"><a href="#cb6-206" aria-hidden="true" tabindex="-1"></a><span class="co">      - MILESTONE_COMPLETED</span></span>
+<span id="cb6-207"><a href="#cb6-207" aria-hidden="true" tabindex="-1"></a><span class="co">      - HEALTH_CHANGED</span></span>
+<span id="cb6-208"><a href="#cb6-208" aria-hidden="true" tabindex="-1"></a><span class="co">      - HEALTH_OVERRIDDEN</span></span>
+<span id="cb6-209"><a href="#cb6-209" aria-hidden="true" tabindex="-1"></a><span class="co">      - CONTACT_GAP_IDENTIFIED</span></span>
+<span id="cb6-210"><a href="#cb6-210" aria-hidden="true" tabindex="-1"></a><span class="co">      - SYNC_COMPLETED</span></span>
+<span id="cb6-211"><a href="#cb6-211" aria-hidden="true" tabindex="-1"></a><span class="co">      - MANUAL_NOTE_ADDED</span></span>
+<span id="cb6-212"><a href="#cb6-212" aria-hidden="true" tabindex="-1"></a><span class="co">    */</span></span>
+<span id="cb6-213"><a href="#cb6-213" aria-hidden="true" tabindex="-1"></a>    event_source                <span class="dt">VARCHAR</span>(<span class="dv">50</span>),  <span class="co">-- &#39;USER&#39;, &#39;SYSTEM&#39;, &#39;WEBHOOK&#39;, &#39;SCHEDULED_JOB&#39;</span></span>
+<span id="cb6-214"><a href="#cb6-214" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-215"><a href="#cb6-215" aria-hidden="true" tabindex="-1"></a>    <span class="co">-- Event data</span></span>
+<span id="cb6-216"><a href="#cb6-216" aria-hidden="true" tabindex="-1"></a>    event_data                  JSONB,  <span class="co">-- Flexible payload</span></span>
+<span id="cb6-217"><a href="#cb6-217" aria-hidden="true" tabindex="-1"></a>    <span class="kw">summary</span>                     TEXT,   <span class="co">-- Human-readable description</span></span>
+<span id="cb6-218"><a href="#cb6-218" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-219"><a href="#cb6-219" aria-hidden="true" tabindex="-1"></a>    <span class="co">-- Actor</span></span>
+<span id="cb6-220"><a href="#cb6-220" aria-hidden="true" tabindex="-1"></a>    user_id                     UUID,  <span class="co">-- FK to users table (if user-triggered)</span></span>
+<span id="cb6-221"><a href="#cb6-221" aria-hidden="true" tabindex="-1"></a>    user_name                   <span class="dt">VARCHAR</span>(<span class="dv">255</span>),</span>
+<span id="cb6-222"><a href="#cb6-222" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-223"><a href="#cb6-223" aria-hidden="true" tabindex="-1"></a>    <span class="co">-- Timing</span></span>
+<span id="cb6-224"><a href="#cb6-224" aria-hidden="true" tabindex="-1"></a>    occurred_at                 <span class="dt">TIMESTAMP</span> <span class="kw">WITH</span> <span class="dt">TIME</span> <span class="dt">ZONE</span> <span class="kw">DEFAULT</span> NOW(),</span>
+<span id="cb6-225"><a href="#cb6-225" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-226"><a href="#cb6-226" aria-hidden="true" tabindex="-1"></a>    <span class="kw">INDEX</span> idx_project (project_id),</span>
+<span id="cb6-227"><a href="#cb6-227" aria-hidden="true" tabindex="-1"></a>    <span class="kw">INDEX</span> idx_event_type (event_type),</span>
+<span id="cb6-228"><a href="#cb6-228" aria-hidden="true" tabindex="-1"></a>    <span class="kw">INDEX</span> idx_occurred_at (occurred_at)</span>
+<span id="cb6-229"><a href="#cb6-229" aria-hidden="true" tabindex="-1"></a>);</span>
+<span id="cb6-230"><a href="#cb6-230" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-231"><a href="#cb6-231" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-232"><a href="#cb6-232" aria-hidden="true" tabindex="-1"></a><span class="co">-- ============================================================================</span></span>
+<span id="cb6-233"><a href="#cb6-233" aria-hidden="true" tabindex="-1"></a><span class="co">-- INTEGRATION CACHE (External system data)</span></span>
+<span id="cb6-234"><a href="#cb6-234" aria-hidden="true" tabindex="-1"></a><span class="co">-- ============================================================================</span></span>
+<span id="cb6-235"><a href="#cb6-235" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> integration_cache (</span>
+<span id="cb6-236"><a href="#cb6-236" aria-hidden="true" tabindex="-1"></a>    <span class="kw">id</span>                          UUID <span class="kw">PRIMARY</span> <span class="kw">KEY</span> <span class="kw">DEFAULT</span> gen_random_uuid(),</span>
+<span id="cb6-237"><a href="#cb6-237" aria-hidden="true" tabindex="-1"></a>    project_id                  UUID <span class="kw">REFERENCES</span> implementation_projects(<span class="kw">id</span>) <span class="kw">ON</span> <span class="kw">DELETE</span> <span class="kw">CASCADE</span>,</span>
+<span id="cb6-238"><a href="#cb6-238" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-239"><a href="#cb6-239" aria-hidden="true" tabindex="-1"></a>    <span class="co">-- Source system</span></span>
+<span id="cb6-240"><a href="#cb6-240" aria-hidden="true" tabindex="-1"></a>    integration_source          <span class="dt">VARCHAR</span>(<span class="dv">50</span>) <span class="kw">NOT</span> <span class="kw">NULL</span>,  <span class="co">-- &#39;JIRA&#39;, &#39;ZENDESK&#39;, &#39;PARENTSQUARE&#39;</span></span>
+<span id="cb6-241"><a href="#cb6-241" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-242"><a href="#cb6-242" aria-hidden="true" tabindex="-1"></a>    <span class="co">-- Cached data</span></span>
+<span id="cb6-243"><a href="#cb6-243" aria-hidden="true" tabindex="-1"></a>    cache_key                   <span class="dt">VARCHAR</span>(<span class="dv">255</span>) <span class="kw">NOT</span> <span class="kw">NULL</span>,  <span class="co">-- e.g., &#39;open_cros&#39;, &#39;tickets_30d&#39;</span></span>
+<span id="cb6-244"><a href="#cb6-244" aria-hidden="true" tabindex="-1"></a>    cache_value                 JSONB <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb6-245"><a href="#cb6-245" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-246"><a href="#cb6-246" aria-hidden="true" tabindex="-1"></a>    <span class="co">-- Cache metadata</span></span>
+<span id="cb6-247"><a href="#cb6-247" aria-hidden="true" tabindex="-1"></a>    cached_at                   <span class="dt">TIMESTAMP</span> <span class="kw">WITH</span> <span class="dt">TIME</span> <span class="dt">ZONE</span> <span class="kw">DEFAULT</span> NOW(),</span>
+<span id="cb6-248"><a href="#cb6-248" aria-hidden="true" tabindex="-1"></a>    expires_at                  <span class="dt">TIMESTAMP</span> <span class="kw">WITH</span> <span class="dt">TIME</span> <span class="dt">ZONE</span>,</span>
+<span id="cb6-249"><a href="#cb6-249" aria-hidden="true" tabindex="-1"></a>    is_stale                    <span class="dt">BOOLEAN</span> <span class="kw">GENERATED</span> ALWAYS <span class="kw">AS</span></span>
+<span id="cb6-250"><a href="#cb6-250" aria-hidden="true" tabindex="-1"></a>                                  (expires_at <span class="op">&lt;</span> NOW()) STORED,</span>
+<span id="cb6-251"><a href="#cb6-251" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-252"><a href="#cb6-252" aria-hidden="true" tabindex="-1"></a>    <span class="kw">UNIQUE</span>(project_id, integration_source, cache_key),</span>
+<span id="cb6-253"><a href="#cb6-253" aria-hidden="true" tabindex="-1"></a>    <span class="kw">INDEX</span> idx_project (project_id),</span>
+<span id="cb6-254"><a href="#cb6-254" aria-hidden="true" tabindex="-1"></a>    <span class="kw">INDEX</span> idx_integration (integration_source),</span>
+<span id="cb6-255"><a href="#cb6-255" aria-hidden="true" tabindex="-1"></a>    <span class="kw">INDEX</span> idx_expires (expires_at)</span>
+<span id="cb6-256"><a href="#cb6-256" aria-hidden="true" tabindex="-1"></a>);</span>
+<span id="cb6-257"><a href="#cb6-257" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-258"><a href="#cb6-258" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-259"><a href="#cb6-259" aria-hidden="true" tabindex="-1"></a><span class="co">-- ============================================================================</span></span>
+<span id="cb6-260"><a href="#cb6-260" aria-hidden="true" tabindex="-1"></a><span class="co">-- USERS (IM owners and admin users)</span></span>
+<span id="cb6-261"><a href="#cb6-261" aria-hidden="true" tabindex="-1"></a><span class="co">-- ============================================================================</span></span>
+<span id="cb6-262"><a href="#cb6-262" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> users (</span>
+<span id="cb6-263"><a href="#cb6-263" aria-hidden="true" tabindex="-1"></a>    <span class="kw">id</span>                          UUID <span class="kw">PRIMARY</span> <span class="kw">KEY</span> <span class="kw">DEFAULT</span> gen_random_uuid(),</span>
+<span id="cb6-264"><a href="#cb6-264" aria-hidden="true" tabindex="-1"></a>    email                       <span class="dt">VARCHAR</span>(<span class="dv">255</span>) <span class="kw">UNIQUE</span> <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb6-265"><a href="#cb6-265" aria-hidden="true" tabindex="-1"></a>    full_name                   <span class="dt">VARCHAR</span>(<span class="dv">255</span>) <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb6-266"><a href="#cb6-266" aria-hidden="true" tabindex="-1"></a>    <span class="kw">role</span>                        <span class="dt">VARCHAR</span>(<span class="dv">50</span>) <span class="kw">NOT</span> <span class="kw">NULL</span>,  <span class="co">-- &#39;IM&#39;, &#39;ADMIN&#39;, &#39;READONLY&#39;</span></span>
+<span id="cb6-267"><a href="#cb6-267" aria-hidden="true" tabindex="-1"></a>    is_active                   <span class="dt">BOOLEAN</span> <span class="kw">DEFAULT</span> <span class="kw">TRUE</span>,</span>
+<span id="cb6-268"><a href="#cb6-268" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-269"><a href="#cb6-269" aria-hidden="true" tabindex="-1"></a>    <span class="co">-- Notification preferences</span></span>
+<span id="cb6-270"><a href="#cb6-270" aria-hidden="true" tabindex="-1"></a>    notification_preferences    JSONB <span class="kw">DEFAULT</span> <span class="st">&#39;{&quot;slack&quot;: true, &quot;email&quot;: true}&#39;</span>,</span>
+<span id="cb6-271"><a href="#cb6-271" aria-hidden="true" tabindex="-1"></a>    slack_user_id               <span class="dt">VARCHAR</span>(<span class="dv">100</span>),</span>
+<span id="cb6-272"><a href="#cb6-272" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-273"><a href="#cb6-273" aria-hidden="true" tabindex="-1"></a>    <span class="co">-- Audit</span></span>
+<span id="cb6-274"><a href="#cb6-274" aria-hidden="true" tabindex="-1"></a>    created_at                  <span class="dt">TIMESTAMP</span> <span class="kw">WITH</span> <span class="dt">TIME</span> <span class="dt">ZONE</span> <span class="kw">DEFAULT</span> NOW(),</span>
+<span id="cb6-275"><a href="#cb6-275" aria-hidden="true" tabindex="-1"></a>    last_login_at               <span class="dt">TIMESTAMP</span> <span class="kw">WITH</span> <span class="dt">TIME</span> <span class="dt">ZONE</span>,</span>
+<span id="cb6-276"><a href="#cb6-276" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-277"><a href="#cb6-277" aria-hidden="true" tabindex="-1"></a>    <span class="kw">INDEX</span> idx_email (email),</span>
+<span id="cb6-278"><a href="#cb6-278" aria-hidden="true" tabindex="-1"></a>    <span class="kw">INDEX</span> idx_role (<span class="kw">role</span>)</span>
+<span id="cb6-279"><a href="#cb6-279" aria-hidden="true" tabindex="-1"></a>);</span>
+<span id="cb6-280"><a href="#cb6-280" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-281"><a href="#cb6-281" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-282"><a href="#cb6-282" aria-hidden="true" tabindex="-1"></a><span class="co">-- ============================================================================</span></span>
+<span id="cb6-283"><a href="#cb6-283" aria-hidden="true" tabindex="-1"></a><span class="co">-- CONFIGURATION (System settings and integration configs)</span></span>
+<span id="cb6-284"><a href="#cb6-284" aria-hidden="true" tabindex="-1"></a><span class="co">-- ============================================================================</span></span>
+<span id="cb6-285"><a href="#cb6-285" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> configuration (</span>
+<span id="cb6-286"><a href="#cb6-286" aria-hidden="true" tabindex="-1"></a>    <span class="kw">id</span>                          UUID <span class="kw">PRIMARY</span> <span class="kw">KEY</span> <span class="kw">DEFAULT</span> gen_random_uuid(),</span>
+<span id="cb6-287"><a href="#cb6-287" aria-hidden="true" tabindex="-1"></a>    config_key                  <span class="dt">VARCHAR</span>(<span class="dv">255</span>) <span class="kw">UNIQUE</span> <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb6-288"><a href="#cb6-288" aria-hidden="true" tabindex="-1"></a>    config_value                JSONB <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb6-289"><a href="#cb6-289" aria-hidden="true" tabindex="-1"></a>    description                 TEXT,</span>
+<span id="cb6-290"><a href="#cb6-290" aria-hidden="true" tabindex="-1"></a>    is_sensitive                <span class="dt">BOOLEAN</span> <span class="kw">DEFAULT</span> <span class="kw">FALSE</span>,  <span class="co">-- Encrypted values</span></span>
+<span id="cb6-291"><a href="#cb6-291" aria-hidden="true" tabindex="-1"></a>    updated_at                  <span class="dt">TIMESTAMP</span> <span class="kw">WITH</span> <span class="dt">TIME</span> <span class="dt">ZONE</span> <span class="kw">DEFAULT</span> NOW(),</span>
+<span id="cb6-292"><a href="#cb6-292" aria-hidden="true" tabindex="-1"></a>    updated_by                  UUID <span class="kw">REFERENCES</span> users(<span class="kw">id</span>)</span>
+<span id="cb6-293"><a href="#cb6-293" aria-hidden="true" tabindex="-1"></a>);</span></code></pre></div>
+<hr />
+<h2 id="technical-stack-recommendations">Technical Stack
+Recommendations</h2>
+<h3 id="frontend-technology-stack">Frontend Technology Stack</h3>
+<pre><code>┌─────────────────────────────────────────────────────────────────────────────┐
+│                         FRONTEND STACK (Recommended)                         │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+Framework:
+──────────
+• React 18+ with TypeScript
+  Rationale: Industry standard, large ecosystem, excellent for complex UIs
+  Alternative: Vue 3 if already standardized at ParentSquare
+
+State Management:
+─────────────────
+• Redux Toolkit (for global state)
+  - Implementation projects list
+  - User session and preferences
+  - Cached integration data
+• React Query / TanStack Query (for server state)
+  - API data fetching and caching
+  - Automatic refetching and invalidation
+  - Optimistic updates
+
+UI Component Library:
+─────────────────────
+• Material-UI (MUI) or Ant Design
+  Rationale: Comprehensive components, accessibility, customizable theming
+  Key components needed: DataGrid, DatePicker, Select, Modal, Alert, Stepper
+
+Data Visualization:
+───────────────────
+• Recharts or Chart.js
+  For health trends, phase distribution, analytics dashboards
+
+Form Management:
+────────────────
+• React Hook Form + Zod (validation)
+  For milestone forms, health override forms, settings
+
+Styling:
+────────
+• CSS-in-JS (Emotion - comes with MUI) or Tailwind CSS
+  For custom styling beyond component library
+
+Build Tool:
+───────────
+• Vite (modern, fast) or Create React App / Next.js
+  Depending on existing ParentSquare standards
+
+Testing:
+────────
+• Jest + React Testing Library (unit/integration)
+• Playwright or Cypress (E2E)</code></pre>
+<h3 id="backend-technology-stack">Backend Technology Stack</h3>
+<pre><code>┌─────────────────────────────────────────────────────────────────────────────┐
+│                         BACKEND STACK (Recommended)                          │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+Primary Options (choose one based on existing standards):
+
+Option A: Node.js/TypeScript Stack
+──────────────────────────────────
+Framework: Express.js or NestJS (preferred for structure)
+Language: TypeScript
+ORM: Prisma or TypeORM
+Validation: Zod or Joi
+Testing: Jest + Supertest
+
+Pros:
+• Shared language with frontend (TypeScript)
+• Large ecosystem for integrations
+• Fast development velocity
+• Good for serverless deployment
+
+Cons:
+• Less robust for heavy computational workloads
+
+
+Option B: Python Stack
+──────────────────────
+Framework: FastAPI or Django + DRF
+Language: Python 3.10+
+ORM: SQLAlchemy or Django ORM
+Validation: Pydantic (built into FastAPI)
+Testing: pytest
+
+Pros:
+• Excellent for data processing and ML (future AI features)
+• Strong async support (FastAPI)
+• Great for integrations (many API clients available)
+• Type hints with Pydantic
+
+Cons:
+• Different language from frontend
+
+
+Option C: Go Stack
+──────────────────
+Framework: Gin or Echo
+Language: Go 1.21+
+ORM: GORM or sqlx
+Testing: Go testing + testify
+
+Pros:
+• Excellent performance
+• Strong concurrency for sync operations
+• Static typing and compilation
+• Good for microservices
+
+Cons:
+• Smaller ecosystem for rapid development
+• Steeper learning curve
+
+RECOMMENDATION: Node.js/TypeScript with NestJS
+──────────────────────────────────────────────
+Rationale:
+• Shared TypeScript across stack = code reuse
+• NestJS provides structure similar to backend frameworks (modules, DI)
+• Rich integration library ecosystem (HubSpot, Jira, Zendesk clients)
+• Easy to find developers
+• Good balance of performance and development speed</code></pre>
+<h3 id="database">Database</h3>
+<pre><code>┌─────────────────────────────────────────────────────────────────────────────┐
+│                              DATABASE                                        │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+Primary Database:
+─────────────────
+• PostgreSQL 15+
+  Rationale:
+  - JSONB support for flexible fields (integration cache, event data)
+  - Strong ACID compliance for critical sync operations
+  - Excellent JSON querying capabilities
+  - Full-text search (for notes, activity feed)
+  - Robust ecosystem and extensions
+  - Supports both relational and document patterns
+
+Hosting Options:
+────────────────
+• AWS RDS PostgreSQL (managed, auto-backups, read replicas)
+• Google Cloud SQL
+• Azure Database for PostgreSQL
+• Supabase (if wanting more managed features)
+
+Cache Layer:
+────────────
+• Redis 7+
+  Use cases:
+  - API response caching (HubSpot data)
+  - Session storage
+  - Rate limit tracking
+  - Job queue (via BullMQ if Node.js)
+
+Alternative: Memcached (simpler, but less features)
+
+Event Queue:
+────────────
+• Option A: Redis + BullMQ (Node.js)
+• Option B: RabbitMQ (language-agnostic)
+• Option C: AWS SQS + SNS (serverless)
+
+Recommendation: Redis + BullMQ
+- Simplifies stack (Redis already needed for caching)
+- Built-in retry, scheduling, rate limiting
+- Web UI for monitoring</code></pre>
+<h3 id="infrastructure-deployment">Infrastructure &amp; Deployment</h3>
+<pre><code>┌─────────────────────────────────────────────────────────────────────────────┐
+│                      INFRASTRUCTURE &amp; DEPLOYMENT                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+Deployment Architecture:
+────────────────────────
+Recommendation: Containerized deployment on cloud platform
+
+Option A: AWS (Full Suite)
+───────────────────────────
+Frontend:
+• S3 + CloudFront (static hosting with CDN)
+  OR
+• Amplify Hosting (includes CI/CD)
+
+Backend:
+• ECS Fargate (serverless containers) or EKS (if Kubernetes experience)
+• Application Load Balancer
+
+Database:
+• RDS PostgreSQL (Multi-AZ for HA)
+• ElastiCache Redis
+
+Jobs/Workers:
+• ECS Fargate tasks (for background sync jobs)
+• Lambda (for webhooks, event processing)
+
+Monitoring:
+• CloudWatch (logs, metrics, alarms)
+• AWS X-Ray (distributed tracing)
+
+
+Option B: Platform-as-a-Service (Simpler)
+──────────────────────────────────────────
+• Heroku, Render, or Railway
+  Pros: Faster setup, less infrastructure management
+  Cons: Less control, potentially higher costs at scale
+
+
+Option C: Kubernetes (Advanced)
+────────────────────────────────
+• GKE, EKS, or AKS
+• Helm charts for deployments
+  Only recommended if existing Kubernetes expertise
+
+
+RECOMMENDATION: AWS ECS Fargate + RDS
+─────────────────────────────────────
+Rationale:
+• Balance of control and managed services
+• Serverless containers = no server management
+• Scales automatically
+• Cost-effective for internal tools
+• Strong integration with AWS services
+
+
+CI/CD Pipeline:
+───────────────
+Tool: GitHub Actions or GitLab CI
+
+Pipeline stages:
+1. Lint &amp; Format Check
+2. Unit Tests
+3. Integration Tests
+4. Build Docker Images
+5. Push to Container Registry (ECR)
+6. Deploy to Staging
+7. E2E Tests (Staging)
+8. Manual Approval
+9. Deploy to Production
+10. Post-deployment smoke tests
+
+
+Environments:
+─────────────
+• Development (local Docker Compose)
+• Staging (mirrors production)
+• Production
+
+Infrastructure as Code:
+───────────────────────
+• Terraform or AWS CDK
+  For: VPC, ECS clusters, RDS, Redis, IAM roles, etc.</code></pre>
+<h3 id="integration-approaches">Integration Approaches</h3>
+<pre><code>┌─────────────────────────────────────────────────────────────────────────────┐
+│                       INTEGRATION PATTERNS &amp; APPROACHES                      │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+HubSpot Integration (PRIMARY - Bidirectional)
+══════════════════════════════════════════════
+
+Authentication:
+───────────────
+• Private App Access Token (recommended for server-to-server)
+  - Scoped permissions: deals, contacts, properties (read/write)
+  - Stored in environment variables / secrets manager
+  - Rotated every 90 days
+
+API Client:
+───────────
+• Official HubSpot Node.js SDK: @hubspot/api-client
+  OR
+• Build custom wrapper with axios for more control
+
+Sync Pattern:
+─────────────
+1. PULL (HubSpot → Dashboard):
+   • Webhook subscription for deal updates
+     - Deal created
+     - Deal stage changed
+     - Deal owner changed
+   • Fallback: Scheduled polling (every 15 min) for new deals
+   • One-time bulk import at initial deployment
+
+2. PUSH (Dashboard → HubSpot):
+   • Event-driven: Listen for dashboard changes
+   • Queue-based: Add to job queue for async processing
+   • Batch similar updates to reduce API calls
+   • Retry logic: Exponential backoff (1s, 2s, 4s, 8s, 16s)
+
+Rate Limiting Strategy:
+───────────────────────
+• HubSpot limit: 100 requests/10 seconds (burst), daily limits
+• Dashboard strategy:
+  - Track API calls in Redis with sliding window
+  - Queue excess requests
+  - Implement request throttling
+  - Use batch endpoints where available (update multiple deals)
+
+Error Handling:
+───────────────
+• 429 (Rate Limit): Retry after header, exponential backoff
+• 401/403 (Auth): Alert admin, log to error tracking
+• 400 (Bad Request): Log request/response, alert IM
+• 500 (HubSpot Error): Retry up to 3 times, then alert
+• Network errors: Retry with exponential backoff
+
+
+Jira Integration (READ-ONLY)
+═════════════════════════════
+
+Authentication:
+───────────────
+• Jira Cloud: OAuth 2.0 or API Token
+• Jira Data Center: Personal Access Token
+
+API Client:
+───────────
+• jira-client (npm) or custom REST client
+
+Data Flow:
+──────────
+• Polling approach: Query for CROs linked to account (every 30 min)
+• JQL query: project = CRO AND customer = &quot;Account Name&quot;
+• Cache results in integration_cache table
+• Display in dashboard Project Detail → Jira Tab
+
+Data Needed:
+────────────
+• CRO issue key (e.g., CRO-123)
+• Priority
+• Status
+• Created date / Age
+• Summary
+• Assignee
+
+
+Zendesk Integration (READ-ONLY)
+════════════════════════════════
+
+Authentication:
+───────────────
+• API Token or OAuth 2.0
+
+API Client:
+───────────
+• node-zendesk (npm) or custom REST client
+
+Data Flow:
+──────────
+• Query tickets by organization (linked to account)
+• Polling: Every 30 minutes
+• Aggregate metrics:
+  - Total tickets (last 30 days)
+  - High-priority tickets
+  - Average response time
+
+Data Needed:
+────────────
+• Ticket volume (count)
+• Priority distribution
+• Status (open, pending, solved)
+• Created date
+
+
+ParentSquare Analytics Integration (READ-ONLY)
+═══════════════════════════════════════════════
+
+Authentication:
+───────────────
+• Internal API token or service account
+
+API Client:
+───────────
+• Custom REST client (ParentSquare internal API)
+
+Data Flow:
+──────────
+• Query usage metrics for district/organization
+• Polling: Daily (overnight batch job)
+• Real-time queries for milestone validation
+
+Metrics Needed:
+───────────────
+• User login rate (% of total users)
+• Feature adoption rates:
+  - Comms sent
+  - Forms completed
+  - Events created
+  - Directory usage
+• Data import completion status
+• SIS integration status
+
+
+Notification Integrations
+══════════════════════════
+
+Slack:
+──────
+• Slack Incoming Webhooks (simple)
+  OR
+• Slack Web API + Bot User (richer interactions)
+
+Use cases:
+- Alert when project goes Yellow/Red
+- Notify when milestone completed
+- Daily digest of at-risk projects
+
+Email:
+──────
+• SendGrid or AWS SES
+• Templates for:
+  - Health alert notifications
+  - Weekly IM digest
+  - Contact gap reminders</code></pre>
+<hr />
+<h2 id="phase-1-implementation-roadmap">Phase 1 Implementation
+Roadmap</h2>
+<pre><code>┌─────────────────────────────────────────────────────────────────────────────┐
+│                      PHASE 1 IMPLEMENTATION ROADMAP                          │
+│                      (Estimated 8-12 weeks to MVP)                           │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+WEEK 1-2: FOUNDATION &amp; SETUP
+═════════════════════════════
+□ Technical setup
+  ├─ Repository creation and branch strategy
+  ├─ Development environment setup (Docker Compose)
+  ├─ CI/CD pipeline skeleton (GitHub Actions)
+  └─ Infrastructure provisioning (Terraform: VPC, RDS, ECS clusters)
+
+□ HubSpot preparation
+  ├─ Create Private App in HubSpot
+  ├─ Define custom properties (im_phase, im_health_status, etc.)
+  ├─ Document existing deal stages and mapping strategy
+  └─ Identify sample deals for testing
+
+□ Requirements finalization
+  ├─ Confirm required contact roles (4-5 roles)
+  ├─ Finalize milestone checklist (6 milestones for v1)
+  ├─ Define health score rules (simple G/Y/R logic)
+  └─ Align on stage progression rules (1-2 transitions)
+
+Deliverable: Development environment ready, HubSpot integration configured
+
+
+WEEK 3-4: DATABASE &amp; CORE BACKEND
+══════════════════════════════════
+□ Database implementation
+  ├─ Set up PostgreSQL (RDS)
+  ├─ Create schema (implementation_projects, sync_log, etc.)
+  ├─ Seed test data
+  └─ Set up Redis cache
+
+□ Core backend services
+  ├─ API gateway and routing
+  ├─ Authentication middleware (SSO/OAuth)
+  ├─ Project Service (CRUD operations)
+  └─ Basic API endpoints
+      • GET /api/projects (list)
+      • GET /api/projects/{id} (detail)
+      • PATCH /api/projects/{id} (update)
+
+□ HubSpot Connector (initial)
+  ├─ API client setup (@hubspot/api-client)
+  ├─ Test connection and authentication
+  └─ Implement deal import function
+
+Deliverable: Core backend API functional, database schema deployed
+
+
+WEEK 5-6: HUBSPOT SYNC SERVICE
+═══════════════════════════════
+□ Sync Service implementation
+  ├─ Build sync engine with field mapping
+  ├─ Implement TO_HUBSPOT sync logic
+      • Field updates (im_phase, im_health_status, etc.)
+      • Activity logging (notes to HubSpot)
+  ├─ Implement FROM_HUBSPOT import logic
+      • Initial deal import
+      • Webhook receiver endpoint
+  ├─ Add sync_log audit trail
+  ├─ Rate limiting and retry logic
+  └─ Background job: Poll new deals (scheduled)
+
+□ Testing
+  ├─ Unit tests for sync logic
+  ├─ Integration tests with HubSpot sandbox
+  └─ Test error handling and retries
+
+Deliverable: Bidirectional HubSpot sync working, tested with sample deals
+
+
+WEEK 7-8: FRONTEND FOUNDATION
+══════════════════════════════
+□ Frontend setup
+  ├─ React + TypeScript project scaffolding
+  ├─ UI component library integration (MUI/Ant Design)
+  ├─ React Query setup for API calls
+  ├─ Routing (React Router)
+  └─ Authentication flow
+
+□ Portfolio View (main page)
+  ├─ Project list table with sorting/filtering
+  ├─ Filter bar (IM owner, phase, health, date range)
+  ├─ Summary stats widgets
+  └─ Link to project detail view
+
+□ API integration
+  ├─ Connect to backend API
+  ├─ Implement data fetching
+  └─ Loading and error states
+
+Deliverable: Portfolio View functional, displaying real projects from database
+
+
+WEEK 9-10: PROJECT DETAIL VIEW &amp; MILESTONES
+════════════════════════════════════════════
+□ Project Detail Page
+  ├─ Project header (account info, owner, dates)
+  ├─ Phase progress bar/stepper
+  ├─ Milestones panel
+      • Checklist with checkboxes
+      • Completion dates
+      • Notes per milestone
+  ├─ HubSpot snapshot panel (read-only fields)
+  ├─ Save functionality
+  └─ Loading states and optimistic updates
+
+□ Backend support
+  ├─ PATCH /api/projects/{id}/milestones endpoint
+  ├─ POST /api/projects/{id}/phase endpoint (advance phase)
+  └─ Validation logic (e.g., can&#39;t advance phase without milestones)
+
+□ Testing
+  ├─ E2E test: Complete milestone → triggers HubSpot sync
+  └─ Verify sync_log records updates correctly
+
+Deliverable: IMs can manage milestones and see syncs to HubSpot
+
+
+WEEK 11: HEALTH SCORING &amp; CONTACT COVERAGE
+═══════════════════════════════════════════
+□ Health Service (simple v1)
+  ├─ Implement basic health calculation
+      • Rule: Days behind schedule
+      • Rule: Manual IM flag
+      • Output: Green / Yellow / Red
+  ├─ Store in health_scores table (with history)
+  ├─ API endpoints
+      • GET /api/health/{project_id}
+      • POST /api/health/{project_id}/override
+  └─ Sync to HubSpot im_health_status field
+
+□ Health Panel (frontend)
+  ├─ Current health display (large visual indicator)
+  ├─ System-suggested vs override toggle
+  ├─ Reason text field (required for override)
+  └─ Save functionality
+
+□ Contact Coverage (basic v1)
+  ├─ Contact Service implementation
+      • Query HubSpot for contacts associated with deal
+      • Map to required roles (5 roles)
+      • Identify gaps
+  ├─ contacts_coverage table population
+  ├─ Contact Coverage Panel (frontend)
+      • List of required roles
+      • Status indicator (filled/missing)
+      • Display missing roles alert
+  └─ Sync coverage status to HubSpot (im_contact_coverage field)
+
+Deliverable: Health scoring and contact coverage working, displayed in UI
+
+
+WEEK 12: TESTING, POLISH &amp; PILOT ROLLOUT
+═════════════════════════════════════════
+□ Comprehensive testing
+  ├─ End-to-end tests for critical workflows
+      • New deal import → project creation
+      • Milestone completion → HubSpot sync → stage change
+      • Health override → sync to HubSpot
+  ├─ Load testing (simulate 50-100 concurrent users)
+  ├─ Security testing (auth, API authorization)
+  └─ Cross-browser testing
+
+□ Monitoring &amp; observability
+  ├─ Set up CloudWatch dashboards
+  ├─ Configure alerts
+      • Failed sync jobs
+      • API errors
+      • High latency
+  ├─ Error tracking (Sentry or similar)
+  └─ Audit log viewer (admin page)
+
+□ Documentation
+  ├─ User guide for IMs (with screenshots)
+  ├─ Admin guide (configuration, monitoring)
+  ├─ Technical documentation (architecture, API docs)
+  └─ Runbook for common issues
+
+□ Pilot rollout
+  ├─ Select 3-5 pilot IMs
+  ├─ Import their active projects
+  ├─ Training session (1 hour)
+  ├─ Daily check-ins during pilot week
+  ├─ Collect feedback
+  └─ Iterate on UX issues
+
+Deliverable: MVP ready for pilot, monitoring in place, documentation complete
+
+
+POST-PHASE 1: ITERATION &amp; EXPANSION
+════════════════════════════════════
+□ Gather pilot feedback and prioritize improvements
+
+□ Phase 2 features (priority order):
+  1. Enhanced health scoring (integrate Jira + Zendesk signals)
+  2. ParentSquare usage analytics integration
+  3. CRO visibility (Jira integration)
+  4. Zendesk support metrics
+  5. Automated Slack/email alerts
+  6. Activity timeline/feed
+  7. Advanced reporting and dashboards
+  8. Multiple implementations per deal (data model extension)
+
+□ Scale rollout to all IMs
+
+□ Phase 3: AI/ML capabilities
+  ├─ Predictive health scores
+  ├─ Anomaly detection
+  ├─ Smart recommendations
+  └─ Natural language insights</code></pre>
+<hr />
+<h2 id="key-features-capabilities">Key Features &amp; Capabilities</h2>
+<h3 id="for-implementation-managers">For Implementation Managers</h3>
+<pre><code>┌─────────────────────────────────────────────────────────────────────────────┐
+│                          IM USER EXPERIENCE                                  │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+Daily Workflow:
+═══════════════
+1. Login → Land on Portfolio View
+   ├─ See all projects assigned to them (default filter)
+   ├─ At-a-glance health indicators (color-coded)
+   ├─ Sort by: Go-live date (ascending) to prioritize imminent launches
+   └─ Red/Yellow health projects surface at top
+
+2. Select a project → Project Detail View
+   ├─ Quickly review phase and milestone status
+   ├─ Check off completed milestones (one click)
+   ├─ Review HubSpot snapshot (no need to open HubSpot)
+   └─ Update health if issues arise (with reason notes)
+
+3. Save changes → Automatic sync to HubSpot
+   ├─ IM sees confirmation: &quot;Synced to HubSpot ✓&quot;
+   ├─ No manual HubSpot updates required
+   └─ Activity logged for audit trail
+
+4. Monitor alerts
+   ├─ Slack notification if a project health degrades
+   ├─ Email digest: Weekly summary of portfolio health
+   └─ Contact gap alerts
+
+Time Savings:
+─────────────
+• Before: 30-45 min/day updating HubSpot manually
+• After: 5-10 min/day managing projects in dashboard
+• Reduction: 75% time savings on administrative tasks
+
+
+Key Capabilities:
+═════════════════
+□ Portfolio Management
+  ├─ View all assigned implementations in one table
+  ├─ Filter by phase, health, go-live date range
+  ├─ Search by account name
+  ├─ Quick status overview (# at risk, # launching soon)
+  └─ Export portfolio to CSV for offline analysis
+
+□ Milestone Tracking
+  ├─ Standardized checklist across all implementations
+  ├─ One-click completion (auto-timestamps)
+  ├─ Add notes per milestone (context for future reference)
+  ├─ Visual progress indicator (X of Y complete)
+  └─ Phase auto-advances when criteria met
+
+□ Health Management
+  ├─ System-suggested health based on signals
+  ├─ Override capability (IM knows context system doesn&#39;t)
+  ├─ Required reason for override (audit trail)
+  ├─ Historical health trend chart (spot patterns)
+  └─ Contributing factors breakdown (why Yellow/Red?)
+
+□ Contact Coverage Validation
+  ├─ See which key roles are filled vs missing
+  ├─ Visual gap indicators (red warning icon)
+  ├─ Direct link to HubSpot contact (when filled)
+  └─ Task/reminder to CSM to fill gaps
+
+□ Multi-System Visibility (Phase 2+)
+  ├─ ParentSquare usage: Login %, feature adoption
+  ├─ Jira CROs: See open bugs/requests for this account
+  ├─ Zendesk: Ticket volume and severity
+  └─ All in one place (no context switching)</code></pre>
+<h3 id="for-customer-success-sales">For Customer Success &amp;
+Sales</h3>
+<pre><code>┌─────────────────────────────────────────────────────────────────────────────┐
+│                     VALUE FOR CS/SALES (HUBSPOT USERS)                       │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+What They See in HubSpot:
+══════════════════════════
+□ Always-accurate implementation fields
+  ├─ im_phase: Current implementation phase (Kickoff → Completed)
+  ├─ im_health_status: Green / Yellow / Red (real-time)
+  ├─ im_target_go_live_date: IM&#39;s best estimate
+  ├─ last_im_update_date: Freshness indicator
+  ├─ im_contact_coverage: Complete / Partial / Incomplete
+  └─ im_missing_roles: Specific gaps (e.g., &quot;SIS Owner&quot;)
+
+□ Automatic deal stage progression (optional Phase 1)
+  ├─ When IM marks &quot;Launched&quot; → Deal stage → &quot;Live&quot;
+  ├─ When IM marks &quot;Completed&quot; → Deal stage → &quot;Implemented&quot;
+  └─ Eliminates manual stage updates
+
+□ Activity notes (automatically logged)
+  ├─ &quot;[IM Dashboard] Health changed: Green → Yellow&quot;
+  ├─ &quot;[IM Dashboard] Phase advanced: In Progress → Launched&quot;
+  ├─ &quot;[IM Dashboard] Milestone completed: Go-live&quot;
+  └─ Full transparency into implementation progress
+
+Benefits:
+═════════
+• Data Integrity: Trust that HubSpot deal pipeline reflects reality
+• Visibility: See implementation health without asking IM
+• Reporting: Accurate forecasting and pipeline reports
+• Collaboration: Clear handoff points between Sales → CS → IM
+• Retention Signals: Early warning (Red health) enables proactive outreach</code></pre>
+<h3 id="for-leadership-operations">For Leadership &amp; Operations</h3>
+<pre><code>┌─────────────────────────────────────────────────────────────────────────────┐
+│                     VALUE FOR LEADERSHIP &amp; OPERATIONS                        │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+Strategic Insights:
+═══════════════════
+□ Portfolio Health Dashboard
+  ├─ Real-time view: % of implementations Green/Yellow/Red
+  ├─ Trend analysis: Is health improving or degrading over time?
+  ├─ IM workload distribution: Are some IMs overloaded?
+  └─ At-risk implementations: Which accounts need intervention?
+
+□ Implementation Performance Metrics
+  ├─ Average time-to-launch by product type
+  ├─ Milestone completion rates
+  ├─ Bottleneck identification (which milestones take longest?)
+  ├─ Contact coverage gaps (systemic issues?)
+  └─ Success rate (% launched on time)
+
+□ Predictive Analytics (Phase 3)
+  ├─ Likelihood of delays (based on historical patterns)
+  ├─ Churn risk indicators (low usage + high tickets)
+  ├─ Resource allocation recommendations
+  └─ Impact of early interventions on outcomes
+
+Reports Available:
+══════════════════
+• Weekly Executive Summary (automated email)
+  - Total active implementations
+  - At-risk count and specific accounts
+  - Implementations launching next 30 days
+  - Key blockers and trends
+
+• Monthly Operations Review
+  - Phase distribution (how many in each phase)
+  - Average time in each phase
+  - Health score distribution
+  - IM productivity metrics (projects per IM, update frequency)
+
+• Quarterly Business Review
+  - Implementations completed (vs target)
+  - On-time launch %
+  - Expansion opportunities (accounts ready for upsell)
+  - Process improvement recommendations</code></pre>
+<hr />
+<h2 id="technical-considerations-best-practices">Technical
+Considerations &amp; Best Practices</h2>
+<h3 id="data-consistency-synchronization">Data Consistency &amp;
+Synchronization</h3>
+<pre><code>┌─────────────────────────────────────────────────────────────────────────────┐
+│                    DATA CONSISTENCY STRATEGY                                 │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+Source of Truth Principles:
+═══════════════════════════
+1. Implementation Project Data (Phase, Health, Milestones)
+   └─ SOURCE OF TRUTH: IM Dashboard database
+   └─ HubSpot: Mirror/replica (read-only for CS/Sales)
+
+2. Deal Metadata (Amount, Close Date, Owner)
+   └─ SOURCE OF TRUTH: HubSpot
+   └─ IM Dashboard: Cached snapshot (refreshed periodically)
+
+3. Contacts
+   └─ SOURCE OF TRUTH: HubSpot
+   └─ IM Dashboard: Validates coverage, doesn&#39;t create/edit (v1)
+
+
+Conflict Resolution:
+════════════════════
+Scenario: Field updated in both systems simultaneously
+
+Resolution Strategy:
+├─ Last-Write-Wins (timestamp-based)
+│  └─ Compare updated_at timestamps
+│  └─ Most recent change prevails
+│
+├─ IM Dashboard Always Wins (for implementation fields)
+│  └─ im_phase, im_health_status always pushed from dashboard
+│  └─ HubSpot updates to these fields ignored (webhook filtered)
+│
+└─ Conflict Logging
+   └─ Log all conflicts to sync_log
+   └─ Alert admin for review
+
+
+Sync Timing &amp; Strategy:
+════════════════════════
+□ Real-time Sync (event-driven):
+  ├─ Trigger: IM updates phase, health, milestone
+  ├─ Action: Immediate sync to HubSpot (queued)
+  ├─ Latency: &lt; 5 seconds (user sees &quot;Syncing...&quot; then &quot;Synced ✓&quot;)
+  └─ Fallback: If sync fails, retry in background
+
+□ Scheduled Sync (batch):
+  ├─ Frequency: Nightly (2 AM)
+  ├─ Purpose: Catch any missed syncs, reconcile data
+  ├─ Process:
+  │   1. Compare dashboard vs HubSpot for all projects
+  │   2. Identify discrepancies
+  │   3. Re-sync using dashboard as source of truth
+  │   4. Log reconciliation report
+  └─ Alert if discrepancies &gt; threshold (e.g., 5%)
+
+□ HubSpot → Dashboard (webhooks):
+  ├─ Listen for: Deal created, deal owner changed
+  ├─ Action: Update dashboard cache
+  ├─ Frequency: Real-time (as events occur)
+  └─ Fallback: Poll every 15 min for new deals
+
+
+Idempotency:
+════════════
+• All sync operations must be idempotent
+  └─ Running sync twice = same result as once
+  └─ Use unique sync_id or timestamp to detect duplicates
+  └─ HubSpot API: Use record ID to update (not create duplicate)
+
+
+Audit Trail:
+════════════
+• Every sync operation logged to sync_log table
+  ├─ What changed (old value → new value)
+  ├─ When (timestamp)
+  ├─ Who triggered it (user_id or &#39;SYSTEM&#39;)
+  ├─ Success/failure status
+  └─ HubSpot API response
+
+• Queryable for debugging:
+  └─ &quot;Show me all syncs for project X in last 24 hours&quot;
+  └─ &quot;Why did this deal stage change?&quot;</code></pre>
+<h3 id="security-compliance">Security &amp; Compliance</h3>
+<pre><code>┌─────────────────────────────────────────────────────────────────────────────┐
+│                       SECURITY &amp; COMPLIANCE                                  │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+Authentication:
+═══════════════
+□ User Authentication:
+  ├─ SSO (SAML or OAuth 2.0) - integrate with ParentSquare identity provider
+  ├─ No local passwords (reduce risk)
+  ├─ Session timeout: 8 hours
+  └─ MFA enforcement (recommended)
+
+□ Service-to-Service Authentication:
+  ├─ HubSpot: Private App Access Token
+  ├─ Jira/Zendesk: API tokens or OAuth
+  ├─ Store in AWS Secrets Manager (encrypted at rest)
+  ├─ Rotate every 90 days (automated)
+  └─ Never log secrets (redact in logs)
+
+
+Authorization:
+══════════════
+□ Role-Based Access Control (RBAC):
+  ├─ IM: Full access to assigned projects, read-only for others
+  ├─ IM Manager: Full access to all projects
+  ├─ Admin: Full access + settings/configuration
+  ├─ Read-Only: View portfolio, no edit access
+  └─ Implemented at API layer (middleware checks role per endpoint)
+
+□ HubSpot Permissions:
+  ├─ Dashboard API token scoped to specific objects (Deals, Contacts)
+  ├─ Write access limited to implementation fields only
+  └─ No delete permissions
+
+
+Data Privacy:
+═════════════
+□ Sensitive Data Handling:
+  ├─ Contact information: Names, emails, phone numbers (from HubSpot)
+  ├─ Notes: May contain sensitive district information
+  ├─ Encryption: TLS 1.3 in transit, AES-256 at rest (RDS encryption)
+  └─ Access logging: Track who viewed which projects (audit_log)
+
+□ GDPR/CCPA Considerations:
+  ├─ Data retention policy: Archive completed projects after 2 years
+  ├─ Right to deletion: Ability to purge project data
+  ├─ Data export: Users can export their project data
+  └─ Consent: No direct customer data (B2B tool, district contact data only)
+
+
+API Security:
+═════════════
+□ Rate Limiting:
+  ├─ Per-user limits: 100 requests/min (prevents abuse)
+  ├─ Per-IP limits: 1000 requests/min (DDoS protection)
+  └─ HubSpot API: Respect their limits (100/10s)
+
+□ Input Validation:
+  ├─ All inputs validated (Zod/Joi schemas)
+  ├─ SQL injection prevention (parameterized queries via ORM)
+  ├─ XSS prevention (sanitize user input, CSP headers)
+  └─ CSRF protection (tokens for state-changing requests)
+
+□ API Authentication:
+  ├─ JWT tokens (short-lived: 1 hour)
+  ├─ Refresh tokens (stored in httpOnly cookies)
+  └─ API key for service-to-service (internal integrations)
+
+
+Monitoring &amp; Incident Response:
+════════════════════════════════
+□ Security Monitoring:
+  ├─ Failed login attempts (alert after 5 failures)
+  ├─ Unusual API activity (spikes, off-hours access)
+  ├─ Permission escalation attempts
+  └─ Data export events (log all exports)
+
+□ Incident Response Plan:
+  ├─ Detection: Automated alerts + daily log review
+  ├─ Containment: Ability to revoke API tokens immediately
+  ├─ Investigation: Audit logs + sync logs for forensics
+  ├─ Recovery: Database backups (point-in-time restore)
+  └─ Post-mortem: Document and improve
+
+
+Compliance:
+═══════════
+□ SOC 2 Considerations (if ParentSquare pursues certification):
+  ├─ Audit logging (all data changes)
+  ├─ Access controls (RBAC enforced)
+  ├─ Encryption (in transit and at rest)
+  ├─ Backup and recovery (tested quarterly)
+  └─ Change management (all code changes reviewed)</code></pre>
+<h3 id="performance-scalability">Performance &amp; Scalability</h3>
+<pre><code>┌─────────────────────────────────────────────────────────────────────────────┐
+│                      PERFORMANCE &amp; SCALABILITY                               │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+Performance Targets:
+════════════════════
+• Portfolio View load: &lt; 2 seconds (for 100 projects)
+• Project Detail load: &lt; 1 second
+• Save operation: &lt; 500ms (optimistic UI update)
+• HubSpot sync: &lt; 5 seconds (async, user sees confirmation)
+• API response time (p95): &lt; 200ms
+
+
+Scalability Assumptions:
+════════════════════════
+Phase 1:
+├─ Users: 10-20 IMs + 30-50 CS/Sales (HubSpot users)
+├─ Projects: 200-500 active implementations
+├─ Requests: ~1,000 API requests/day
+└─ HubSpot syncs: ~500 sync operations/day
+
+Phase 2-3 (Growth):
+├─ Users: 50 IMs + 200 CS/Sales
+├─ Projects: 2,000 active implementations
+├─ Requests: ~10,000 API requests/day
+└─ HubSpot syncs: ~3,000 sync operations/day
+
+
+Optimization Strategies:
+════════════════════════
+□ Database:
+  ├─ Indexes on frequently queried columns (im_owner_id, phase, health)
+  ├─ Connection pooling (pg-pool)
+  ├─ Read replicas for reporting queries (Phase 2)
+  └─ Materialized views for analytics dashboards
+
+□ Caching:
+  ├─ Redis cache for:
+  │   • HubSpot deal snapshots (TTL: 5 min)
+  │   • User sessions
+  │   • API responses (GET /api/projects - TTL: 1 min)
+  ├─ Browser cache for static assets (CDN)
+  └─ Cache invalidation on updates (smart invalidation)
+
+□ API:
+  ├─ Pagination (limit 50 projects per page)
+  ├─ Field selection (only return requested fields)
+  ├─ Batch endpoints (update multiple milestones in one call)
+  └─ GraphQL (Phase 2) for flexible querying
+
+□ Frontend:
+  ├─ Code splitting (lazy load Project Detail page)
+  ├─ Virtual scrolling for long lists
+  ├─ Optimistic UI updates (don&#39;t wait for server)
+  ├─ React Query caching (minimize API calls)
+  └─ Web workers for heavy client-side processing
+
+□ Background Jobs:
+  ├─ Queue-based processing (BullMQ)
+  ├─ Job priority (health alerts &gt; routine syncs)
+  ├─ Concurrency limits (max 5 concurrent HubSpot syncs)
+  └─ Job retry with exponential backoff
+
+
+Monitoring Performance:
+═══════════════════════
+□ Key Metrics:
+  ├─ API latency (p50, p95, p99)
+  ├─ Database query time
+  ├─ Cache hit rate (target: &gt; 80%)
+  ├─ HubSpot API call rate
+  ├─ Job queue depth (backlog indicator)
+  └─ Error rates (target: &lt; 0.1%)
+
+□ Tools:
+  ├─ Application Performance Monitoring: New Relic or Datadog
+  ├─ Database monitoring: pg_stat_statements
+  ├─ CloudWatch dashboards: Custom metrics
+  └─ Distributed tracing: AWS X-Ray or Jaeger
+
+
+Scalability Plan:
+═════════════════
+Phase 1 (Small scale):
+└─ Single ECS Fargate task, RDS instance (small), Redis (small)
+
+Phase 2 (Medium scale):
+├─ Horizontal scaling: 3-5 ECS tasks behind load balancer
+├─ RDS read replica for reports
+└─ Redis cluster (high availability)
+
+Phase 3 (Large scale):
+├─ Auto-scaling: Scale ECS tasks based on CPU/memory
+├─ Database sharding (if &gt; 100k projects - unlikely)
+├─ CDN for static assets (CloudFront)
+└─ Regional deployment (multi-region for global teams - future)</code></pre>
+<h3 id="monitoring-observability">Monitoring &amp; Observability</h3>
+<pre><code>┌─────────────────────────────────────────────────────────────────────────────┐
+│                      MONITORING &amp; OBSERVABILITY                              │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+Three Pillars:
+══════════════
+1. Logs: What happened
+2. Metrics: How much/how often
+3. Traces: Where time was spent
+
+
+Logging Strategy:
+═════════════════
+□ Structured Logging (JSON format):
+  {
+    &quot;timestamp&quot;: &quot;2025-01-15T10:30:00Z&quot;,
+    &quot;level&quot;: &quot;INFO&quot;,
+    &quot;service&quot;: &quot;sync-service&quot;,
+    &quot;project_id&quot;: &quot;abc-123&quot;,
+    &quot;event&quot;: &quot;hubspot_sync_completed&quot;,
+    &quot;duration_ms&quot;: 1234,
+    &quot;user_id&quot;: &quot;user-456&quot;
+  }
+
+□ Log Levels:
+  ├─ DEBUG: Detailed diagnostic info (dev only)
+  ├─ INFO: Key events (sync completed, user login)
+  ├─ WARN: Potential issues (retry triggered, cache miss)
+  ├─ ERROR: Failures requiring attention (API error, validation failed)
+  └─ FATAL: System-level failures (database connection lost)
+
+□ Log Aggregation:
+  ├─ CloudWatch Logs (central repository)
+  ├─ Log retention: 30 days (operational), 1 year (audit logs)
+  ├─ Log groups by service (project-service, sync-service, etc.)
+  └─ Search/filter capabilities (CloudWatch Insights)
+
+
+Metrics to Track:
+═════════════════
+□ Application Metrics:
+  ├─ API request count (by endpoint)
+  ├─ API latency (p50, p95, p99)
+  ├─ Error rate (% of requests failing)
+  ├─ Active users (concurrent sessions)
+  └─ Project operations (creates, updates, deletes)
+
+□ Integration Metrics:
+  ├─ HubSpot sync success rate (target: &gt; 99%)
+  ├─ HubSpot API call count (track against rate limit)
+  ├─ Sync latency (time from trigger to completion)
+  ├─ Failed sync count (alert threshold: &gt; 10/hour)
+  └─ Retry count (indicator of API instability)
+
+□ Infrastructure Metrics:
+  ├─ CPU utilization (ECS tasks)
+  ├─ Memory utilization
+  ├─ Database connections (pool usage)
+  ├─ Database query time
+  ├─ Redis hit rate
+  └─ Job queue depth (BullMQ)
+
+□ Business Metrics:
+  ├─ Active implementations count
+  ├─ Health distribution (% Green/Yellow/Red)
+  ├─ Average time to launch
+  ├─ Daily active users (IMs logging in)
+  └─ Portfolio coverage (% of deals with IM project)
+
+
+Alerting Rules:
+═══════════════
+Priority 1 (Page on-call):
+├─ Application down (health check fails)
+├─ Database connection lost
+├─ Error rate &gt; 5% (sustained 5 min)
+└─ HubSpot sync failing 100% (sustained 10 min)
+
+Priority 2 (Slack alert):
+├─ Error rate &gt; 1%
+├─ API latency p95 &gt; 1 second
+├─ Failed syncs &gt; 10/hour
+├─ Job queue backlog &gt; 1000
+└─ Cache hit rate &lt; 60%
+
+Priority 3 (Email digest):
+├─ Daily summary of warnings
+├─ Weekly performance report
+└─ Monthly trend analysis
+
+
+Dashboards:
+═══════════
+□ Operations Dashboard:
+  ├─ Real-time health status (green/yellow/red indicator)
+  ├─ API request rate (last 1 hour)
+  ├─ Error rate (last 24 hours)
+  ├─ HubSpot sync status (last 100 syncs)
+  └─ Job queue depth
+
+□ Business Dashboard:
+  ├─ Active implementations count
+  ├─ Health score distribution (pie chart)
+  ├─ Implementations by phase (bar chart)
+  ├─ IM workload distribution
+  └─ Daily/weekly active users
+
+□ Performance Dashboard:
+  ├─ API latency trends (line chart)
+  ├─ Database query performance (slowest queries)
+  ├─ Cache hit rate (gauge)
+  └─ Resource utilization (CPU/memory)
+
+
+Distributed Tracing:
+════════════════════
+• Tool: AWS X-Ray or Jaeger
+• Trace ID: Propagated through all services
+• Visualize:
+  ├─ User request → API Gateway → Project Service → Database
+  ├─ Sync trigger → Queue → Sync Service → HubSpot API
+  └─ Identify bottlenecks (where is time spent?)
+
+
+Incident Response:
+══════════════════
+1. Detect: Alert fires (Slack/PagerDuty)
+2. Acknowledge: On-call engineer acknowledges
+3. Investigate: Check dashboards, logs, traces
+4. Mitigate: Apply fix (rollback, restart, hotfix)
+5. Resolve: Verify resolution, close incident
+6. Post-mortem: Document, identify root cause, prevent recurrence</code></pre>
+<hr />
+<h2 id="success-metrics">Success Metrics</h2>
+<pre><code>┌─────────────────────────────────────────────────────────────────────────────┐
+│                          SUCCESS METRICS (Phase 1)                           │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+User Adoption:
+══════════════
+Target: 90% daily active usage among IMs
+Measurement:
+├─ Daily logins / Total IMs
+├─ Projects updated daily / Total active projects
+└─ Time spent in dashboard (average session length)
+
+Success Criteria:
+├─ Week 1 (pilot): 80% DAU
+├─ Week 4: 90% DAU
+└─ Week 12: 95% DAU + IMs report it as primary tool
+
+
+Efficiency Gains:
+═════════════════
+Target: 75% reduction in time spent on manual HubSpot updates
+Measurement:
+├─ Survey IMs: &quot;How much time do you spend updating HubSpot per week?&quot;
+│   • Before: Baseline (estimated 3-5 hours/week)
+│   • After: Measured (target: &lt; 1 hour/week)
+└─ Time saved = (Baseline - After) / Baseline * 100%
+
+Success Criteria:
+└─ 75% reduction achieved within 8 weeks of full rollout
+
+
+Data Integrity:
+═══════════════
+Target: 95%+ accuracy in HubSpot deal stages
+Measurement:
+├─ Audit sample: Random sample of 50 deals/month
+├─ Compare: IM Dashboard phase vs HubSpot stage
+├─ Discrepancies / Total * 100% = Error rate
+└─ Target error rate: &lt; 5%
+
+Success Criteria:
+├─ Week 4: &lt; 10% error rate
+└─ Week 12: &lt; 5% error rate (sustained)
+
+
+Sync Reliability:
+═════════════════
+Target: 99% sync success rate
+Measurement:
+├─ Successful syncs / Total sync attempts * 100%
+├─ Track failed syncs in sync_log table
+└─ Alert threshold: &lt; 95% success rate
+
+Success Criteria:
+├─ Phase 1 launch: &gt; 95%
+└─ Steady state (12 weeks): &gt; 99%
+
+
+Contact Coverage:
+═════════════════
+Target: 100% of implementations have complete contact coverage
+Measurement:
+├─ Projects with all required roles filled / Total projects * 100%
+├─ Gap closure rate (how fast are gaps filled after identification)
+
+Success Criteria:
+├─ Baseline: Measure current state (likely 60-70% complete)
+├─ 12 weeks: 90% of projects have complete coverage
+└─ 24 weeks: 95%+ complete coverage
+
+
+User Satisfaction:
+══════════════════
+Target: Net Promoter Score (NPS) &gt; 50
+Measurement:
+├─ Quarterly survey: &quot;How likely are you to recommend this dashboard? (0-10)&quot;
+├─ NPS = % Promoters (9-10) - % Detractors (0-6)
+
+Success Criteria:
+├─ Initial survey (week 4): Collect baseline
+├─ 3 months: NPS &gt; 30
+└─ 6 months: NPS &gt; 50
+
+
+Business Impact:
+════════════════
+Target: Improved implementation launch predictability
+Measurement:
+├─ % of implementations launched within ±1 week of target date
+├─ Baseline: Measure current state
+├─ After: Track quarterly
+
+Success Criteria:
+├─ 6 months: 10% improvement in on-time launch rate
+└─ 12 months: 20% improvement
+
+
+Return on Investment (ROI):
+═══════════════════════════
+Calculation:
+├─ Cost: Development + Infrastructure + Maintenance
+│   • Development: 8-12 weeks * team cost (estimate $80k-$120k)
+│   • Infrastructure: ~$500/month (ECS, RDS, Redis)
+│   • Maintenance: 0.5 FTE (~$60k/year)
+│   • Total Year 1: ~$150k-$200k
+│
+└─ Savings: IM time savings + Data quality improvements
+    • 15 IMs * 4 hours/week saved * 50 weeks * $50/hour = $150k/year
+    • Improved retention (1-2 fewer churns) = $500k-$1M/year
+    • Better expansion (2-3 more upsells) = $200k-$500k/year
+    • Total Annual Value: $850k-$1.65M
+
+ROI = (Annual Value - Cost) / Cost * 100%
+    = ($850k - $150k) / $150k * 100%
+    = 467% ROI (conservative estimate)
+
+Payback Period: ~2-3 months</code></pre>
+<hr />
+<h2 id="appendix-alternative-approaches-considered">Appendix:
+Alternative Approaches Considered</h2>
+<pre><code>┌─────────────────────────────────────────────────────────────────────────────┐
+│                      ALTERNATIVE APPROACHES CONSIDERED                       │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+Approach 1: HubSpot-Native Solution
+════════════════════════════════════
+Description:
+├─ Build everything within HubSpot (custom objects, workflows)
+├─ Use HubSpot&#39;s UI for IM interface
+└─ Leverage HubSpot&#39;s automation and reporting
+
+Pros:
+├─ No separate application to build/maintain
+├─ Native integration (no sync needed)
+├─ Use existing HubSpot licenses
+└─ Sales/CS already familiar with HubSpot
+
+Cons:
+├─ Limited customization (constrained by HubSpot capabilities)
+├─ Complex milestone tracking (not HubSpot&#39;s strength)
+├─ Can&#39;t integrate ParentSquare, Jira, Zendesk easily
+├─ HubSpot licensing costs (may need higher tier)
+├─ Vendor lock-in
+└─ Poor experience for IMs (not optimized for their workflow)
+
+Decision: REJECTED
+Rationale: HubSpot is great for CRM, but not designed for implementation
+project management. Need dedicated tool optimized for IM workflows.
+
+
+Approach 2: BI Tool Solution (Looker, Tableau, etc.)
+═════════════════════════════════════════════════════
+Description:
+├─ Build dashboards in BI tool (read-only views)
+├─ IMs continue updating HubSpot manually
+└─ BI tool aggregates data from HubSpot + other systems
+
+Pros:
+├─ Faster to build (no application development)
+├─ Good for reporting and analytics
+└─ Can pull from multiple data sources
+
+Cons:
+├─ Read-only (doesn&#39;t solve manual update problem)
+├─ No workflow management (just reporting)
+├─ IMs still have to update HubSpot
+├─ No automation (no sync, no alerts)
+└─ Doesn&#39;t address core problem (data fragmentation)
+
+Decision: REJECTED
+Rationale: BI tools are for reporting, not operational workflows. Doesn&#39;t
+reduce IM workload or improve data accuracy.
+
+
+Approach 3: No-Code Platform (Airtable, Notion, etc.)
+══════════════════════════════════════════════════════
+Description:
+├─ Use Airtable or Notion as implementation tracking database
+├─ Build custom views and forms
+├─ Use Zapier/Integromat for HubSpot sync
+└─ Lightweight, quick to implement
+
+Pros:
+├─ Very fast to build (days, not weeks)
+├─ No code required (accessible to non-developers)
+├─ Flexible data model
+└─ Good for prototyping/MVP
+
+Cons:
+├─ Limited customization (UI constrained by platform)
+├─ Complex integrations require Zapier (additional cost, brittle)
+├─ Scalability concerns (performance, rate limits)
+├─ Security and compliance (data in third-party SaaS)
+├─ Vendor lock-in (hard to migrate later)
+└─ Limited support for complex workflows and logic
+
+Decision: REJECTED (for production; OK for prototype)
+Rationale: Good for quick prototype/pilot, but not durable for long-term
+production use. ParentSquare needs control, customization, and scalability.
+
+
+Approach 4: Spreadsheet + Scripts
+══════════════════════════════════
+Description:
+├─ Google Sheets as implementation tracking database
+├─ Google Apps Script for HubSpot sync
+└─ Shared sheet for all IMs
+
+Pros:
+├─ Extremely fast to build (hours)
+├─ Familiar interface (everyone knows spreadsheets)
+└─ Free (no infrastructure costs)
+
+Cons:
+├─ No multi-user concurrency (conflicts, data loss)
+├─ No access control (anyone can edit anything)
+├─ No audit trail (who changed what?)
+├─ Poor UX (not designed for this use case)
+├─ Fragile scripts (breaks easily)
+└─ Not scalable (performance degrades with data)
+
+Decision: REJECTED
+Rationale: Fine for 1-2 users, not suitable for team of 15+ IMs. No
+production-grade reliability or security.
+
+
+Approach 5: Modify Existing Internal Tool
+══════════════════════════════════════════
+Description:
+├─ Extend existing ParentSquare internal tool (if one exists)
+├─ Add implementation tracking module
+└─ Leverage existing auth, infrastructure
+
+Pros:
+├─ Reuse existing infrastructure and authentication
+├─ IMs already familiar with tool (lower learning curve)
+├─ Faster development (some components already built)
+└─ Unified internal tools experience
+
+Cons:
+├─ Depends on existing tool architecture (may not fit)
+├─ Technical debt (if existing tool is legacy)
+├─ Risk of bloating existing tool (scope creep)
+└─ May inherit limitations of existing system
+
+Decision: CONSIDER IF APPLICABLE
+Rationale: If ParentSquare has a suitable internal tool (e.g., customer
+operations platform), this could be viable. Evaluate case-by-case.
+
+
+CHOSEN APPROACH: Net-New Internal Application
+══════════════════════════════════════════════
+Rationale:
+├─ Purpose-built for IM workflows (optimal UX)
+├─ Full control over features, integrations, roadmap
+├─ Scalable and extensible (supports Phase 2, 3 expansions)
+├─ Secure and compliant (meets ParentSquare standards)
+├─ Durable (can evolve with business needs)
+└─ Best ROI over 3-5 year horizon
+
+Trade-off:
+├─ Higher upfront investment (8-12 weeks development)
+├─ Ongoing maintenance required
+└─ Need dedicated ownership (team/person responsible)
+
+Verdict: Best long-term solution for ParentSquare&#39;s needs.</code></pre>
+<hr />
+<h2 id="document-metadata">Document Metadata</h2>
+<pre><code>Document: Implementation Manager Dashboard - Visual Architecture &amp; Technical Specification
+Version: 1.0
+Date: 2025-01-15
+Author: Enterprise Architecture Team
+Status: DRAFT - For Review &amp; Alignment
+
+Change Log:
+───────────
+v1.0 (2025-01-15): Initial comprehensive specification based on:
+  - Centralized Implementation Manager Dashboard and HubSpot Synchronization feedback
+  - IM HubSpot API Proposal
+
+Next Steps:
+───────────
+1. Review with stakeholders:
+   - Implementation Manager team (validate workflows)
+   - RevOps/Sales (validate HubSpot integration approach)
+   - Engineering (validate technical feasibility)
+   - Leadership (validate investment and ROI)
+
+2. Address open questions from source document (Section 5)
+
+3. Finalize Phase 1 scope and begin sprint planning
+
+4. Provision HubSpot sandbox environment for development/testing
+
+5. Initiate technical discovery (existing ParentSquare stack audit)
+
+Approval Required From:
+───────────────────────
+□ Head of Implementation / Customer Success
+□ VP of RevOps / Sales
+□ CTO / VP of Engineering
+□ VP of Product (if applicable)
+
+Questions or Feedback:
+──────────────────────
+Contact: [Your contact information]
+Slack Channel: #im-dashboard-project (suggested)
+Document Updates: [Link to living document]</code></pre>
+<hr />
+<h2 id="conclusion">Conclusion</h2>
+<p>This Implementation Manager Dashboard represents a strategic
+investment in operational excellence and data integrity. By creating a
+single source of truth for implementation project data, ParentSquare
+will:</p>
+<ol type="1">
+<li><p><strong>Empower Implementation Managers</strong> with a
+purpose-built tool that reduces administrative burden by 75%, allowing
+them to focus on customer success rather than manual data
+entry.</p></li>
+<li><p><strong>Improve Data Quality</strong> across HubSpot, ensuring
+Sales, CS, and Leadership have accurate, real-time visibility into
+implementation health and progress.</p></li>
+<li><p><strong>Enable Proactive Management</strong> through automated
+health scoring and alerting, catching at-risk implementations before
+they become escalations.</p></li>
+<li><p><strong>Scale Operations</strong> with a flexible, extensible
+architecture that supports future integrations (Jira, Zendesk, product
+analytics, AI) without major refactoring.</p></li>
+<li><p><strong>Drive Business Outcomes</strong>: Better on-time launch
+rates, improved customer retention, and data-driven insights for
+strategic decision-making.</p></li>
+</ol>
+<p>The recommended architecture balances pragmatism (getting to MVP
+quickly) with long-term vision (Phase 2-3 roadmap). The hub-and-spoke
+design with HubSpot as the primary integration ensures that existing
+workflows are respected while establishing the dashboard as the
+operational command center for implementation teams.</p>
+<p><strong>Estimated Timeline</strong>: 8-12 weeks to Phase 1 MVP, with
+pilot rollout by Week 12 and full deployment by Week 16.</p>
+<p><strong>Estimated Investment</strong>: $150k-$200k Year 1
+(development + infrastructure + maintenance).</p>
+<p><strong>Expected ROI</strong>: 467% (conservative), with 2-3 month
+payback period.</p>
+<p>This is not just a dashboard—it’s a transformation of how
+ParentSquare manages implementation success.</p>
+<hr />
+</body>
+</html>

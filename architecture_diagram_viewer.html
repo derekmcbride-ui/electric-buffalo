@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IM Dashboard - Architecture Diagram</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 40px;
+      background: #ffffff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-family: Arial, sans-serif;
+    }
+
+    .container {
+      max-width: 900px;
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+    }
+
+    .instructions {
+      background: #e5f1d4;
+      border-left: 4px solid #85ad33;
+      padding: 20px;
+      margin-bottom: 30px;
+      border-radius: 8px;
+    }
+
+    .instructions h2 {
+      color: #618025;
+      margin-top: 0;
+      font-size: 1.2rem;
+    }
+
+    .instructions p {
+      color: #666;
+      line-height: 1.6;
+      margin: 0.5rem 0;
+    }
+
+    .instructions code {
+      background: white;
+      padding: 2px 6px;
+      border-radius: 3px;
+      color: #85ad33;
+      font-weight: bold;
+    }
+
+    svg {
+      width: 100%;
+      height: auto;
+      background: white;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 1rem;
+      margin-top: 20px;
+      justify-content: center;
+    }
+
+    .btn {
+      padding: 12px 24px;
+      background: #85ad33;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .btn:hover {
+      background: #618025;
+    }
+
+    .btn-secondary {
+      background: #7bbaf0;
+    }
+
+    .btn-secondary:hover {
+      background: #5a9fd4;
+    }
+
+    @media print {
+      .instructions, .buttons {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="instructions">
+      <h2>📐 How to Use This Diagram</h2>
+      <p><strong>Option 1: Screenshot</strong> - Take a screenshot of the diagram below (press Cmd+Shift+4 on Mac)</p>
+      <p><strong>Option 2: Insert SVG</strong> - Insert <code>architecture_diagram.svg</code> directly into Word/PowerPoint (Insert → Pictures)</p>
+      <p><strong>Option 3: Print to PDF</strong> - Press Cmd+P and save as PDF for highest quality</p>
+      <p><strong>Option 4: Download PNG</strong> - Right-click the SVG file in Finder → Open With → Preview → Export as PNG</p>
+    </div>
+
+    <object data="architecture_diagram.svg" type="image/svg+xml" width="800" height="640">
+      <img src="architecture_diagram.svg" alt="IM Dashboard Architecture Diagram" />
+    </object>
+
+    <div class="buttons">
+      <a href="architecture_diagram.svg" download class="btn">💾 Download SVG</a>
+      <button onclick="window.print()" class="btn btn-secondary">🖨️ Print/PDF</button>
+    </div>
+  </div>
+</body>
+</html>
